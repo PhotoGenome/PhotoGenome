@@ -1,11 +1,24 @@
 package edu.cmu.photogenome.actions.embedinformation;
 
+import java.util.Date;
 import java.util.List;
 
-import edu.cmu.photogenome.domain.*;
+import com.opensymphony.xwork2.ActionSupport;
 
-public class EmbedInformationController {
+import edu.cmu.photogenome.dao.PhotoDao;
+import edu.cmu.photogenome.dao.PhotoDaoImpl;
+import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.domain.PhotoCategory;
+import edu.cmu.photogenome.domain.PhotoComment;
+import edu.cmu.photogenome.domain.PhotoRegion;
+import edu.cmu.photogenome.domain.RegionCategory;
+import edu.cmu.photogenome.domain.RegionComment;
+import edu.cmu.photogenome.domain.User;
 
+public class EmbedInformationController extends ActionSupport{
+
+	
+	private PhotoDao photoDao = new PhotoDaoImpl();
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 	
@@ -18,6 +31,13 @@ public class EmbedInformationController {
 	
 	public boolean addPhotoCategories(Photo currentPhoto, List<PhotoCategory> lstPhotoCategories){
 		
+		Photo newPhoto = currentPhoto;
+		int photoId = newPhoto.getPhotoId();
+		photoDao.save(currentPhoto);
+    	newUser.setUserFirstName(this.username);
+    	
+    	
+    	return SUCCESS;
 	}
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
