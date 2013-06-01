@@ -15,7 +15,7 @@ public class EmbedInformationAction extends ActionSupport {
 		return false;
 	}
 
-	/* takes a user object and verifies its login details it into the system
+	/* takes a user object and verifies the login details it into the system
 	 * return true if correct*/
 	
 	public boolean addPhotoCategories(Photo currentPhoto, List<PhotoCategory> listPhotoCategories){
