@@ -5,14 +5,14 @@ import java.util.List;
 
 public interface GenericDao<T, ID extends Serializable> {
 	
-	public void delete(T entity);
+	public boolean delete(T entity);
 	
 	public T findById(ID id);
 	
 	public List<T> findAll();
 	
-	public void save(T entity);
+	public boolean save(T entity);
 	
-	public void update(T entity);
+	public boolean update(T entity);
 	
 }

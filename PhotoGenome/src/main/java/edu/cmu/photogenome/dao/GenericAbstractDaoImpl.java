@@ -26,14 +26,19 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 	
-    public void delete(T entity) {
+    public boolean delete(T entity) {
+    	boolean result = false;
+    	
     	try {
 			session.delete(entity);
+			result = true;
 		}
 		catch(Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
 		}
+    	
+    	return result;
     }
     
 	public T findById(ID id) {
@@ -51,6 +56,7 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 	
 	public List<T> findAll() {
 		List<T> list = null;
+		
 		try {
 			list = (List<T>) session.createCriteria(type).list();
 		}
@@ -61,23 +67,33 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		return list;
 	}
 	
-	public void save(T entity) {
+	public boolean save(T entity) {
+		boolean result = false;
+		
 		try {
 			session.save(entity);
+			result = true;
 		}
 		catch(Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
 		}
+		
+		return result;
 	}
 	
-	public void update(T entity) {
+	public boolean update(T entity) {
+		boolean result = false;
+		
 		try {
 			session.saveOrUpdate(entity);
+			result = true;
 		}
 		catch(Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
 		}
+		
+		return result;
 	}
 }
