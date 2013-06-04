@@ -27,12 +27,18 @@ public class EmbedInformationAction extends ActionSupport {
 	/* takes a user object and verifies the login details it into the system
 	 * return true if correct*/
 	
-	public boolean addPhotoCategories(int photoId, int userId, String photoCategoryName,
+	public boolean addPhotoCategories(int photoId, int userId, List<String> categoryDetails,
 			String photoCategoryText){
 		PhotoCategory category = new PhotoCategory(photoId, userId, new Date());
 		
-		category.setPhotoCategoryName(photoCategoryName);
-		category.setPhotoCategoryText(photoCategoryText);
+		for (String details : categoryDetails){
+			String[] categoryNameandText = details.split(":");
+			category.setPhotoCategoryName([0]);
+			category.setPhotoCategoryText(photoCategoryText);
+		}
+		
+		
+		
 		
 		if(!photoCategoryDao.save(category))
 			return false;
@@ -137,8 +143,9 @@ public class EmbedInformationAction extends ActionSupport {
 	public boolean editPhotoCategories(int photoId, int userId, String photoCategoryName,
 			String photoCategoryText){
 		
-		PhotoCategory category = new PhotoCategory(photoId, userId, new Date());
-		
+		PhotoCategory category = new PhotoCategory();
+		category.setPhotoId(photoId);
+		category.setUserId(userId);
 		category.setPhotoCategoryName(photoCategoryName);
 		category.setPhotoCategoryText(photoCategoryText);
 		
@@ -172,6 +179,26 @@ public class EmbedInformationAction extends ActionSupport {
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 	
+	public boolean editRegionCategories(int regionId, int photoId, int userId,
+			String categoryName, String regionCategoryText,
+			Boolean regionCategoryIsdeleted){
+		
+		RegionCategory category = new RegionCategory();
+		category.setRegionId(regionId);
+		category.setPhotoId(photoId);
+		category.setCategoryName(categoryName);
+		category.setRegionCategoryText(regionCategoryText);
+		
+		if(!regionCategoryDao.update(category))
+			return false;
+		
+		return true;
+	}
+
+	
+	/* takes a user object and verifies its login details it into the system
+	 * return true if correct*/
+	
 	public boolean editRegionCategories(PhotoRegion currentPhotoRegion, RegionCategory currentRegionCategories){
 		return false;
 	}
@@ -189,6 +216,23 @@ public class EmbedInformationAction extends ActionSupport {
 		return false;
 	}
 
+	
+	/* takes a user object and verifies its login details it into the system
+	 * return true if correct*/
+	
+	public boolean deletePhotoCategories(int photoId, int photoCategoryId){
+		
+		PhotoCategory category = new PhotoCategory();
+		
+		category.setPhotoId(photoId);
+		category.setPhotoCategoryId(photoCategoryId);
+		
+		if(!photoCategoryDao.delete(category))
+			return false;
+		
+		return true;
+	}
+	
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 	
@@ -209,6 +253,23 @@ public class EmbedInformationAction extends ActionSupport {
 		return false;
 	}
 
+	
+	/* takes a user object and verifies its login details it into the system
+	 * return true if correct*/
+	
+	public boolean deleteRegionCategories(int regionId, int photoId, int regionCategoryId){
+		
+		RegionCategory category = new RegionCategory();
+		category.setRegionCategoryId(regionCategoryId);
+		category.setRegionId(regionId);
+		category.setPhotoId(photoId);
+		
+		if(!regionCategoryDao.delete(category))
+			return false;
+		
+		return true;
+	}
+	
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 	
