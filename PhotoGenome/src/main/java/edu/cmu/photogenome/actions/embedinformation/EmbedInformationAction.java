@@ -15,6 +15,8 @@ public class EmbedInformationAction extends ActionSupport {
 	private RegionCategoryDao regionCategoryDao = new RegionCategoryDaoImpl();
 	private RegionCoordinateDao regionCoordinateDao = new RegionCoordinateDaoImpl();
 	
+	private PhotoCategoryDao photoCategoryDao = new PhotoCategoryDaoImpl();
+	
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 	
@@ -25,9 +27,25 @@ public class EmbedInformationAction extends ActionSupport {
 	/* takes a user object and verifies the login details it into the system
 	 * return true if correct*/
 	
+	public boolean addPhotoCategories(int photoId, int userId, String photoCategoryName,
+			String photoCategoryText){
+		PhotoCategory category = new PhotoCategory(photoId, userId, new Date());
+		
+		category.setPhotoCategoryName(photoCategoryName);
+		category.setPhotoCategoryText(photoCategoryText);
+		
+		if(!photoCategoryDao.save(category))
+			return false;
+		return true;
+	}
+	
+	/* takes a user object and verifies the login details it into the system
+	 * return true if correct*/
+	
 	public boolean addPhotoCategories(Photo currentPhoto, List<PhotoCategory> listPhotoCategories){
 		return false;
 	}
+	
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 	
@@ -113,6 +131,24 @@ public class EmbedInformationAction extends ActionSupport {
 		return false;
 	}
 
+	/* takes a user object and verifies its login details it into the system
+	 * return true if correct*/
+	
+	public boolean editPhotoCategories(int photoId, int userId, String photoCategoryName,
+			String photoCategoryText){
+		
+		PhotoCategory category = new PhotoCategory(photoId, userId, new Date());
+		
+		category.setPhotoCategoryName(photoCategoryName);
+		category.setPhotoCategoryText(photoCategoryText);
+		
+		if(!photoCategoryDao.update(category))
+			return false;
+		return true;
+		
+	}
+	
+	
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 	
