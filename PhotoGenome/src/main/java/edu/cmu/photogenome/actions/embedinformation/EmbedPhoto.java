@@ -24,7 +24,7 @@ public class EmbedPhoto {
 	public boolean addPhotoComments(Photo currentPhoto, List<PhotoComment> listPhotoComments){
 		return false;
 	}
-	
+	 
 	/* takes a user object and verifies the login details it into the system
 	 * return true if correct*/
 	
