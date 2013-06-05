@@ -104,7 +104,8 @@ public class EmbedRegionAction extends ActionSupport {
 		if((comment = regionCommentDao.findById(regionCommentId)) == null 
 				|| comment.getPhotoId() != photoId)
 			return "invalid_region_comment";
-		else {
+		else { // update the comment
+			comment.setRegionCommentText(regionCommentText);
 			if(embedRegion.editRegionComment(comment))
 				return SUCCESS;
 			else
@@ -112,12 +113,17 @@ public class EmbedRegionAction extends ActionSupport {
 		}
 	}
 	
+	
 	public String editRegionCoordinate() {
 		RegionCoordinate coordinate = null;
 		if((coordinate = regionCoordinateDao.findById(regionCoordinateId)) == null 
 				|| coordinate.getPhotoId() != photoId)
 			return "invalid_region_coordinate";
-		else {
+		else { // update the coordinate
+			coordinate.setRegionX(regionX);
+			coordinate.setRegionY(regionY);
+			coordinate.setHeight(height);
+			coordinate.setWidth(width);
 			if(embedRegion.editRegionCoordinate(coordinate))
 				return SUCCESS;
 			else
