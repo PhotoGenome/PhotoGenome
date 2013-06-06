@@ -12,6 +12,7 @@ import edu.cmu.photogenome.domain.User;
 public class LoginAction extends ActionSupport {
     private String username;
     private String password;
+    private String id;
  
     private UserDao userDao = new UserDaoImpl();
     
@@ -31,6 +32,8 @@ public class LoginAction extends ActionSupport {
     	newUser.setUserFirstName(this.username);
     	userDao.save(newUser);
     	
+    	id = String.valueOf(newUser.getUserId());
+    	username = id;
     	return SUCCESS;
     }
     
@@ -54,8 +57,10 @@ public class LoginAction extends ActionSupport {
     
     public String findUser() {
     	User user = userDao.findByFirstName(this.username);
-    	if(user != null)
+    	if(user != null) {
+    		id = String.valueOf(user.getUserId());
     		return SUCCESS;
+    	}
     	else {
     		addActionError(getText("error.login"));
     		return ERROR;
@@ -77,4 +82,12 @@ public class LoginAction extends ActionSupport {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

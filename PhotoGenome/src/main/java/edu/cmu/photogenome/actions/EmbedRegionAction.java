@@ -16,7 +16,7 @@ import edu.cmu.photogenome.dao.RegionCoordinateDaoImpl;
 import edu.cmu.photogenome.domain.PhotoRegion;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
-
+ 
 public class EmbedRegionAction extends ActionSupport {
 
 	private EmbedRegion embedRegion = new EmbedRegion();

@@ -7,5 +7,6 @@
  
 <body>
     <h2>Howdy, <s:property value="username" />...!</h2>
+    <h2>Your user id is <s:property value="id" /></h2>
 </body>
 </html>
