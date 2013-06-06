@@ -107,7 +107,7 @@ public class EmbedRegion {
 		RegionCoordinate coordinate = new RegionCoordinate(regionId, photoId, userId, regionX, regionY, 
 				height, width, new Date());
 		
-		if(!regionCoordinateDao.save(coordinate))
+		if(regionCoordinateDao.save(coordinate))
 				return coordinate;
 		else
 			return null;

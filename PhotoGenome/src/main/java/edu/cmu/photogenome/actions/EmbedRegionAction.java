@@ -101,8 +101,7 @@ public class EmbedRegionAction extends ActionSupport {
 	
 	public String editRegionComment() {
 		RegionComment comment = null;
-		if((comment = regionCommentDao.findById(regionCommentId)) == null 
-				|| comment.getPhotoId() != photoId)
+		if((comment = regionCommentDao.findById(regionCommentId)) == null)
 			return "invalid_region_comment";
 		else { // update the comment
 			comment.setRegionCommentText(regionCommentText);
@@ -115,8 +114,7 @@ public class EmbedRegionAction extends ActionSupport {
 	
 	public String editRegionCoordinate() {
 		RegionCoordinate coordinate = null;
-		if((coordinate = regionCoordinateDao.findById(regionCoordinateId)) == null 
-				|| coordinate.getPhotoId() != photoId)
+		if((coordinate = regionCoordinateDao.findById(regionCoordinateId)) == null)
 			return "invalid_region_coordinate";
 		else { // update the coordinate
 			coordinate.setRegionX(regionX);
