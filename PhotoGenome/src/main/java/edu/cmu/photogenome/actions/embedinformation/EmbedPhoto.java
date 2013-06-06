@@ -20,11 +20,12 @@ public class EmbedPhoto {
 	private PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl();
 
 
-	public boolean addPhotoComments(int photoId, int userId){
+	public boolean addPhotoComments(int photoId, int userId, String comment){
 		PhotoComment photoComment = new PhotoComment();
 
 		photoComment.setPhotoId(photoId);
 		photoComment.setUserId(userId);
+		photoComment.setPhotoCommentText(comment);
 
 		if(photoCommentDao.save(photoComment))
 			return true;
@@ -67,11 +68,13 @@ public class EmbedPhoto {
 	 * @return	true if comment is updated, otherwise false
 	 */
 
-	public boolean editPhotoComments(int photoId, int userId){
+	public boolean editPhotoComments(int photoId, int userId, String comment){
 		PhotoComment photoComment = new PhotoComment();
 
 		photoComment.setPhotoId(photoId);
 		photoComment.setUserId(userId);
+		photoComment.setPhotoCommentText(comment);
+		photoComment.setPhotoCommentTimestamp(new Date());
 
 		if(photoCommentDao.update(photoComment))
 			return true;
@@ -111,16 +114,9 @@ public class EmbedPhoto {
 	 * @return	true if category is updated, otherwise false
 	 */
 
-	public boolean editPhotoCategories(int photoId, int userId, String photoCategoryName,
-			String photoCategoryText){
+	public boolean editPhotoCategories(PhotoCategory photoCategory){
 
-		PhotoCategory category = new PhotoCategory();
-		category.setPhotoId(photoId);
-		category.setUserId(userId);
-		category.setPhotoCategoryName(photoCategoryName);
-		category.setPhotoCategoryText(photoCategoryText);
-
-		if(!photoCategoryDao.update(category))
+		if(!photoCategoryDao.update(photoCategory))
 			return false;
 		return true;
 
@@ -164,15 +160,13 @@ public class EmbedPhoto {
 	 * @return	true if category is deleted, otherwise false
 	 */
 
-	public boolean deletePhotoCategories(int photoId, int photoCategoryId){
+	public boolean deletePhotoCategories(int photoCategoryId){
 
-		PhotoCategory category = new PhotoCategory();
-
-		category.setPhotoId(photoId);
-		category.setPhotoCategoryId(photoCategoryId);
-
-		if(!photoCategoryDao.delete(category))
-			return false;
+		PhotoCategory category;
+		if((category = photoCategoryDao.findById(photoCategoryId)) != null)
+		{
+			return photoCategoryDao.delete(category);
+		}
 
 		return true;
 	}

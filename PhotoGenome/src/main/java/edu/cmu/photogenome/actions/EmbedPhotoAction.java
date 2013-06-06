@@ -6,11 +6,14 @@ import java.util.List;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.actions.embedinformation.EmbedPhoto;
+import edu.cmu.photogenome.dao.PhotoCategoryDao;
+import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
 import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.dao.RegionCategoryDao;
 import edu.cmu.photogenome.dao.RegionCategoryDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.RegionCategory;
 
@@ -31,6 +34,16 @@ public class EmbedPhotoAction extends ActionSupport {
 	private String regionCategoryText;
 	private Date regionCategoryTimestamp;
 	private Boolean regionCategoryIsdeleted;
+	
+	private Integer photoCommentId;
+	private String photoCommentText;
+	private Date photoCommentTimestamp;
+	private Boolean photoCommentIsdeleted;
+	private String photoCommentOption1;
+	private String photoCommentOption2;
+	private String photoCommentOption3;
+	private String photoCommentOption4;
+	private String photoCommentOption5;
 
 	// Additional variables
 	private List<String> categoryDetails;
@@ -38,6 +51,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	EmbedPhoto embedPhoto = new EmbedPhoto();
 	PhotoDao photoDao = new PhotoDaoImpl();
 	RegionCategoryDao regionCategoryDao = new RegionCategoryDaoImpl();
+	PhotoCategoryDao photoCategoryDao = new PhotoCategoryDaoImpl();
 
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
@@ -47,7 +61,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		Photo photoObj = photoDao.findById(photoId);
 
 		if(photoObj != null) {
-			if(!embedPhoto.addPhotoCategories(photoId, userId, categoryDetails, photoCategoryText))
+			if(!embedPhoto.addPhotoComments(photoId, userId, photoCommentText))
 				return ERROR;
 		}else
 			return ERROR;
@@ -83,10 +97,12 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	public String editPhotoCategories(){
 
-		Photo photo = photoDao.findById(photoId);
+		PhotoCategory photoCategory = photoCategoryDao.findById(photoId);
 
-		if(photo != null) {
-			if(!embedPhoto.addPhotoCategories(photoId, userId, categoryDetails, photoCategoryText))
+		if(photoCategory != null) {
+			photoCategory.setPhotoCategoryName(photoCategoryName);
+			photoCategory.setPhotoCategoryText(photoCategoryText);
+			if(!embedPhoto.editPhotoCategories(photoCategory))
 				return ERROR;
 		}else
 			return ERROR;
@@ -123,7 +139,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	/* takes a user object and verifies its login details it into the system
 	 * return true if correct*/
 
-	public String deletePhotoCategories(int photoId, int photoCategoryId){
+	public String deletePhotoCategories(int photoCategoryId){
 
 		Photo photo = photoDao.findById(photoId);
 
