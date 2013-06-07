@@ -6,12 +6,16 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
 import com.googlecode.s2hibernate.struts2.plugin.annotations.TransactionTarget;
 
 public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implements GenericDao<T, ID> {
 
+	final Logger log = LoggerFactory.getLogger(GenericAbstractDaoImpl.class);
+	
 	@SessionTarget
 	Session session;
 	
@@ -35,12 +39,13 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		}
 		catch(Exception e) {
 			transaction.rollback();
-			e.printStackTrace();
+			log.warn(e.getMessage(), e);
 		}
     	
     	return result;
     }
     
+	@SuppressWarnings("unchecked")
 	public T findById(ID id) {
 		T entity = null;
 		
@@ -48,12 +53,13 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 			entity = (T) session.get(type, id);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage(), e);
 		}
 		
 		return entity;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		List<T> list = null;
 		
@@ -61,7 +67,7 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 			list = (List<T>) session.createCriteria(type).list();
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			log.warn(e.getMessage(), e);
 		}
 		
 		return list;
@@ -76,7 +82,7 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		}
 		catch(Exception e) {
 			transaction.rollback();
-			e.printStackTrace();
+			log.warn(e.getMessage(), e);
 		}
 		
 		return result;
@@ -91,7 +97,7 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		}
 		catch(Exception e) {
 			transaction.rollback();
-			e.printStackTrace();
+			log.warn(e.getMessage(), e);
 		}
 		
 		return result;

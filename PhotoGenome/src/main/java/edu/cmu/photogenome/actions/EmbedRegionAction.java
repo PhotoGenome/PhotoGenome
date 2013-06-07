@@ -2,6 +2,9 @@ package edu.cmu.photogenome.actions;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.actions.embedinformation.EmbedRegion;
@@ -19,6 +22,8 @@ import edu.cmu.photogenome.domain.RegionCoordinate;
  
 public class EmbedRegionAction extends ActionSupport {
 
+	final Logger log = LoggerFactory.getLogger(EmbedRegionAction.class);
+	
 	private EmbedRegion embedRegion = new EmbedRegion();
 	
 	private Integer regionId;

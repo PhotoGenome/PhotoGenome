@@ -2,6 +2,9 @@ package edu.cmu.photogenome.actions.embedinformation;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.cmu.photogenome.dao.PhotoRegionDao;
 import edu.cmu.photogenome.dao.PhotoRegionDaoImpl;
 import edu.cmu.photogenome.dao.RegionCommentDao;
@@ -14,6 +17,8 @@ import edu.cmu.photogenome.domain.RegionCoordinate;
 
 public class EmbedRegion {
 
+	final Logger log = LoggerFactory.getLogger(EmbedRegion.class);
+	
 	private PhotoRegionDao photoRegionDao;
 	private RegionCommentDao regionCommentDao;
 	private RegionCoordinateDao regionCoordinateDao;
@@ -45,6 +50,7 @@ public class EmbedRegion {
 			RegionCoordinate coordinate = null;
 			if((coordinate = addRegionCoordinate(region.getRegionId(), photoId, userId, regionX, regionY, 
 					height, width)) == null) { // try to save the coordinates
+				log.debug("Failed to save coordinate, deleting region with ID = {}", region.getRegionId());
 				photoRegionDao.delete(region); // delete region if coordinates failed to save
 				return false;
 			}
@@ -64,6 +70,7 @@ public class EmbedRegion {
 	private PhotoRegion addPhotoRegion(int photoId, int userId, int shapeId) {
 		PhotoRegion region = new PhotoRegion(photoId, userId, shapeId, new Date());
 		
+		log.debug("Saving photo region with photoId={}, userId={}, shapeId={}", photoId, userId, shapeId);
 		if(photoRegionDao.save(region))
 			return region;
 		else
@@ -83,13 +90,14 @@ public class EmbedRegion {
 		RegionComment comment = new RegionComment(photoId, regionId, userId, new Date());
 		comment.setRegionCommentText(regionCommentText);
 		
+		log.debug("Saving region comment with photoId={}, userId={}, regionId={}, regionCommentText={}",
+				photoId, userId, regionId, regionCommentText);
 		if(regionCommentDao.save(comment))
 			return true;
 		else
 			return false;
 	}
 	
-
 	/**
 	 * Private helper method to save a set of region coordinates
 	 * 
@@ -107,13 +115,14 @@ public class EmbedRegion {
 		RegionCoordinate coordinate = new RegionCoordinate(regionId, photoId, userId, regionX, regionY, 
 				height, width, new Date());
 		
+		log.debug("Saving region coordinate with regionId, photoId={}, userId={}, regionX={}, regionY={}," +
+				" height={}, width={}", photoId, userId, regionX, regionY, height, width);
 		if(regionCoordinateDao.save(coordinate))
 				return coordinate;
 		else
 			return null;
 	}
 	
-
 	/**
 	 * Edit the text of a region comment
 	 * 
@@ -121,6 +130,7 @@ public class EmbedRegion {
 	 * @return true if the comment is updated, else false
 	 */
 	public boolean editRegionComment(RegionComment comment){
+		log.debug("Updating region comment with ID = {}", comment.getRegionCommentId());
 		if(regionCommentDao.update(comment))
 			return true;
 		else
@@ -133,6 +143,7 @@ public class EmbedRegion {
 	 * @return true if the coordinate is updated, else false
 	 */
 	public boolean editRegionCoordinate(RegionCoordinate coordinate){
+		log.debug("Updating region coordinate with ID = {}", coordinate.getRegionCoordinateId());
 		if(regionCoordinateDao.update(coordinate))
 			return true;
 		else
@@ -147,9 +158,12 @@ public class EmbedRegion {
 	public boolean deletePhotoRegion(int regionId){
 		PhotoRegion region;
 		if((region = photoRegionDao.findById(regionId)) != null) {
+			log.debug("Deleting photo region with ID = {}", regionId);
 			if(!photoRegionDao.delete(region))
 				return false;
 		}
+		else
+			log.debug("Photo region with ID = {} does not exist. Nothing to delete", regionId);
 		
 		return true;
 	}
@@ -162,9 +176,12 @@ public class EmbedRegion {
 	public boolean deleteRegionComment(int regionCommentId){
 		RegionComment comment;
 		if((comment = regionCommentDao.findById(regionCommentId)) != null) {
+			log.debug("Deleting region comment with ID = {}", regionCommentId);
 			if(!regionCommentDao.delete(comment))
 				return false;
 		}
+		else
+			log.debug("Region comment with ID = {} does not exist. Nothing to delete", regionCommentId);
 		
 		return true;
 	}
@@ -174,12 +191,15 @@ public class EmbedRegion {
 	 * @param coordinateId
 	 * @return true if the region coordinate no longer exists, else false
 	 */
-	public boolean deleteRegionCoordinate(int regionCoodinateId) {
+	public boolean deleteRegionCoordinate(int regionCoordinateId) {
 		RegionCoordinate coordinate;
-		if((coordinate = regionCoordinateDao.findById(regionCoodinateId)) != null) {
+		if((coordinate = regionCoordinateDao.findById(regionCoordinateId)) != null) {
+			log.debug("Deleting region coordinate with ID = {}", regionCoordinateId);
 			if(!regionCoordinateDao.delete(coordinate))
 				return false;
 		}
+		else
+			log.debug("Region coordinate with ID = {} does not exist. Nothing to delete", regionCoordinateId);
 		
 		return true;		
 	}
