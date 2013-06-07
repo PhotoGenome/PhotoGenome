@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Table(name = "photocomment", catalog = "photogenomeDatabase")
 public class PhotoComment implements java.io.Serializable {
 
-	private Integer photoCommentId;
+	private int photoCommentId;
 	private String photoCommentText;
 	private int photoId;
 	private int userId;
