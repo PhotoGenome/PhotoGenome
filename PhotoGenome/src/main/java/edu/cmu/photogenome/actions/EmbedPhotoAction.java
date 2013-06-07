@@ -8,6 +8,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import edu.cmu.photogenome.actions.embedinformation.EmbedPhoto;
 import edu.cmu.photogenome.dao.PhotoCategoryDao;
 import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
+import edu.cmu.photogenome.dao.PhotoCommentDao;
+import edu.cmu.photogenome.dao.PhotoCommentDaoImpl;
 import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.dao.RegionCategoryDao;
@@ -34,8 +36,8 @@ public class EmbedPhotoAction extends ActionSupport {
 	private String regionCategoryText;
 	private Date regionCategoryTimestamp;
 	private Boolean regionCategoryIsdeleted;
-	
-	private Integer photoCommentId;
+
+	private int photoCommentId;
 	private String photoCommentText;
 	private Date photoCommentTimestamp;
 	private Boolean photoCommentIsdeleted;
@@ -47,17 +49,21 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	// Additional variables
 	private List<String> categoryDetails;
-	
+
 	EmbedPhoto embedPhoto = new EmbedPhoto();
 	PhotoDao photoDao = new PhotoDaoImpl();
 	RegionCategoryDao regionCategoryDao = new RegionCategoryDaoImpl();
 	PhotoCategoryDao photoCategoryDao = new PhotoCategoryDaoImpl();
+	PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl(); 
 
-	/* takes a user object and verifies its login details it into the system
-	 * return true if correct*/
+	/**
+	 * Add comments to a photo
+	 * 
+	 * @return
+	 */
 
 	public String addPhotoComments(){
-		
+
 		Photo photoObj = photoDao.findById(photoId);
 
 		if(photoObj != null) {
@@ -69,8 +75,11 @@ public class EmbedPhotoAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	/* takes a user object and verifies the login details it into the system
-	 * return true if correct*/
+	/**
+	 * Add category to a photo
+	 * 
+	 * @return true if category is added, otherwise false
+	 */
 
 	public String addPhotoCategories(){
 
@@ -85,15 +94,32 @@ public class EmbedPhotoAction extends ActionSupport {
 		return SUCCESS;
 	}
 
-	/* takes a user object and verifies its login details it into the system
-	 * return true if correct*/
+	/**
+	 * Update photo comments
+	 * 
+	 * @return true if comment is updated, otherwise false
+	 */
 
-	public boolean editPhotoComments(Photo currentPhoto, PhotoComment currentPhotoComments){
-		return false;
+	public String editPhotoComments(){
+
+		PhotoComment photoComment = null;
+		if((photoComment = photoCommentDao.findById(photoCommentId)) == null)
+			return "invalid_photo_comment";
+		else {
+			photoComment.setPhotoCommentTimestamp(new Date());
+			photoComment.setPhotoCommentText(photoCommentText);
+			if (embedPhoto.editPhotoComments(photoComment))
+				return SUCCESS;
+			else 
+				return ERROR;
+		}
 	}
 
-	/* takes a user object and verifies its login details it into the system
-	 * return true if correct*/
+	/**
+	 * Update photo category
+	 * 
+	 * @return true if category is updated, otherwise false
+	 */
 
 	public String editPhotoCategories(){
 
@@ -105,53 +131,59 @@ public class EmbedPhotoAction extends ActionSupport {
 			if(!embedPhoto.editPhotoCategories(photoCategory))
 				return ERROR;
 		}else
-			return ERROR;
+			return "invalid_photo_category";
 
 		return SUCCESS;
 
 	}
 
-	/* takes a user object and verifies its login details it into the system
-	 * return true if correct*/
+	/**
+	 * Update region category
+	 * 
+	 * @return true if region category is updated, otherwise false
+	 */
 
 	public String editRegionCategories(){
 
-		RegionCategory region = regionCategoryDao.findById(regionId);
-
-		if(region != null) {
-			if(!embedPhoto.editRegionCategories(regionId, photoId, userId, categoryName, regionCategoryText, regionCategoryIsdeleted))
+		RegionCategory regionCategory = null;
+		if((regionCategory = regionCategoryDao.findById(regionCategoryId)) == null)
+			return "invalid_region_category";
+		else {
+			regionCategory.setCategoryName(categoryName);
+			regionCategory.setRegionCategoryText(regionCategoryText);
+			if (embedPhoto.editRegionCategories(regionCategory))
+				return SUCCESS;
+			else 
 				return ERROR;
-		}else
+		}
+	}
+
+	/**
+	 * Delete a photo comment
+	 * 
+	 * @return true if comment is deleted, otherwise false
+	 */
+
+	public String deletePhotoComments(){
+		if(embedPhoto.deletePhotoComments(photoCommentId))
+			return SUCCESS;
+	else
+		return ERROR;
+	}
+
+
+	/**
+	 * Delete a photo category
+	 * 
+	 * @return true if photo category is deleted, otherwise false
+	 */
+
+	public String deletePhotoCategories(){
+
+		if(embedPhoto.deletePhotoCategories(photoCategoryId))
+				return SUCCESS;
+		else
 			return ERROR;
-
-		return SUCCESS;
-
 	}
-
-	/* takes a user object and verifies its login details it into the system
-	 * return true if correct*/
-
-	public boolean deletePhotoComments(Photo currentPhoto, List<PhotoComment> listPhotoComments){
-		return false;
-	}
-
-
-	/* takes a user object and verifies its login details it into the system
-	 * return true if correct*/
-
-	public String deletePhotoCategories(int photoCategoryId){
-
-		Photo photo = photoDao.findById(photoId);
-
-		if(photo != null) {
-			if(!embedPhoto.deletePhotoCategories(photoId, photoCategoryId))
-				return ERROR;
-		}else
-			return ERROR;
-
-		return SUCCESS;
-	}
-
-
 
 }
