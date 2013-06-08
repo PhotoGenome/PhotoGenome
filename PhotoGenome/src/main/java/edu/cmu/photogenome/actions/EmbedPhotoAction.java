@@ -3,6 +3,9 @@ package edu.cmu.photogenome.actions;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.actions.embedinformation.EmbedPhoto;
@@ -21,7 +24,8 @@ import edu.cmu.photogenome.domain.RegionCategory;
 
 public class EmbedPhotoAction extends ActionSupport {
 
-
+	final Logger log = LoggerFactory.getLogger(EmbedPhotoAction.class);
+	
 	private Integer photoCategoryId;
 	private int photoId;
 	private int userId;
