@@ -1,4 +1,4 @@
-package edu.cmu.photogenome.embedinformation;
+package edu.cmu.photogenome.business;
 
 import java.util.Date;
 import java.util.List;

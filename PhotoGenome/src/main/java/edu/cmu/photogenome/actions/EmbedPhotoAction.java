@@ -2,12 +2,14 @@ package edu.cmu.photogenome.actions;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import edu.cmu.photogenome.business.EmbedPhoto;
 import edu.cmu.photogenome.dao.PhotoCategoryDao;
 import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
 import edu.cmu.photogenome.dao.PhotoCommentDao;
@@ -20,7 +22,6 @@ import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.RegionCategory;
-import edu.cmu.photogenome.embedinformation.EmbedPhoto;
 
 public class EmbedPhotoAction extends ActionSupport {
 
@@ -53,6 +54,16 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	// Additional variables
 	private List<String> categoryDetails;
+	
+	// Variables to store and pass JSON data
+	private Map jsonAddPhotoComments;
+	private Map addPhotoCategories;
+	private Map editPhotoComments;
+	private Map editPhotoCategories;
+	private Map editRegionCategories;
+	private Map deletePhotoComments;
+	private Map deletePhotoCategories;
+	
 
 	EmbedPhoto embedPhoto = new EmbedPhoto();
 	PhotoDao photoDao = new PhotoDaoImpl();
