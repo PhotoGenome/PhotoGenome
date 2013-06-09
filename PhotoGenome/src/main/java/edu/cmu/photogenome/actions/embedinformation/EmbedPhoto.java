@@ -3,6 +3,9 @@ package edu.cmu.photogenome.actions.embedinformation;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.cmu.photogenome.dao.PhotoCategoryDao;
 import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
 import edu.cmu.photogenome.dao.PhotoCommentDao;
@@ -14,6 +17,8 @@ import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.RegionCategory;
 
 public class EmbedPhoto {
+
+	final Logger log = LoggerFactory.getLogger(EmbedPhoto.class);
 
 	private PhotoCategoryDao photoCategoryDao = new PhotoCategoryDaoImpl();
 	private RegionCategoryDao regionCategoryDao = new RegionCategoryDaoImpl();
@@ -35,10 +40,14 @@ public class EmbedPhoto {
 		photoComment.setUserId(userId);
 		photoComment.setPhotoCommentText(comment);
 
-		if(photoCommentDao.save(photoComment))
+		if(photoCommentDao.save(photoComment)) {
+			log.debug("Photo comments saved for photo ", photoComment.getPhotoId());	
 			return true;
-		else
+		}
+		else {
+			log.error("Failed to save photo comments for photo ", photoComment.getPhotoId());
 			return false;
+		}
 	}
 
 	/**
@@ -61,10 +70,12 @@ public class EmbedPhoto {
 			category.setPhotoCategoryName(categoryNameandText[0]);
 			category.setPhotoCategoryText(categoryNameandText[1]);
 
-			if(!photoCategoryDao.save(category))
+			if(!photoCategoryDao.save(category)) {
+				log.error("Failed to add photo category for photo ", category.getPhotoId());
 				return false;
+			}
 		}
-
+		log.debug("Photo category added for photo ", category.getPhotoId());
 		return true;
 	}
 
@@ -76,12 +87,16 @@ public class EmbedPhoto {
 	 */
 
 	public boolean editPhotoComments(PhotoComment photoComment){
-		
-		if(photoCommentDao.update(photoComment))
+
+		if(photoCommentDao.update(photoComment)) {
+			log.debug("Photo comments updated for photo ", photoComment.getPhotoId());	
 			return true;
-		else
+		}
+		else {
+			log.error("Failed to update photo comments for photo ", photoComment.getPhotoId());
 			return false;
-		
+		}
+
 	}
 
 
@@ -95,9 +110,17 @@ public class EmbedPhoto {
 	public boolean deletePhotoComments(int photoCommentId){
 		PhotoComment photoComment;
 
-		if((photoComment = photoCommentDao.findById(photoCommentId)) != null)
-			return photoCommentDao.delete(photoComment);
-		
+		if((photoComment = photoCommentDao.findById(photoCommentId)) != null) {
+			if (!photoCommentDao.delete(photoComment)) {
+				log.error("Failed to delete photo comments for photo ", photoComment.getPhotoId());
+				return false;
+			}
+			else {
+				log.debug("Photo comments deletd for photo ", photoComment.getPhotoId());
+				return true;
+			}
+		}
+		log.debug("Photo does not exist, no comments deleted for ", photoCommentId);
 		return true;
 	}
 
@@ -111,8 +134,12 @@ public class EmbedPhoto {
 
 	public boolean editPhotoCategories(PhotoCategory photoCategory){
 
-		if(!photoCategoryDao.update(photoCategory))
-			return false;
+		if(!photoCategoryDao.update(photoCategory)) {
+			log.error("Failed to update category for photo ", photoCategory.getPhotoId());
+			return false; 
+			}
+		
+		log.debug("Photo category updated for photo ", photoCategory.getPhotoId());
 		return true;
 
 	}
@@ -127,9 +154,11 @@ public class EmbedPhoto {
 
 	public boolean editRegionCategories(RegionCategory regionCategory){
 
-		if(!regionCategoryDao.update(regionCategory))
+		if(!regionCategoryDao.update(regionCategory)) {
+			log.error("Failed to update region category for photo ", regionCategory.getPhotoId());
 			return false;
-
+		}
+		log.debug("Region category updated for photo with category id", regionCategory.getPhotoId());
 		return true;
 	}
 
@@ -146,9 +175,17 @@ public class EmbedPhoto {
 		PhotoCategory category;
 		if((category = photoCategoryDao.findById(photoCategoryId)) != null)
 		{
-			return photoCategoryDao.delete(category);
+			if (!photoCategoryDao.delete(category)) {
+				log.error("Failed to delete category for photo with category Id ", photoCategoryId);
+				return false;
+			}
+			else {
+				log.debug("Photo category updated for photo with category id ", photoCategoryId);
+				return true;
+			}
 		}
 
+		log.debug("Photo does not exist, no category updated category id ", photoCategoryId);
 		return true;
 	}
 
