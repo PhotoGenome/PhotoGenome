@@ -29,4 +29,6 @@
             <result name="error">Login.jsp</result>
         </action>
     </package>
+    
+    <package name=""></package>
 </struts>

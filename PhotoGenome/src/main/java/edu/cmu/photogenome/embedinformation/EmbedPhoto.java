@@ -1,4 +1,4 @@
-package edu.cmu.photogenome.actions.embedinformation;
+package edu.cmu.photogenome.embedinformation;
 
 import java.util.Date;
 import java.util.List;

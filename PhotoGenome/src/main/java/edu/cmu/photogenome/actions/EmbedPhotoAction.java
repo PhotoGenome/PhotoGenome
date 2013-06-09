@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import edu.cmu.photogenome.actions.embedinformation.EmbedPhoto;
 import edu.cmu.photogenome.dao.PhotoCategoryDao;
 import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
 import edu.cmu.photogenome.dao.PhotoCommentDao;
@@ -21,6 +20,7 @@ import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.RegionCategory;
+import edu.cmu.photogenome.embedinformation.EmbedPhoto;
 
 public class EmbedPhotoAction extends ActionSupport {
 
