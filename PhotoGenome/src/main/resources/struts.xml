@@ -10,7 +10,7 @@
     <constant name="struts.custom.i18n.resources"
         value="ApplicationResources" />
  
-    <package name="default" extends="hibernate-default">	
+    <package name="default" extends="hibernate-default, json-default">	
         <action name="add" method="addUser"
             class="edu.cmu.photogenome.actions.LoginAction">
             <result name="success">Login.jsp</result>
@@ -25,8 +25,9 @@
         </action>
         <action name="find" method="findUser"
             class="edu.cmu.photogenome.actions.LoginAction">
-            <result name="success">Welcome.jsp</result>
-            <result name="error">Login.jsp</result>
+              <result type="json">
+   				<param name="root">jsonData</param>
+ 			 </result>
         </action>
     </package>
 </struts>
