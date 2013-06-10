@@ -55,16 +55,6 @@ public class EmbedPhotoAction extends ActionSupport {
 	// Additional variables
 	private List<String> categoryDetails;
 	
-	// Variables to store and pass JSON data
-	private Map jsonAddPhotoComments;
-	private Map addPhotoCategories;
-	private Map editPhotoComments;
-	private Map editPhotoCategories;
-	private Map editRegionCategories;
-	private Map deletePhotoComments;
-	private Map deletePhotoCategories;
-	
-
 	EmbedPhoto embedPhoto = new EmbedPhoto();
 	PhotoDao photoDao = new PhotoDaoImpl();
 	RegionCategoryDao regionCategoryDao = new RegionCategoryDaoImpl();
