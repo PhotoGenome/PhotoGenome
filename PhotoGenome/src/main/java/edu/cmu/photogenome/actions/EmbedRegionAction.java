@@ -26,7 +26,6 @@ public class EmbedRegionAction extends ActionSupport {
 	
 	private EmbedRegion embedRegion = new EmbedRegion();
 	
-	
 	private Integer regionId;
 	private int photoId;
 	private int userId;
@@ -100,6 +99,13 @@ public class EmbedRegionAction extends ActionSupport {
 	
 	public String deleteRegionComment() {
 		if(embedRegion.deleteRegionComment(regionCommentId))
+			return SUCCESS;
+		else
+			return ERROR;
+	}
+	
+	public String deleteRegionCoordinate() {
+		if(embedRegion.deleteRegionCoordinate(regionCoordinateId))
 			return SUCCESS;
 		else
 			return ERROR;

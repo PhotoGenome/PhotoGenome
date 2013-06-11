@@ -1,20 +1,37 @@
 package edu.cmu.photogenome.actions;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.struts2.json.JSONWriter;
+
+import com.cedarsoftware.util.io.JsonWriter;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.dao.UserDao;
 import edu.cmu.photogenome.dao.UserDaoImpl;
+import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.User;
 
 public class LoginAction extends ActionSupport {
     private String username;
     private String password;
     private String id;
- 
-    private UserDao userDao = new UserDaoImpl();
+    private String jsonFindUser;
+    private LinkedHashMap<String, Object> jsonData = new LinkedHashMap<String, Object>();
+    
+    public String getJsonFindUser() {
+		return jsonFindUser;
+	}
+
+	public void setJsonFindUser(String jsonFindUser) {
+		this.jsonFindUser = jsonFindUser;
+	}
+
+	private UserDao userDao = new UserDaoImpl();
     
     public String execute() {
  
@@ -56,6 +73,28 @@ public class LoginAction extends ActionSupport {
     }
     
     public String findUser() {
+    	System.out.println("FIND USER *****");
+    	Photo photo = new Photo();
+    	photo.setPhotoDesc("my description");
+    	photo.setPhotoId(10);
+    	Photo photo2 = new Photo();
+    	photo2.setPhotoDesc("my description 2");
+    	photo2.setPhotoId(20);
+    	ArrayList<Photo> list = new ArrayList<Photo>();
+    	list.add(photo);
+    	list.add(photo2);
+    	
+    	 try {
+			jsonFindUser = JsonWriter.objectToJson(list);
+			JSONWriter writer = new JSONWriter();
+			System.out.println("STRUTS WRITER " + writer.write(list));
+			System.out.println("JSON*******   " + jsonFindUser);
+			jsonData.put("json key", jsonFindUser);
+			return SUCCESS;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
     	User user = userDao.findByFirstName(this.username);
     	if(user != null) {
     		id = String.valueOf(user.getUserId());
@@ -67,7 +106,15 @@ public class LoginAction extends ActionSupport {
     	}
     }
     
-    public String getUsername() {
+    public LinkedHashMap<String, Object> getJsonData() {
+		return jsonData;
+	}
+
+	public void setJsonData(LinkedHashMap<String, Object> jsonData) {
+		this.jsonData = jsonData;
+	}
+
+	public String getUsername() {
         return username;
     }
  
