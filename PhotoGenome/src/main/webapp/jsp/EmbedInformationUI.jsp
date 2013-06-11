@@ -283,8 +283,10 @@ function getPhotoComments(){
       $.getJSON(
          'getPhotoComments.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoComments) {
+        	 alert(jsonPhotoComments.items);
         	  for (comment in jsonPhotoComments.items) {
-	         	  $('#photoComments').append('<div class="box"> <div commentId="'+jsonPhotoComments.items[comment].commentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].commenttext+'</p></div>');
+        		  alert(comment);
+	         	  $('#photoComments').append('<div class="box"> <div photoCommentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].photoCommentText+'</p></div>');
 	         	  }
          });
       return false;
