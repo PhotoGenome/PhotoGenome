@@ -7,8 +7,34 @@
 <title>AJAX calls using Jquery in Servlet</title>
 
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="jsonUtil.js"></script>
+      
         <script>
-$(document).on('click','.close_box',function(){
+$(document).on('click','.Rclose_box',function(){
+    $(this).parent().fadeTo(300,0,function(){
+          $(this).remove();
+    });
+});
+
+$(document).on('click','.PCclose_box',function(){
+    $(this).parent().fadeTo(300,0,function(){
+          $(this).remove();
+    });
+});
+
+$(document).on('click','.RCclose_box',function(){
+    $(this).parent().fadeTo(300,0,function(){
+          $(this).remove();
+    });
+});
+
+$(document).on('click','.PCatclose_box',function(){
+    $(this).parent().fadeTo(300,0,function(){
+          $(this).remove();
+    });
+});
+
+$(document).on('click','.RCatclose_box',function(){
     $(this).parent().fadeTo(300,0,function(){
           $(this).remove();
     });
@@ -28,10 +54,60 @@ $(document).on('click','.close_box',function(){
     float:right;
     background:#eee;
     width:400px;
-    padding:15px;
-    margin:10px;
+    padding:0px;
+    margin:0px;
   }
-  .close_box{
+  .PCclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .PCatclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .RCclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .RCatclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .Rclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .close_box{
     background:grey;
     color:#fff;
     padding:2px 5px;
@@ -46,40 +122,40 @@ $(document).on('click','.close_box',function(){
         <script>
             $(document).ready(function() {                        
                 $('#submitRCat').click(function(event) {  
-                    var username=$('#txtRegionCategories').val();
-                    alert(username);
-                   $('#regionCategories').append('<div class="box"> <div class="close_box">X</div> <h2>Apoorvi</h2><p>'+username+'</p></div>');
+                    var regionCategories=$('#txtRegionCategories').val();
+                    setRegionCategories(regionCategories);
                    $('#txtRegionCategories').text('');
                  
                 });
                 $('#submitRCom').click(function(event) {  
-                    var username=$('#txtRegionComments').val();
-                	    $('#regionComments').append('<br>'+username+'<br>'); 
-                	    $('#txtRegionCategories').text('');
+                    var regionComments=$('#txtRegionComments').val();
+                    setRegionComments(regionComments);
+                	$('#txtRegionCategories').text('');
                 });
-                $('#cartId').click(function(event) {
-                	 $.getJSON(
-                  	  'giveMeJsonData.action' , {cartId:$('#cartId').attr('value')},
-                  	  function(json) {
-                  		alert('hello');
-                  		alert(json);
-                  		alert(json.shoppingCartId);
-                  		$('#cartIdD').html(json.shoppingCartId);
-                  	   $('#cartCreation').html(json.datetime);
-                  	   itemsHtml = "<table>";
-                  	   for (i in json.items) {
-                  	    itemsHtml += '<tr>';
-                  	    itemsHtml += '<td>' + json.items[i].id + '</td>';
-                  	    itemsHtml += '<td>' + json.items[i].quantity + '</td>';
-                  	    itemsHtml += '<td>' + json.items[i].price + '</td>';
-                  	    itemsHtml += '</tr>';
-                  	   }
-                  	   itemsHtml += '</table>';
-                  	   $('#cartItems').html(itemsHtml);
-                  	  });
-                  	 return false;
-                  	});	
-                  
+                $('#submitPCat').click(function(event) {  
+                    var photoCategories=$('#txtPhotoCategories').val();
+                    setPhotoCategories(photoCategories);
+                    $('#txtPhotoCategories').text('');
+                 
+                });
+                $('#submitPCom').click(function(event) {  
+                    var photoComments=$('#txtPhotoComments').val();
+                    setPhotoComments(photoComments);    
+                    $('#txtPhotoCategories').text('');
+                });
+                
+              	$('CategoryType').click( function( event )
+                 {
+                  alert($(this).val());
+                  if($(this).val()==='')
+                	  {
+                	  
+                	  } else {
+                		  
+                	  }
+                 });
+                		
+                   
             });
                  
            
@@ -161,11 +237,6 @@ Enter Comments Here.
 <input type="button" id="submitPCom" value="Comments Submit"/>
 </td></tr>
 </table>
-
-<input type="button" id="cartId" value="32233" />
-<div id=”cartIdD”>JQuery will replace this text with the Cart Id returned by the json action</div>
-<div id=”cartCreation”>JQuery will replace this text with the Cart creation date returned by the json action</div>
-<div id=”cartItems”>Jquery wil replace this text with a HTML table containg all the items of the selected cart</div>
 <input type="button" id="stop" value="Stop!" />
 <input type="button" id="start" value="Start!" />
 
@@ -173,8 +244,7 @@ Enter Comments Here.
 <script>
 
 $(window).load(function () {
-	addBox(100,100,50,50); 
-	getPhotoComments();
+	getPhotoComments(); 
 });
 
 function getPhotoLink(){
@@ -192,69 +262,130 @@ function getPhotoCategories(){
 	 $.getJSON(
          	  'getPhotoCategories.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoCategories) {
-         		for (category in jsonPhotoCategories) {
-         		$('#photoCategories').append('<div class="box"> <div categoryId="'+category.categoryId+'"class="close_box">X</div> <h2>Apoorvi</h2><p>'+category.categorytext+'</p></div>');
-                 }
+         		 for (category in jsonPhotoCategories.items) {
+ 	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].categoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].categorytext+'</p></div>');
+ 	                 }
          	  });
          	 return false;
          	};	
       
-function getRegionCategories(){
+function getRegionCategories(regionId){
 	$.getJSON(
-    	'getRegionCategories.action' , {photoId:$('#canvas').attr('photoId')},
+    	'getRegionCategories.action' , {regionId:regionId},
          	  function(jsonRegionCategories) {
-         	  for (category in jsonRegionCategories) {
-         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+category.categoryId+'"class="close_box">X</div> <h2>Apoorvi</h2><p>'+category.categorytext+'</p></div>');
+       	  for (category in jsonRegionCategories.items) {
+         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].categoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].categorytext+'</p></div>');
          	  }
          });
        return false;
   };	
 function getPhotoComments(){
-	alert('I am here in JS');
-	alert('PhotoId'+$('#canvas').attr('photoId'));
       $.getJSON(
          'getPhotoComments.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoComments) {
-        	  alert('I have returnted from Server');
-        	  alert(jsonPhotoComments);
-         	  for (comment in jsonPhotoComments) {
-         	  $('#photoComments').append('<div class="box"> <div commentId="'+comment.commentId+'"class="close_box">X</div> <h2>Apoorvi</h2><p>'+comment.commenttext+'</p></div>');
-         	  }
+        	  for (comment in jsonPhotoComments.items) {
+	         	  $('#photoComments').append('<div class="box"> <div commentId="'+jsonPhotoComments.items[comment].commentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].commenttext+'</p></div>');
+	         	  }
          });
       return false;
   };	
 
-  function getRegionComments(){
+  function getRegionComments(regionId){
       $.getJSON(
-         'getRegionComments.action' , {photoId:$('#canvas').attr('photoId')},
+         'getRegionComments.action' , {regionId:regionId},
          	  function(jsonRegionComments) {
-         	  for (comment in jsonRegionComments) {
-         	  $('#regionComments').append('<div class="box"> <div commentId="'+comment.commentId+'"class="close_box">X</div> <h2>Apoorvi</h2><p>'+comment.commenttext+'</p></div>');
-         	  }
+        	 for (comment in jsonRegionComments.items) {
+	         	  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].commentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].commenttext+'</p></div>');
+	         	  }
          });
       return false;
   };
-  
-  function addBox(x,y,w,h){
+
+  function getRegionCoordinates(){
+		$.getJSON(
+	    	'getRegionCoordinates.action' , {photoId:$('#canvas').attr('photoId')},
+	         	  function(jsonRegionCoordinates) {
+	       	  for (coordinate in jsonRegionCoordinates.items) {
+	       		addBox(jsonRegionCoordinates.items[coordinate].x,jsonRegionCoordinates.items[coordinate].y,jsonRegionCoordinates.items[coordinate].width,jsonRegionCoordinates.items[coordinate].height,jsonRegionCoordinates.items[coordinate].id); 
+	         	  }
+	         });
+	       return false;
+	  };	
+	  
+	 
+  function addPhotoCategories(photoCategories){
+		 $.getJSON(
+	         	  'addPhotoCategories.action' , {photoCategories:photoCategories},
+	         	  function(jsonPhotoCategories) {
+	         		for (category in jsonPhotoCategories.items) {
+	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].categoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].categorytext+'</p></div>');
+	                 }
+	         	  });
+	         	 return false;
+	         	};	
+	      
+	function addRegionCategories(regionCategories){
+		$.getJSON(
+	    	'addRegionCategories.action' , {regionCategories:regionCategories},
+	         	  function(jsonRegionCategories) {
+	         	  for (category in jsonRegionCategories.items) {
+	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].categoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].categorytext+'</p></div>');
+	         	  }
+	         });
+	       return false;
+	  };	
+	function addPhotoComments(photoComments){
+	
+	      $.getJSON(
+	         'addPhotoComments.action' , {photoComments:photoComments},
+	         	  function(jsonPhotoComments) {
+	        	  for (comment in jsonPhotoComments.items) {
+	         	  $('#photoComments').append('<div class="box"> <div commentId="'+jsonPhotoComments.items[comment].commentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].commenttext+'</p></div>');
+	         	  }
+	         });
+	      return false;
+	  };	
+
+	  function addRegionComments(regionComments){
+	      $.getJSON(
+	         'addRegionComments.action' , {regionComments:regionComments},
+	         	  function(jsonRegionComments) {
+	         	  for (comment in jsonRegionComments.items) {
+	         	  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].commentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].commenttext+'</p></div>');
+	         	  }
+	         });
+	      return false;
+	  };
+	    
+	  function parseJSON(){
+		  alert('hie1');
+		  jsonRegionComments={"items":[{"photoDesc":"my description","photoId":10,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0},{"photoDesc":"my description 2","photoId":20,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0}]};
+	         	  for (comment in jsonRegionComments.items) {
+	         		  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].photoDesc+'"class="close_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].photoDesc+'</p></div>');
+	         	  	}
+	       
+	      return false;
+	  };
+  function addBox(x,y,w,h,id){
 	var canvas = $('#canvas');
-	 canvas.append('<div id="'+'regionx_' + x + '_y_' +y+'_w_' + w + '_h_' + h+'"></div>');
-	 $('#'+'regionx_' + x + '_y_' +y+'_w_' + w + '_h_' + h).addClass('ui-boxer')
+	     
+	canvas.append('<div></div>').addClass('ui-boxer')
 	     .css({ border: '1px solid red',
 	             padding: '0.5em',
 	             position: 'relative',
 	            'z-index': 100,
 	             left: parseInt(x), top: parseInt(y),
 	             width: parseInt(w), height: parseInt(h)})
+	    .attr('id', id)
+		.append('<div id="'+regionId+'"class="Rclose_box">X</div> ')
 		.click(function () {
 			
 		    $('#txtRegionCategories').attr('disabled', false).focus();
-		    $('#regionCategories').text('name:HH');
 		    $('#txtRegionComments').attr('disabled', false).focus();
-		    $('#regionComments').text('Apoorvi: I like this building!');
 		    
 		});
-
-
+			   return false;
+	
 };
 
 $(function () {
@@ -377,10 +508,18 @@ $.extend($.ui.boxer, {
 $('#canvas').boxer({
 	stop: function(event, ui) {
 		var offset = ui.box.offset();
+		var regionId=0;
+		$.getJSON(
+		    	'addRegionCoordinates.action' , {x:offset.left,y:offset.top,width:ui.box.width(),height:ui.box.height()},
+		         	  function(jsonRegionCoordinates) {
+		       	  for (coordinate in jsonRegionCoordinates.items) {
+		       		regionId=  jsonRegionCoordinates.items[coordinate].regionId;
+		       	  }
+		         });
+		
 		ui.box.css({ border: '1px solid red', padding: '0.5em' });
-		ui.box.attr('id', 'regionx_' + offset.left + '_y_' + offset.top+'_w_' + ui.box.width() + '_h_' + ui.box.height());
-		 username='x:' + offset.left + ', y:' + offset.top+'w:' + ui.box.width() + ', h:' + ui.box.height();
-
+		ui.box.attr('id', regionId);
+		ui.box.append('<div id="'+regionId+'"class="Rclose_box">X</div> ');
 		ui.box.click(function () {
 			
 		    $('#txtRegionCategories').attr('disabled', false).focus();
@@ -389,10 +528,7 @@ $('#canvas').boxer({
 		    $('#regionComments').text('Apoorvi: I like this building!');
 		    
 		});
-		    username='x:' + offset.left + ', y:' + offset.top+'w:' + ui.box.width() + ', h:' + ui.box.height();
-    	$.get('ActionServlet',{user:username},function(responseText) { 
-            $('#welcometext').text(responseText);         
-        });
+		
 	}
 });
 </script>
