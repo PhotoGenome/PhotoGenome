@@ -22,6 +22,14 @@ public class ViewInformationAction extends ActionSupport{
 
 	private Integer photoId;
 
+	public Integer getPhotoId() {
+		return photoId;
+	}
+
+	public void setPhotoId(Integer photoId) {
+		this.photoId = photoId;
+	}
+
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonGetPhoto = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotoComments = new LinkedHashMap<String, Object>();
@@ -65,6 +73,7 @@ public class ViewInformationAction extends ActionSupport{
 	 * @return 
 	 */
 	public String getPhotoComments(){
+		
 
 		JSONWriter jsonWriter = null;
 		List<PhotoComment> list = null;
@@ -77,9 +86,9 @@ public class ViewInformationAction extends ActionSupport{
 					jsonGetPhotoComments.put(String.valueOf(comment.getPhotoCommentId()), jsonWriter.write(comment));
 					setJsonGetPhotoComments(jsonGetPhotoComments);//TODO
 				}
-
 				return SUCCESS;
 			}else {
+				
 				return ERROR;
 			}
 		}catch(JSONException e){
