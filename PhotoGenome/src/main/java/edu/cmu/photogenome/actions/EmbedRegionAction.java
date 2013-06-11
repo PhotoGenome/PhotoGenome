@@ -1,14 +1,13 @@
 package edu.cmu.photogenome.actions;
 
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import edu.cmu.photogenome.business.EmbedRegion;
 import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.dao.PhotoRegionDao;
@@ -20,7 +19,6 @@ import edu.cmu.photogenome.dao.RegionCoordinateDaoImpl;
 import edu.cmu.photogenome.domain.PhotoRegion;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
-import edu.cmu.photogenome.business.EmbedRegion;
  
 public class EmbedRegionAction extends ActionSupport {
 

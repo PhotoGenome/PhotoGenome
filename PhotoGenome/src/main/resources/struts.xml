@@ -29,6 +29,14 @@
    				<param name="root">jsonData</param>
  			 </result>
         </action>
+        <action name="getPhotoComments" method="getPhotoComments"
+            class="edu.cmu.photogenome.actions.ViewInformationAction">
+              <result type="json">
+   				<param name="root">jsonGetPhotoComments</param>
+ 			 </result>
+ 			 <result name="error">Login.jsp</result>
+ 			  <result name="success">Welcome.jsp</result>
+        </action>
     </package>
     
     <package name=""></package>
