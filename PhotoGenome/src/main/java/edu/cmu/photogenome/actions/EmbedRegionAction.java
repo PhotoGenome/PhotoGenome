@@ -1,6 +1,8 @@
 package edu.cmu.photogenome.actions;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +20,13 @@ import edu.cmu.photogenome.dao.RegionCoordinateDaoImpl;
 import edu.cmu.photogenome.domain.PhotoRegion;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
-import edu.cmu.photogenome.embedinformation.EmbedRegion;
+import edu.cmu.photogenome.business.EmbedRegion;
  
 public class EmbedRegionAction extends ActionSupport {
 
 	final Logger log = LoggerFactory.getLogger(EmbedRegionAction.class);
 	
 	private EmbedRegion embedRegion = new EmbedRegion();
-	
 	
 	private Integer regionId;
 	private int photoId;
@@ -100,6 +101,13 @@ public class EmbedRegionAction extends ActionSupport {
 	
 	public String deleteRegionComment() {
 		if(embedRegion.deleteRegionComment(regionCommentId))
+			return SUCCESS;
+		else
+			return ERROR;
+	}
+	
+	public String deleteRegionCoordinate() {
+		if(embedRegion.deleteRegionCoordinate(regionCoordinateId))
 			return SUCCESS;
 		else
 			return ERROR;
