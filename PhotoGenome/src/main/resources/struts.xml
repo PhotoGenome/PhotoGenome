@@ -10,7 +10,7 @@
     <constant name="struts.custom.i18n.resources"
         value="ApplicationResources" />
  
-    <package name="default" extends="hibernate-default, json-default">	
+    <package name="default" extends="json-default, hibernate-default">	
         <action name="add" method="addUser"
             class="edu.cmu.photogenome.actions.LoginAction">
             <result name="success">Login.jsp</result>

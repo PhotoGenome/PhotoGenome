@@ -5,10 +5,11 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/photogenomeDatabase</property>
         <property name="hibernate.connection.username">root</property>
         
         <mapping class="edu.cmu.photogenome.domain.User"/>
+        <mapping class="edu.cmu.photogenome.domain.Photo"/>
     </session-factory>
 </hibernate-configuration>
