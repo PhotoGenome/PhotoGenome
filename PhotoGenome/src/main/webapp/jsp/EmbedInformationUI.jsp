@@ -263,7 +263,7 @@ function getPhotoCategories(){
          	  'getPhotoCategories.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoCategories) {
          		 for (category in jsonPhotoCategories.items) {
- 	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].categoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].categorytext+'</p></div>');
+ 	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].photoCategoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].photoCategoryText+'</p></div>');
  	                 }
          	  });
          	 return false;
@@ -274,19 +274,21 @@ function getRegionCategories(regionId){
     	'getRegionCategories.action' , {regionId:regionId},
          	  function(jsonRegionCategories) {
        	  for (category in jsonRegionCategories.items) {
-         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].categoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].categorytext+'</p></div>');
+         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
          	  }
          });
        return false;
   };	
 function getPhotoComments(){
+	alert('I am here out');
       $.getJSON(
          'getPhotoComments.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoComments) {
-        	 alert(jsonPhotoComments.items);
+        	 alert('I am here');
+        	 alert(jsonPhotoComments);
         	  for (comment in jsonPhotoComments.items) {
-        		  alert(comment);
-	         	  $('#photoComments').append('<div class="box"> <div photoCommentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].photoCommentText+'</p></div>');
+        		  alert(jsonPhotoComments.items[comment]);
+        		  $('#photoComments').append('<div class="box"> <div photoCommentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].photoCommentText+'</p></div>');
 	         	  }
          });
       return false;
@@ -297,7 +299,7 @@ function getPhotoComments(){
          'getRegionComments.action' , {regionId:regionId},
          	  function(jsonRegionComments) {
         	 for (comment in jsonRegionComments.items) {
-	         	  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].commentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].commenttext+'</p></div>');
+	         	  $('#regionComments').append('<div class="box"> <div regionCommentId="'+jsonRegionComments.items[comment].regionCommentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].regionCommentText+'</p></div>');
 	         	  }
          });
       return false;
@@ -315,50 +317,57 @@ function getPhotoComments(){
 	  };	
 	  
 	 
-  function addPhotoCategories(photoCategories){
+  function addPhotoCategories(photoCategortyText){
 		 $.getJSON(
-	         	  'addPhotoCategories.action' , {photoCategories:photoCategories},
+	         	  'addPhotoCategories.action' , {photoCategoryText:photoCategortyText},
 	         	  function(jsonPhotoCategories) {
 	         		for (category in jsonPhotoCategories.items) {
-	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].categoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].categorytext+'</p></div>');
+	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].photoCategoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].photoCategoryText+'</p></div>');
 	                 }
 	         	  });
 	         	 return false;
 	         	};	
 	      
-	function addRegionCategories(regionCategories){
+	function addRegionCategories(regionCategoryText){
 		$.getJSON(
-	    	'addRegionCategories.action' , {regionCategories:regionCategories},
+	    	'addRegionCategories.action' , {regionCategortyText:regionCategoryText},
 	         	  function(jsonRegionCategories) {
 	         	  for (category in jsonRegionCategories.items) {
-	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].categoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].categorytext+'</p></div>');
+	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
 	         	  }
 	         });
 	       return false;
 	  };	
-	function addPhotoComments(photoComments){
+	function addPhotoComments(photoCommentText){
 	
 	      $.getJSON(
-	         'addPhotoComments.action' , {photoComments:photoComments},
+	         'addPhotoComments.action' , {photoCommentText:photoCommentText},
 	         	  function(jsonPhotoComments) {
 	        	  for (comment in jsonPhotoComments.items) {
-	         	  $('#photoComments').append('<div class="box"> <div commentId="'+jsonPhotoComments.items[comment].commentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].commenttext+'</p></div>');
+	         	  $('#photoComments').append('<div class="box"> <div commentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].photoCommentText+'</p></div>');
 	         	  }
 	         });
 	      return false;
 	  };	
 
-	  function addRegionComments(regionComments){
+	  function addRegionComments(regionCommentText){
 	      $.getJSON(
-	         'addRegionComments.action' , {regionComments:regionComments},
+	         'addRegionComments.action' , {regionCommentText:regionCommentText},
 	         	  function(jsonRegionComments) {
 	         	  for (comment in jsonRegionComments.items) {
-	         	  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].commentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].commenttext+'</p></div>');
+	         	  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].regionCommentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].regionCommentText+'</p></div>');
 	         	  }
 	         });
 	      return false;
 	  };
-	    
+	  
+	  function deleteRegionCategories(regionId){
+			$.getJSON(
+		    	'deleteRegionCategories.action' , {regionId:regionId},
+		         	  function(jsonRegionCategories) {
+		       	 });
+		       return false;
+		  };
 	  function parseJSON(){
 		  alert('hie1');
 		  jsonRegionComments={"items":[{"photoDesc":"my description","photoId":10,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0},{"photoDesc":"my description 2","photoId":20,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0}]};

@@ -34,8 +34,7 @@
               <result type="json">
    				<param name="root">jsonGetPhotoComments</param>
  			 </result>
- 			 <result name="error">Login.jsp</result>
- 			  <result name="success">Welcome.jsp</result>
+ 			
         </action>
     </package>
     

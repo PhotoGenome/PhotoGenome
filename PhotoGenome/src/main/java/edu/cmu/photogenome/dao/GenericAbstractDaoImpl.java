@@ -48,7 +48,7 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 	@SuppressWarnings("unchecked")
 	public T findById(ID id) {
 		T entity = null;
-		
+		System.out.println(session==null);
 		try {
 			entity = (T) session.get(type, id);
 		}

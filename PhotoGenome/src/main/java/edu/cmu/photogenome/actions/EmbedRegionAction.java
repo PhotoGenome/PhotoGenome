@@ -1,6 +1,8 @@
 package edu.cmu.photogenome.actions;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,8 @@ import edu.cmu.photogenome.domain.RegionCoordinate;
 public class EmbedRegionAction extends ActionSupport {
 
 	final Logger log = LoggerFactory.getLogger(EmbedRegionAction.class);
+	
+	final String jsonKey = getText("json.key");
 	
 	private EmbedRegion embedRegion = new EmbedRegion();
 	
@@ -67,12 +71,21 @@ public class EmbedRegionAction extends ActionSupport {
 	private RegionCommentDao regionCommentDao = new RegionCommentDaoImpl();
 	private RegionCoordinateDao regionCoordinateDao = new RegionCoordinateDaoImpl();
 	
+	/** Variables to store/pass JSON data **/
+	private Map<String, Object> jsonAddPhotoRegion = new LinkedHashMap<String, Object>();
+	private Map<String, Object> jsonAddRegionComment = new LinkedHashMap<String, Object>();
+	
 	public String addPhotoRegion() {
+		
+		PhotoRegion region;
+		
 		if(photoDao.findById(photoId) == null)
 			return "invalid_photo";
 		else {
-			if(embedRegion.addPhotoRegion(photoId, userId, shapeId, regionX, regionY, height, width))
+			if((region = embedRegion.addPhotoRegion(photoId, userId, shapeId, regionX, regionY, height, width)) !=null ) {
+				jsonAddPhotoRegion.put(jsonKey, region);
 				return SUCCESS;
+			}
 			else
 				return ERROR;
 		}
@@ -80,11 +93,15 @@ public class EmbedRegionAction extends ActionSupport {
 	
 	public String addRegionComment() {
 		PhotoRegion region;
+		RegionComment regionComment;
+		
 		if((region = photoRegionDao.findById(regionId)) == null || region.getPhotoId() != photoId)
 			return "invalid_region";
 		else {
-			if(embedRegion.addRegionComment(photoId, userId, regionId, regionCommentText))
+			if((regionComment = embedRegion.addRegionComment(photoId, userId, regionId, regionCommentText))!=null) {
+				jsonAddRegionComment.put(jsonKey, regionComment);
 				return SUCCESS;
+			}
 			else
 				return ERROR;
 		}
