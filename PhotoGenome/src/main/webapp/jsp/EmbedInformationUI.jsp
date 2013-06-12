@@ -10,35 +10,6 @@
       <script src="jsonUtil.js"></script>
       
         <script>
-$(document).on('click','.Rclose_box',function(){
-    $(this).parent().fadeTo(300,0,function(){
-          $(this).remove();
-    });
-});
-
-$(document).on('click','.PCclose_box',function(){
-    $(this).parent().fadeTo(300,0,function(){
-          $(this).remove();
-    });
-});
-
-$(document).on('click','.RCclose_box',function(){
-    $(this).parent().fadeTo(300,0,function(){
-          $(this).remove();
-    });
-});
-
-$(document).on('click','.PCatclose_box',function(){
-    $(this).parent().fadeTo(300,0,function(){
-          $(this).remove();
-    });
-});
-
-$(document).on('click','.RCatclose_box',function(){
-    $(this).parent().fadeTo(300,0,function(){
-          $(this).remove();
-    });
-});
 </script>
         <style>
   article, aside, figure, footer, header, hgroup, 
@@ -51,9 +22,10 @@ $(document).on('click','.RCatclose_box',function(){
  
   .box{
     position:relative;
-    float:right;
+    float:left;
     background:#eee;
     width:400px;
+    left:0px;
     padding:0px;
     margin:0px;
   }
@@ -120,10 +92,51 @@ $(document).on('click','.RCatclose_box',function(){
   
 </style>
         <script>
+        
+        $(document).on('click','.Rclose_box',function(){
+            $(this).parent().fadeTo(300,0,function(){
+                  $(this).remove();
+            });
+        });
+
+        $(document).on('click','.PCclose_box',function(){
+            $(this).parent().fadeTo(300,0,function(){
+                  $(this).remove();
+            });
+        });
+
+        $(document).on('click','.RCclose_box',function(){
+            $(this).parent().fadeTo(300,0,function(){
+                  $(this).remove();
+            });
+        });
+
+        $(document).on('click','.PCatclose_box',function(){
+            $(this).parent().fadeTo(300,0,function(){
+                  $(this).remove();
+            });
+        });
+
+        $(document).on('click','.RCatclose_box',function(){
+            $(this).parent().fadeTo(300,0,function(){
+                  $(this).remove();
+            });
+        });
+
             $(document).ready(function() {                        
                 $('#submitRCat').click(function(event) {  
-                    var regionCategories=$('#txtRegionCategories').val();
-                    setRegionCategories(regionCategories);
+                	if($("input[name='RCategoryType']").val()==='Custom')
+                	{
+                		var regionCategories=$('#txtRegionCategories').val();
+                    	var regionCategoryText=$('#txtRegionCategoryText').val();
+                    	addRegionCategories(regionCategories,regionCategoryText);
+                	} else if($("input[name='RCategoryType']").val()==='Custom')
+                    {
+                		var regionCategories=$('#cbRegionCategories').val();
+                    	var regionCategoryText=$('#txtPRegionCategoryText').val();
+                    	addRegionCategories(regionCategories,regionCategoryText);	
+                    }	 
+                    
                    $('#txtRegionCategories').text('');
                  
                 });
@@ -133,9 +146,17 @@ $(document).on('click','.RCatclose_box',function(){
                 	$('#txtRegionCategories').text('');
                 });
                 $('#submitPCat').click(function(event) {  
-                    var photoCategories=$('#txtPhotoCategories').val();
-                    setPhotoCategories(photoCategories);
-                    $('#txtPhotoCategories').text('');
+                	if($("input[name='PCategoryType']").val()==='Custom')
+                	{
+                		var photoCategories=$('#txtPhotoCategories').val();
+                    	var photoCategoryText=$('#txtPhotoCategoryText').val();
+                    	addPhotoCategories(photoCategories,photoCategoryText);
+                	} else if($("input[name='PCategoryType']").val()==='Custom')
+                    {
+                		var photoCategories=$('#cbPhotoCategories').val();
+                    	var photoCategoryText=$('#txtPPhotoCategoryText').val();
+                    	addPhotoCategories(photoCategories,photoCategoryText);	
+                    }$('#txtPhotoCategories').text('');
                  
                 });
                 $('#submitPCom').click(function(event) {  
@@ -144,17 +165,43 @@ $(document).on('click','.RCatclose_box',function(){
                     $('#txtPhotoCategories').text('');
                 });
                 
-              	$('CategoryType').click( function( event )
+              	$("input[name='RCategoryType']").click( function( event )
                  {
-                  alert($(this).val());
-                  if($(this).val()==='')
-                	  {
-                	  
-                	  } else {
-                		  
+              		if($(this).val()==='Custom')
+                	{
+          		    $('#txtRegionCategories').attr('disabled', false).focus();
+          		  	$('#txtRegionCategoryText').attr('disabled', false).focus();
+          			$('#txtPRegionCategoryText').attr('disabled', true);
+      		    	$('#cbRegionCategories').attr('disabled', true);
+        		    
+                	} else if($(this).val()==='Predefined') {
+          		    	$('#txtPRegionCategoryText').attr('disabled', false).focus();
+          		    	$('#cbRegionCategories').attr('disabled', false).focus();
+          		    	
+          		      $('#txtRegionCategories').attr('disabled', true);
+            		  	$('#txtRegionCategoryText').attr('disabled', true);
+          		    		  
                 	  }
                  });
-                		
+              	$("input[name='PCategoryType']").click( function( event )
+                        {
+                     		if($(this).val()==='Custom')
+                       	{
+                 		    $('#txtPhotoCategories').attr('disabled', false).focus();
+                 		  	$('#txtPhotoCategoryText').attr('disabled', false).focus();
+                 			$('#txtPPhotoCategoryText').attr('disabled', true);
+             		    	$('#cbPhotoCategories').attr('disabled', true);
+               		    
+                       	} else if($(this).val()==='Predefined') {
+                 		    	$('#txtPPhotoCategoryText').attr('disabled', false).focus();
+                 		    	$('#cbPhotoCategories').attr('disabled', false).focus();
+                 		    	
+                 		      $('#txtPhotoCategories').attr('disabled', true);
+                   		  	$('#txtPhotoCategoryText').attr('disabled', true);
+                 		    		  
+                       	  }
+                        });
+                       		
                    
             });
                  
@@ -187,9 +234,9 @@ $(document).on('click','.RCatclose_box',function(){
 <tr><td >Current Region Categories</td></tr>
 <tr><td><div id="regionCategories"></div> </td></tr>
 <tr>
-	<td><input type="radio" name="CategoryType" value="Predefined"> Predefined categories </td></tr>
+	<td><input type="radio" name="RCategoryType" value="Predefined"> Predefined categories </td></tr>
 	<tr> <td>
-<select id="combobox">
+<select id="cbRegionCategories" disabled=true>
 		<option value="">Select one...</option>
 		<option value="Time">Time</option>
 		<option value="Date">Date</option>
@@ -202,11 +249,14 @@ $(document).on('click','.RCatclose_box',function(){
 		<option value="Zip">Zip</option>
 		<option value="Building">Building</option>
 		
-	</select><textarea id="txtRegionCategoriesOnly" disabled=true rows="1" cols="20">
+	</select><textarea id="txtPRegionCategoryText" disabled=true rows="1" cols="20">
 Enter values.  
 </textarea></td></tr>
-<tr><td> <input type="radio" name="CategoryType" value="Custom"> Custom <br> <textarea id="txtRegionCategories" disabled=true rows="1" cols="50">
-Enter Categories and values here.  
+<tr><td> <input type="radio" name="RCategoryType" value="Custom"> Custom <br> <textarea id="txtRegionCategories" disabled=true rows="1" cols="50">
+Enter Categories   
+</textarea>
+<textarea id="txtRegionCategoryText" disabled=true rows="1" cols="50">
+Enter Values Here. 
 </textarea></td></tr> 
 <tr><td> <input type="button" id="submitRCat" value="Categories Submit"/>
 </td></tr>
@@ -222,15 +272,37 @@ Enter Comments Here.
 </td>
 </tr>
 <tr><td>Photo Categories</td></tr>
-<tr><td><div id="photoCategories">year:1929</div>
-<textarea id="txtPhotoCategories" rows="1" cols="50">
-Enter Categories Here. 
+<tr>
+	<td><input type="radio" name="PCategoryType" value="Predefined"> Predefined categories </td></tr>
+	<tr> <td>
+<select id="cbPhotoCategories" disabled=true>
+		<option value="">Select one...</option>
+		<option value="Time">Time</option>
+		<option value="Date">Date</option>
+		<option value="Place">Place</option>
+		<option value="Event">Event</option>
+		<option value="People">People</option>
+		<option value="City">City</option>
+		<option value="State">State</option>
+		<option value="Country">Country</option>
+		<option value="Zip">Zip</option>
+		<option value="Building">Building</option>
+		
+	</select><textarea id="txtPPhotoCategoryText" disabled=true rows="1" cols="20">
+Enter values.  
+</textarea></td></tr>
+<tr><td> <input type="radio" name="PCategoryType" value="Custom"> Custom <br> <textarea id="txtPhotoCategories" disabled=true rows="1" cols="50">
+Enter Categories   
 </textarea>
-<input type="button" id="submitPCat" value="Comments Submit"/>
+<textarea id="txtPhotoCategoryText" disabled=true rows="1" cols="50">
+Enter Values Here. 
+</textarea></td></tr> 
+<tr><td> <input type="button" id="submitPCat" value="Categories Submit"/>
 </td></tr>
+	
 <tr><td>Photo Comments</td></tr>
 <tr><td><div id="photoComments">
-Apoorvi: It was bright sunny day!!!</div>
+</div>
 <textarea id="txtPhotoComments" rows="1" cols="50">
 Enter Comments Here. 
 </textarea>
@@ -262,10 +334,10 @@ function getPhotoCategories(){
 	 $.getJSON(
          	  'getPhotoCategories.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoCategories) {
-         		 for (category in jsonPhotoCategories.items) {
- 	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].photoCategoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].photoCategoryText+'</p></div>');
- 	                 }
-         	  });
+         			for (category in jsonPhotoCategories.items) {
+    	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].photoCategoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryName+':'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
+    	                 }
+    	            	  });
          	 return false;
          	};	
       
@@ -273,21 +345,17 @@ function getRegionCategories(regionId){
 	$.getJSON(
     	'getRegionCategories.action' , {regionId:regionId},
          	  function(jsonRegionCategories) {
-       	  for (category in jsonRegionCategories.items) {
-         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
-         	  }
-         });
+    		  for (category in jsonRegionCategories.items) {
+	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryName+':'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
+	         	  }
+    		  });
        return false;
   };	
 function getPhotoComments(){
-	alert('I am here out');
-      $.getJSON(
+	  $.getJSON(
          'getPhotoComments.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoComments) {
-        	 alert('I am here');
-        	 alert(jsonPhotoComments);
         	  for (comment in jsonPhotoComments.items) {
-        		  alert(jsonPhotoComments.items[comment]);
         		  $('#photoComments').append('<div class="box"> <div photoCommentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].photoCommentText+'</p></div>');
 	         	  }
          });
@@ -317,23 +385,23 @@ function getPhotoComments(){
 	  };	
 	  
 	 
-  function addPhotoCategories(photoCategortyText){
+  function addPhotoCategories(photoCategoryName,photoCategortyText){
 		 $.getJSON(
-	         	  'addPhotoCategories.action' , {photoCategoryText:photoCategortyText},
+	         	  'addPhotoCategories.action' , {photoCategoryName:regionCategoryName,photoCategoryText:photoCategortyText},
 	         	  function(jsonPhotoCategories) {
 	         		for (category in jsonPhotoCategories.items) {
-	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].photoCategoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategory.items[category].photoCategoryText+'</p></div>');
+	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategory.items[category].photoCategoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryName+':'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
 	                 }
 	         	  });
 	         	 return false;
 	         	};	
 	      
-	function addRegionCategories(regionCategoryText){
+	function addRegionCategories(regionCategoryName,regionCategoryText){
 		$.getJSON(
-	    	'addRegionCategories.action' , {regionCategortyText:regionCategoryText},
+	    	'addRegionCategories.action' , {regionCategoryName:regionCategoryName,regionCategortyText:regionCategoryText,},
 	         	  function(jsonRegionCategories) {
 	         	  for (category in jsonRegionCategories.items) {
-	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
+	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryName+':'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
 	         	  }
 	         });
 	       return false;
@@ -391,7 +459,6 @@ function getPhotoComments(){
 		.append('<div id="'+regionId+'"class="Rclose_box">X</div> ')
 		.click(function () {
 			
-		    $('#txtRegionCategories').attr('disabled', false).focus();
 		    $('#txtRegionComments').attr('disabled', false).focus();
 		    
 		});
@@ -532,11 +599,7 @@ $('#canvas').boxer({
 		ui.box.attr('id', regionId);
 		ui.box.append('<div id="'+regionId+'"class="Rclose_box">X</div> ');
 		ui.box.click(function () {
-			
-		    $('#txtRegionCategories').attr('disabled', false).focus();
-		    $('#regionCategories').text('name:HH');
-		    $('#txtRegionComments').attr('disabled', false).focus();
-		    $('#regionComments').text('Apoorvi: I like this building!');
+			$('#txtRegionComments').attr('disabled', false).focus();
 		    
 		});
 		
