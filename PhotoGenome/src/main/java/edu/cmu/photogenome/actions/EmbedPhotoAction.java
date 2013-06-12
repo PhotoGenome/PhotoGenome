@@ -1,8 +1,12 @@
 package edu.cmu.photogenome.actions;
 
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +30,8 @@ import edu.cmu.photogenome.domain.RegionCategory;
 public class EmbedPhotoAction extends ActionSupport {
 
 	final Logger log = LoggerFactory.getLogger(EmbedPhotoAction.class);
+	
+	final String jsonKey = getText("json.key");
 	
 	private Integer photoCategoryId;
 	private int photoId;
@@ -54,12 +60,16 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	// Additional variables
 	private List<String> categoryDetails;
-	
+
 	EmbedPhoto embedPhoto = new EmbedPhoto();
 	PhotoDao photoDao = new PhotoDaoImpl();
 	RegionCategoryDao regionCategoryDao = new RegionCategoryDaoImpl();
 	PhotoCategoryDao photoCategoryDao = new PhotoCategoryDaoImpl();
-	PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl(); 
+	PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl();
+
+	/** Variables to store/pass JSON data **/
+	private Map<String, Object> jsonAddPhotoComments = new LinkedHashMap<String, Object>();
+	private Map<String, Object> jsonAddPhotoCategories = new LinkedHashMap<String, Object>();
 
 	/**
 	 * Add comments to a photo
@@ -69,15 +79,24 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	public String addPhotoComments(){
 
-		Photo photoObj = photoDao.findById(photoId);
+		Photo photo = null;
+		PhotoComment photoComment = null;
 
-		if(photoObj != null) {
-			if(!embedPhoto.addPhotoComments(photoId, userId, photoCommentText))
+		try{
+			photo = photoDao.findById(photoId);
+
+			if(photo != null) {
+				if((photoComment = embedPhoto.addPhotoComments(photoId, userId, photoCommentText)) == null)
+					return ERROR;
+			}else
 				return ERROR;
-		}else
-			return ERROR;
 
-		return SUCCESS;
+			jsonAddPhotoComments.put(jsonKey, photoComment);
+			return SUCCESS;
+
+		}catch(Exception ex) {
+			return ERROR;
+		}
 	}
 
 	/**
@@ -88,15 +107,31 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	public String addPhotoCategories(){
 
-		Photo photoObj = photoDao.findById(photoId);
-
-		if(photoObj != null) {
-			if(!embedPhoto.addPhotoCategories(photoId, userId, categoryDetails, photoCategoryText))
+		Photo photo = null;
+		PhotoCategory photoCategory = null;
+		List<SimpleEntry<String, String>> categoryList = null;
+		
+		try{
+			categoryList = new ArrayList<SimpleEntry<String, String>>();
+			photo = photoDao.findById(photoId);
+			
+		if(photo != null) {
+			categoryList.add(new SimpleEntry<String, String>(photoCategoryName, photoCategoryText));
+					
+			if((photoCategory = embedPhoto.addPhotoCategories(photoId, userId, categoryList))==null)
 				return ERROR;
-		}else
-			return ERROR;
+		}else{
 
+			return ERROR;
+		}
+		
+		jsonAddPhotoCategories.put(jsonKey, photoCategory);		
 		return SUCCESS;
+		
+		}catch(Exception ex)
+		{
+			return ERROR;
+		}
 	}
 
 	/**
@@ -172,8 +207,8 @@ public class EmbedPhotoAction extends ActionSupport {
 	public String deletePhotoComments(){
 		if(embedPhoto.deletePhotoComments(photoCommentId))
 			return SUCCESS;
-	else
-		return ERROR;
+		else
+			return ERROR;
 	}
 
 
@@ -186,7 +221,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	public String deletePhotoCategories(){
 
 		if(embedPhoto.deletePhotoCategories(photoCategoryId))
-				return SUCCESS;
+			return SUCCESS;
 		else
 			return ERROR;
 	}

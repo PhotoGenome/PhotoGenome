@@ -1,7 +1,9 @@
 package edu.cmu.photogenome.business;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Date;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +33,9 @@ public class EmbedPhoto {
 	 * @param photoId
 	 * @param userId
 	 * @param comment
-	 * @return true if comment is added, otherwise false
+	 * @return newly created photoComment, otherwise null
 	 */
-	public boolean addPhotoComments(int photoId, int userId, String comment){
+	public PhotoComment addPhotoComments(int photoId, int userId, String comment){
 		PhotoComment photoComment = new PhotoComment();
 
 		photoComment.setPhotoId(photoId);
@@ -42,11 +44,11 @@ public class EmbedPhoto {
 
 		if(photoCommentDao.save(photoComment)) {
 			log.debug("Photo comments saved for photo ", photoComment.getPhotoId());	
-			return true;
+			return photoComment;
 		}
 		else {
 			log.error("Failed to save photo comments for photo ", photoComment.getPhotoId());
-			return false;
+			return null;
 		}
 	}
 
@@ -57,26 +59,26 @@ public class EmbedPhoto {
 	 * @param userId
 	 * @param categoryDetails
 	 * @param photoCategoryText
-	 * @return	true if category is added, otherwise false
+	 * @return newly created category, otherwise null
 	 */
 
-	public boolean addPhotoCategories(int photoId, int userId, List<String> categoryDetails,
-			String photoCategoryText){
+	public PhotoCategory addPhotoCategories(int photoId, int userId, List<SimpleEntry<String, String>> categoryDetails){
 		PhotoCategory category = new PhotoCategory(photoId, userId, new Date());
 
-		for (String details : categoryDetails){
+		for (SimpleEntry<String, String> details : categoryDetails){
 
-			String[] categoryNameandText = details.split(":");
-			category.setPhotoCategoryName(categoryNameandText[0]);
-			category.setPhotoCategoryText(categoryNameandText[1]);
+			category.setPhotoCategoryName(details.getKey());
+			category.setPhotoCategoryText(details.getValue());
+			category.setUserId(userId);
+			category.setPhotoId(photoId);
 
 			if(!photoCategoryDao.save(category)) {
 				log.error("Failed to add photo category for photo ", category.getPhotoId());
-				return false;
+				return null;
 			}
 		}
 		log.debug("Photo category added for photo ", category.getPhotoId());
-		return true;
+		return category;
 	}
 
 	/**

@@ -1,7 +1,5 @@
 package edu.cmu.photogenome.actions;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +9,7 @@ import org.apache.struts2.json.JSONWriter;
 import com.cedarsoftware.util.io.JsonWriter;
 import com.opensymphony.xwork2.ActionSupport;
 
+import edu.cmu.photogenome.business.ViewInformation;
 import edu.cmu.photogenome.dao.UserDao;
 import edu.cmu.photogenome.dao.UserDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
@@ -75,19 +74,21 @@ public class LoginAction extends ActionSupport {
     public String findUser() {
     	System.out.println("FIND USER *****");
     	Photo photo = new Photo();
-    	photo.setPhotoDesc("my description");
-    	photo.setPhotoId(10);
-    	Photo photo2 = new Photo();
-    	photo2.setPhotoDesc("my description 2");
-    	photo2.setPhotoId(20);
-    	ArrayList<Photo> list = new ArrayList<Photo>();
-    	list.add(photo);
-    	list.add(photo2);
+    	//photo.setPhotoDesc("my description");
+    	//photo.setPhotoId(10);
+    	//Photo photo2 = new Photo();
+    	//photo2.setPhotoDesc("my description 2");
+    	//photo2.setPhotoId(20);
+    	//ArrayList<Photo> list = new ArrayList<Photo>();
+    	//list.add(photo);
+    	//list.add(photo2);
+    	ViewInformation viewInformation = new ViewInformation();
+    	photo = viewInformation.getPhoto(1);
     	
     	 try {
-			jsonFindUser = JsonWriter.objectToJson(list);
+			jsonFindUser = JsonWriter.objectToJson(photo);
 			JSONWriter writer = new JSONWriter();
-			System.out.println("STRUTS WRITER " + writer.write(list));
+			System.out.println("STRUTS WRITER " + writer.write(photo));
 			System.out.println("JSON*******   " + jsonFindUser);
 			jsonData.put("json key", jsonFindUser);
 			return SUCCESS;

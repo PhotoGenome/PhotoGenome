@@ -39,24 +39,24 @@ public class EmbedRegion {
 	 * @param regionY
 	 * @param height
 	 * @param width
-	 * @return true if the region is saved, else false
+	 * @return newly created region, otherwise null
 	 */
-	public boolean addPhotoRegion(int photoId, int userId, int shapeId, int regionX, int regionY, 
+	public PhotoRegion addPhotoRegion(int photoId, int userId, int shapeId, int regionX, int regionY, 
 			int height, int width) {
 		PhotoRegion region = null;
 		if((region = addPhotoRegion(photoId, userId, shapeId)) == null) // try to save the region
-			return false;
+			return null;
 		else {
 			RegionCoordinate coordinate = null;
 			if((coordinate = addRegionCoordinate(region.getRegionId(), photoId, userId, regionX, regionY, 
 					height, width)) == null) { // try to save the coordinates
 				log.debug("Failed to save coordinate, deleting region with ID = {}", region.getRegionId());
 				photoRegionDao.delete(region); // delete region if coordinates failed to save
-				return false;
+				return null;
 			}
 		}
 		
-		return true;
+		return region;
 	}
 	
 	/**
@@ -84,18 +84,18 @@ public class EmbedRegion {
 	 * @param userId
 	 * @param regionId
 	 * @param regionCommentText
-	 * @return true if the comment was saved, else false
+	 * @return newly created regioncomment, otherwise null
 	 */
-	public boolean addRegionComment(int photoId, int userId, int regionId, String regionCommentText) {
+	public RegionComment addRegionComment(int photoId, int userId, int regionId, String regionCommentText) {
 		RegionComment comment = new RegionComment(photoId, regionId, userId, new Date());
 		comment.setRegionCommentText(regionCommentText);
 		
 		log.debug("Saving region comment with photoId={}, userId={}, regionId={}, regionCommentText={}",
 				photoId, userId, regionId, regionCommentText);
 		if(regionCommentDao.save(comment))
-			return true;
+			return comment;
 		else
-			return false;
+			return null;
 	}
 	
 	/**
