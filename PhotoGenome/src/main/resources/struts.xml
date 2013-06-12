@@ -2,41 +2,111 @@
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
- 
+
 <struts>
-    <constant name="struts.enable.DynamicMethodInvocation"
-        value="false" />
-    <constant name="struts.devMode" value="false" />
-    <constant name="struts.custom.i18n.resources"
-        value="ApplicationResources" />
- 
-    <package name="default" extends="json-default, hibernate-default">	
-        <action name="add" method="addUser"
-            class="edu.cmu.photogenome.actions.LoginAction">
-            <result name="success">Login.jsp</result>
-        </action>
-        <action name="remove" method="removeUser"
-            class="edu.cmu.photogenome.actions.LoginAction">
-            <result name="success">Login.jsp</result>
-        </action>
-        <action name="update" method="updateUser"
-            class="edu.cmu.photogenome.actions.LoginAction">
-            <result name="success">Login.jsp</result>
-        </action>
-        <action name="find" method="findUser"
-            class="edu.cmu.photogenome.actions.LoginAction">
-              <result type="json">
-   				<param name="root">jsonData</param>
- 			 </result>
-        </action>
-        <action name="getPhotoComments" method="getPhotoComments"
-            class="edu.cmu.photogenome.actions.ViewInformationAction">
-              <result type="json">
-   				<param name="root">jsonGetPhotoComments</param>
- 			 </result>
- 			
-        </action>
-    </package>
-    
-    <package name=""></package>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+
+	<package name="default" extends="json-default, hibernate-default">
+		<action name="add" method="addUser"
+			class="edu.cmu.photogenome.actions.LoginAction">
+			<result name="success">Login.jsp</result>
+		</action>
+		<action name="remove" method="removeUser"
+			class="edu.cmu.photogenome.actions.LoginAction">
+			<result name="success">Login.jsp</result>
+		</action>
+		<action name="update" method="updateUser"
+			class="edu.cmu.photogenome.actions.LoginAction">
+			<result name="success">Login.jsp</result>
+		</action>
+		<action name="find" method="findUser"
+			class="edu.cmu.photogenome.actions.LoginAction">
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+		</action>
+		<action name="getPhotoComments" method="getPhotoComments"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetPhotoComments</param>
+			</result>
+
+		</action>
+
+		<!-- Begin adding actions for connecting UI with business logic -->
+		<action name="getPhoto" method="getPhoto"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetPhoto</param>
+			</result>
+		</action>
+
+		<action name="getPhotoCategories" method="getPhotoCategories"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetPhotoCategories</param>
+			</result>
+		</action>
+
+		<action name="getPhotoRegions" method="getPhotoRegions"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetPhotoRegions</param>
+			</result>
+		</action>
+
+		<action name="getRegionComments" method="getRegionComments"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetRegionComments</param>
+			</result>
+		</action>
+
+		<action name="getRegionCategories" method="getRegionCategories"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetRegionCategories</param>
+			</result>
+		</action>
+
+		<action name="getRegionCoordinates" method="getRegionCoordinates"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetRegionCoordinates</param>
+			</result>
+		</action>
+
+		<action name="addPhotoRegion" method="addPhotoRegion"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result type="json">
+				<param name="root">jsonAddPhotoRegion</param>
+			</result>
+		</action>
+
+		<action name="addRegionComment" method="addRegionComment"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result type="json">
+				<param name="root">jsonAddRegionComment</param>
+			</result>
+		</action>
+
+		<action name="addPhotoComments" method="addPhotoComments"
+			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
+			<result type="json">
+				<param name="root">jsonAddPhotoComments</param>
+			</result>
+		</action>
+
+		<action name="addPhotoCategories" method="addPhotoCategories"
+			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
+			<result type="json">
+				<param name="root">jsonAddPhotoCategories</param>
+			</result>
+		</action>
+		<!-- End adding actions for connecting UI with business logic -->
+	</package>
+
+	<package name=""></package>
 </struts>

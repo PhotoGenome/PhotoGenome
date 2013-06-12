@@ -22,6 +22,8 @@ import edu.cmu.photogenome.domain.RegionCoordinate;
 
 public class ViewInformationAction extends ActionSupport{
 
+	private final String jsonKey  = getText("json.key");
+
 	private Integer photoId;
 
 	public Integer getPhotoId() {
@@ -44,7 +46,7 @@ public class ViewInformationAction extends ActionSupport{
 	private ViewInformation viewInformation = new ViewInformation();
 
 	PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl();
-	
+
 	/**Get photo using photoId
 	 * 
 	 * @return
@@ -57,14 +59,13 @@ public class ViewInformationAction extends ActionSupport{
 		try{
 			jsonWriter = new JSONWriter();
 			if((photo = viewInformation.getPhoto(photoId)) != null){
-				jsonGetPhotoComments.put(String.valueOf(photo.getPhotoId()), jsonWriter.write(photo));
+				//jsonGetPhoto.put(String.valueOf(photo.getPhotoId()), jsonWriter.write(photo));
+				jsonGetPhoto.put(jsonKey, photo);
 				return SUCCESS;
 			}else {
 				return ERROR;
 			}
-		}catch(JSONException e){
-			return ERROR;
-		} catch(Exception e){
+		}catch(Exception e){
 			return ERROR;
 		}
 
@@ -76,7 +77,7 @@ public class ViewInformationAction extends ActionSupport{
 	 * @return 
 	 */
 	public String getPhotoComments(){
-		
+
 
 		JSONWriter jsonWriter = null;
 		List<PhotoComment> list = null;
@@ -88,9 +89,8 @@ public class ViewInformationAction extends ActionSupport{
 			if((list = viewInformation.getPhotoComments(photoId)) != null){
 				System.out.println(viewInformation.getPhotoComments(photoId).size());
 				//for (PhotoComment comment : list){
-					jsonGetPhotoComments.put("items", list);
-					System.out.println(jsonWriter.write(jsonGetPhotoComments));
-					//setJsonGetPhotoComments(jsonGetPhotoComments);//TODO
+				jsonGetPhotoComments.put(jsonKey, list);
+				System.out.println(jsonWriter.write(jsonGetPhotoComments));
 				//}
 				return SUCCESS;
 			}else {
@@ -120,20 +120,18 @@ public class ViewInformationAction extends ActionSupport{
 
 		try{
 			jsonWriter = new JSONWriter();
-			if( (list = viewInformation.getPhotoCategories(photoId)) != null){
+			if((list = viewInformation.getPhotoCategories(photoId)) != null){
 
-				for (PhotoCategory category : list){
-					jsonGetPhotoCategories.put(String.valueOf(category.getPhotoCategoryId()), jsonWriter.write(category));
-				}
+				//for (PhotoCategory category : list){
+				//jsonGetPhotoCategories.put(String.valueOf(category.getPhotoCategoryId()), jsonWriter.write(category));
+				jsonGetPhotoCategories.put(jsonKey, list);
+				//}
 
 				return SUCCESS;
 			}else {
 				return ERROR;
 			}
-		}catch(JSONException e)
-		{
-			return ERROR;
-		} catch(Exception e){
+		}catch(Exception e){
 			return ERROR;
 		}
 
@@ -153,18 +151,15 @@ public class ViewInformationAction extends ActionSupport{
 			jsonWriter = new JSONWriter();
 			if( (list = viewInformation.getPhotoRegions(photoId)) != null){
 
-				for (PhotoRegion region : list){
-					jsonGetPhotoCategories.put(String.valueOf(region.getRegionId()), jsonWriter.write(region));
-				}
-
+				//for (PhotoRegion region : list){
+				//	jsonGetPhotoRegions.put(String.valueOf(region.getRegionId()), jsonWriter.write(region));
+				//}
+				jsonGetPhotoRegions.put(jsonKey, list);
 				return SUCCESS;
 			}else {
 				return ERROR;
 			}
-		}catch(JSONException e)
-		{
-			return ERROR;
-		} catch(Exception e){
+		}catch(Exception e){
 			return ERROR;
 		}
 
@@ -185,18 +180,15 @@ public class ViewInformationAction extends ActionSupport{
 			jsonWriter = new JSONWriter();
 			if( (list = viewInformation.getRegionComments(photoId)) != null){
 
-				for (RegionComment regionComment : list){
-					jsonGetPhotoCategories.put(String.valueOf(regionComment.getRegionCommentId()), jsonWriter.write(regionComment));
-				}
-
+				//for (RegionComment regionComment : list){
+				//	jsonGetRegionComments.put(String.valueOf(regionComment.getRegionCommentId()), jsonWriter.write(regionComment));
+				//}
+				jsonGetRegionComments.put(jsonKey, list);
 				return SUCCESS;
 			}else {
 				return ERROR;
 			}
-		}catch(JSONException e)
-		{
-			return ERROR;
-		} catch(Exception e){
+		}catch(Exception e){
 			return ERROR;
 		}
 
@@ -217,18 +209,17 @@ public class ViewInformationAction extends ActionSupport{
 			jsonWriter = new JSONWriter();
 			if( (list = viewInformation.getRegionCategories((photoId))) != null){
 
-				for (RegionCategory regionCategory : list){
-					jsonGetPhotoCategories.put(String.valueOf(regionCategory.getRegionCategoryId()), jsonWriter.write(regionCategory));
-				}
+				//for (RegionCategory regionCategory : list){
+				//	jsonGetRegionCategories.put(String.valueOf(regionCategory.getRegionCategoryId()), jsonWriter.write(regionCategory));
+				//}
+
+				jsonGetRegionCategories.put(jsonKey, list);
 
 				return SUCCESS;
 			}else {
 				return ERROR;
 			}
-		}catch(JSONException e)
-		{
-			return ERROR;
-		} catch(Exception e){
+		}catch(Exception e){
 			return ERROR;
 		}
 
@@ -249,18 +240,15 @@ public class ViewInformationAction extends ActionSupport{
 			jsonWriter = new JSONWriter();
 			if( (list = viewInformation.getRegionCoordinates((photoId))) != null){
 
-				for (RegionCoordinate regionCoordinate: list){
-					jsonGetPhotoCategories.put(String.valueOf(regionCoordinate.getRegionCoordinateId()),jsonWriter.write(regionCoordinate));
-				}
-
+				//for (RegionCoordinate regionCoordinate: list){
+				//	jsonGetRegionCoordinates.put(String.valueOf(regionCoordinate.getRegionCoordinateId()),jsonWriter.write(regionCoordinate));
+				//}
+				jsonGetRegionCoordinates.put(jsonKey, list);
 				return SUCCESS;
 			}else {
 				return ERROR;
 			}
-		}catch(JSONException e)
-		{
-			return ERROR;
-		} catch(Exception e){
+		}catch(Exception e){
 			return ERROR;
 		}
 
