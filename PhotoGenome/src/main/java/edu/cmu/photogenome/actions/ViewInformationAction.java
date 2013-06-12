@@ -10,6 +10,8 @@ import org.apache.struts2.json.JSONWriter;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.ViewInformation;
+import edu.cmu.photogenome.dao.PhotoCommentDao;
+import edu.cmu.photogenome.dao.PhotoCommentDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
@@ -41,7 +43,8 @@ public class ViewInformationAction extends ActionSupport{
 
 	private ViewInformation viewInformation = new ViewInformation();
 
-
+	PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl();
+	
 	/**Get photo using photoId
 	 * 
 	 * @return
@@ -77,23 +80,28 @@ public class ViewInformationAction extends ActionSupport{
 
 		JSONWriter jsonWriter = null;
 		List<PhotoComment> list = null;
-
+		System.out.println("PHOTO ID = " + photoId);
 		try{
 			jsonWriter = new JSONWriter();
-			if((list = viewInformation.getPhotoComments(photoId)) != null){
+			//System.out.println("PHOTO COMMENT= " + photoCommentDao.findById(1).getPhotoCommentText());
 
-				for (PhotoComment comment : list){
-					jsonGetPhotoComments.put(String.valueOf(comment.getPhotoCommentId()), jsonWriter.write(comment));
-					setJsonGetPhotoComments(jsonGetPhotoComments);//TODO
-				}
+			if((list = viewInformation.getPhotoComments(photoId)) != null){
+				System.out.println(viewInformation.getPhotoComments(photoId).size());
+				//for (PhotoComment comment : list){
+					jsonGetPhotoComments.put("items", list);
+					System.out.println(jsonWriter.write(jsonGetPhotoComments));
+					//setJsonGetPhotoComments(jsonGetPhotoComments);//TODO
+				//}
 				return SUCCESS;
 			}else {
-				
+				System.out.println("error");
 				return ERROR;
 			}
 		}catch(JSONException e){
+			e.printStackTrace();
 			return ERROR;
 		} catch(Exception e){
+			e.printStackTrace();
 			return ERROR;
 		}
 

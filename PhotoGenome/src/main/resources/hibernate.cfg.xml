@@ -10,5 +10,6 @@
         <property name="hibernate.connection.username">root</property>
         
         <mapping class="edu.cmu.photogenome.domain.User"/>
+        <mapping class="edu.cmu.photogenome.domain.PhotoComment"/>
     </session-factory>
 </hibernate-configuration>
