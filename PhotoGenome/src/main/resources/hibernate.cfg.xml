@@ -9,7 +9,16 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/photogenomeDatabase</property>
         <property name="hibernate.connection.username">root</property>
         
-        <mapping class="edu.cmu.photogenome.domain.User"/>
+        <mapping class="edu.cmu.photogenome.domain.Photo"/>
+        <mapping class="edu.cmu.photogenome.domain.PhotoCategory"/>
         <mapping class="edu.cmu.photogenome.domain.PhotoComment"/>
+        <mapping class="edu.cmu.photogenome.domain.PhotoRegion"/>
+        <mapping class="edu.cmu.photogenome.domain.RegionCategory"/>
+        <mapping class="edu.cmu.photogenome.domain.RegionComment"/>
+        <mapping class="edu.cmu.photogenome.domain.RegionCoordinate"/>
+        <mapping class="edu.cmu.photogenome.domain.Role"/>
+        <mapping class="edu.cmu.photogenome.domain.Shape"/>
+        <mapping class="edu.cmu.photogenome.domain.User"/>
+        
     </session-factory>
 </hibernate-configuration>
