@@ -322,6 +322,7 @@ Enter Comments Here.
 <script>
 
 $(window).load(function () {
+	getRegionCoordinates();
 	getPhotoComments(); 
 	getPhotoCategories();
 });
@@ -382,11 +383,12 @@ function getPhotoComments(){
   };
 
   function getRegionCoordinates(){
-		$.getJSON(
+		$.get(
 	    	'getRegionCoordinates.action' , {photoId:$('#canvas').attr('photoId')},
 	         	  function(jsonRegionCoordinates) {
+	    		alert(jsonRegionCoordinates);
 	       	  for (coordinate in jsonRegionCoordinates.items) {
-	       		addBox(jsonRegionCoordinates.items[coordinate].x,jsonRegionCoordinates.items[coordinate].y,jsonRegionCoordinates.items[coordinate].width,jsonRegionCoordinates.items[coordinate].height,jsonRegionCoordinates.items[coordinate].id); 
+	       		addBox(jsonRegionCoordinates.items[coordinate].regionX,jsonRegionCoordinates.items[coordinate].regionY,jsonRegionCoordinates.items[coordinate].width,jsonRegionCoordinates.items[coordinate].height,jsonRegionCoordinates.items[coordinate].regionId); 
 	         	  }
 	         });
 	       return false;
@@ -408,7 +410,7 @@ function getPhotoComments(){
 	      
 	function addRegionCategories(regionCategoryName,regionCategoryText){
 		$.getJSON(
-	    	'addRegionCategories.action' , {regionCategoryName:regionCategoryName,regionCategortyText:regionCategoryText,},
+	    	'addRegionCategories.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCategoryName:regionCategoryName,regionCategortyText:regionCategoryText,},
 	         	  function(jsonRegionCategories) {
 	         	  for (category in jsonRegionCategories.items) {
 	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryName+':'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
@@ -430,7 +432,7 @@ function getPhotoComments(){
 
 	  function addRegionComments(regionCommentText){
 	      $.getJSON(
-	         'addRegionComments.action' , {regionCommentText:regionCommentText},
+	         'addRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCommentText:regionCommentText},
 	         	  function(jsonRegionComments) {
 	         	  for (comment in jsonRegionComments.items) {
 	         	  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].regionCommentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].regionCommentText+'</p></div>');
@@ -455,26 +457,28 @@ function getPhotoComments(){
 	       
 	      return false;
 	  };
-  function addBox(x,y,w,h,id){
+  
+function addBox(x,y,w,h,regionId){
 	var canvas = $('#canvas');
-	     
-	canvas.append('<div></div>').addClass('ui-boxer')
+	 canvas.append('<div id="'+'regionx_' + x + '_y_' +y+'_w_' + w + '_h_' + h+'"></div>');
+	 $('#'+'regionx_' + x + '_y_' +y+'_w_' + w + '_h_' + h).addClass('ui-boxer')
 	     .css({ border: '1px solid red',
 	             padding: '0.5em',
 	             position: 'relative',
 	            'z-index': 100,
 	             left: parseInt(x), top: parseInt(y),
 	             width: parseInt(w), height: parseInt(h)})
-	    .attr('id', id)
-		.append('<div id="'+regionId+'"class="Rclose_box">X</div> ')
+	     .append('<div id="'+regionId+'"class="Rclose_box">X</div> ')
 		.click(function () {
 			
+		    $('#txtRegionCategories').attr('disabled', false).focus();
 		    $('#txtRegionComments').attr('disabled', false).focus();
 		    
 		});
-			   return false;
-	
+
+
 };
+
 
 $(function () {
     var div = $("#canvas").boxer();
