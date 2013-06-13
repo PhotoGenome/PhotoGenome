@@ -34,37 +34,104 @@ public class EmbedRegionAction extends ActionSupport {
 	private int photoId;
 	private int userId;
 	private int shapeId;
-	private String regionName;
-	private Date photoRegionTimestamp;
-	private Boolean photoRegionIsdeleted;
-	private String photoRegionOption1;
-	private String photoRegionOption2;
-	private String photoRegionOption3;
-	private String photoRegionOption4;
-	private String photoRegionOption5;
-	
+
 	private Integer regionCommentId;
 	private String regionCommentText;
-	private Date regionCommentTimestamp;
-	private Boolean regionCommentIsdeleted;
-	private String regionCommentOption1;
-	private String regionCommentOption2;
-	private String regionCommentOption3;
-	private String regionCommentOption4;
-	private String regionCommentOption5;
-	
+		
 	private Integer regionCoordinateId;
 	private int regionX;
+	
+	public Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
+	}
+
+	public int getPhotoId() {
+		return photoId;
+	}
+
+	public void setPhotoId(int photoId) {
+		this.photoId = photoId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getShapeId() {
+		return shapeId;
+	}
+
+	public void setShapeId(int shapeId) {
+		this.shapeId = shapeId;
+	}
+
+	public Integer getRegionCommentId() {
+		return regionCommentId;
+	}
+
+	public void setRegionCommentId(Integer regionCommentId) {
+		this.regionCommentId = regionCommentId;
+	}
+
+	public String getRegionCommentText() {
+		return regionCommentText;
+	}
+
+	public void setRegionCommentText(String regionCommentText) {
+		this.regionCommentText = regionCommentText;
+	}
+
+	public Integer getRegionCoordinateId() {
+		return regionCoordinateId;
+	}
+
+	public void setRegionCoordinateId(Integer regionCoordinateId) {
+		this.regionCoordinateId = regionCoordinateId;
+	}
+
+	public int getRegionX() {
+		return regionX;
+	}
+
+	public void setRegionX(int regionX) {
+		this.regionX = regionX;
+	}
+
+	public int getRegionY() {
+		return regionY;
+	}
+
+	public void setRegionY(int regionY) {
+		this.regionY = regionY;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
 	private int regionY;
 	private int height;
 	private int width;
-	private Date regionCoordinateTimestamp;
-	private Boolean regionCoordinateIsdeleted;
-	private String regionCoordinateOption1;
-	private String regionCoordinateOption2;
-	private String regionCoordinateOption3;
-	private String regionCoordinateOption4;
-	private String regionCoordinateOption5;
 	
 	private PhotoDao photoDao = new PhotoDaoImpl();
 	private PhotoRegionDao photoRegionDao = new PhotoRegionDaoImpl();

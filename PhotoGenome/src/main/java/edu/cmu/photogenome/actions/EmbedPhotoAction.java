@@ -38,28 +38,94 @@ public class EmbedPhotoAction extends ActionSupport {
 	private int userId;
 	private String photoCategoryName;
 	private String photoCategoryText;
-	private Date photoCategoryTimestamp;
-	private Boolean photoCategoryIsdeleted;
 
 	private Integer regionCategoryId;
-	private int regionId;
 	private String categoryName;
 	private String regionCategoryText;
-	private Date regionCategoryTimestamp;
-	private Boolean regionCategoryIsdeleted;
 
 	private int photoCommentId;
 	private String photoCommentText;
-	private Date photoCommentTimestamp;
-	private Boolean photoCommentIsdeleted;
-	private String photoCommentOption1;
-	private String photoCommentOption2;
-	private String photoCommentOption3;
-	private String photoCommentOption4;
-	private String photoCommentOption5;
+	
+	
+	public Integer getPhotoCategoryId() {
+		return photoCategoryId;
+	}
 
-	// Additional variables
-	private List<String> categoryDetails;
+	public void setPhotoCategoryId(Integer photoCategoryId) {
+		this.photoCategoryId = photoCategoryId;
+	}
+
+	public int getPhotoId() {
+		return photoId;
+	}
+
+	public void setPhotoId(int photoId) {
+		this.photoId = photoId;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public String getPhotoCategoryName() {
+		return photoCategoryName;
+	}
+
+	public void setPhotoCategoryName(String photoCategoryName) {
+		this.photoCategoryName = photoCategoryName;
+	}
+
+	public String getPhotoCategoryText() {
+		return photoCategoryText;
+	}
+
+	public void setPhotoCategoryText(String photoCategoryText) {
+		this.photoCategoryText = photoCategoryText;
+	}
+
+	public Integer getRegionCategoryId() {
+		return regionCategoryId;
+	}
+
+	public void setRegionCategoryId(Integer regionCategoryId) {
+		this.regionCategoryId = regionCategoryId;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getRegionCategoryText() {
+		return regionCategoryText;
+	}
+
+	public void setRegionCategoryText(String regionCategoryText) {
+		this.regionCategoryText = regionCategoryText;
+	}
+
+	public int getPhotoCommentId() {
+		return photoCommentId;
+	}
+
+	public void setPhotoCommentId(int photoCommentId) {
+		this.photoCommentId = photoCommentId;
+	}
+
+	public String getPhotoCommentText() {
+		return photoCommentText;
+	}
+
+	public void setPhotoCommentText(String photoCommentText) {
+		this.photoCommentText = photoCommentText;
+	}
 
 	EmbedPhoto embedPhoto = new EmbedPhoto();
 	PhotoDao photoDao = new PhotoDaoImpl();

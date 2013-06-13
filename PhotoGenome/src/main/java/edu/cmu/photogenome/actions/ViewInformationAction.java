@@ -25,7 +25,7 @@ public class ViewInformationAction extends ActionSupport{
 	private final String jsonKey  = getText("json.key");
 
 	private Integer photoId;
-
+	
 	public Integer getPhotoId() {
 		return photoId;
 	}
