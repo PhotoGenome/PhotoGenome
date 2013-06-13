@@ -205,7 +205,10 @@
                    
             });
                  
-           
+            $(function getUserName() {
+                alert(Session["UserName"]);
+            });
+      
         </script>
         
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
@@ -222,10 +225,6 @@
 </head>
 <body>
 <form id="form1">
-<h1>Coordinates	from server </h1>
-<div id="welcometext"></div>
-<h1>ui.boxer</h1>
-<h2>Directions: click and drag in the white region to draw a box</h2>
 <table width="100%" bordercolor="black">
 <tr><td width="70%" bordercolor="black">
 <div id="canvas" photoId="1" style="border:solid black; background-image:url('https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-ash3/942522_10151496380413710_188944828_n.jpg');"></div>
