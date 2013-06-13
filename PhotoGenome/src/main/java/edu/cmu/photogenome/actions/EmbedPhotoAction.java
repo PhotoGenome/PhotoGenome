@@ -69,6 +69,23 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonAddPhotoComments = new LinkedHashMap<String, Object>();
+	public Map<String, Object> getJsonAddPhotoComments() {
+		return jsonAddPhotoComments;
+	}
+
+	public void setJsonAddPhotoComments(Map<String, Object> jsonAddPhotoComments) {
+		this.jsonAddPhotoComments = jsonAddPhotoComments;
+	}
+
+	public Map<String, Object> getJsonAddPhotoCategories() {
+		return jsonAddPhotoCategories;
+	}
+
+	public void setJsonAddPhotoCategories(Map<String, Object> jsonAddPhotoCategories) {
+		this.jsonAddPhotoCategories = jsonAddPhotoCategories;
+	}
+
+
 	private Map<String, Object> jsonAddPhotoCategories = new LinkedHashMap<String, Object>();
 
 	/**

@@ -73,6 +73,22 @@ public class EmbedRegionAction extends ActionSupport {
 	
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonAddPhotoRegion = new LinkedHashMap<String, Object>();
+	public Map<String, Object> getJsonAddPhotoRegion() {
+		return jsonAddPhotoRegion;
+	}
+
+	public void setJsonAddPhotoRegion(Map<String, Object> jsonAddPhotoRegion) {
+		this.jsonAddPhotoRegion = jsonAddPhotoRegion;
+	}
+
+	public Map<String, Object> getJsonAddRegionComment() {
+		return jsonAddRegionComment;
+	}
+
+	public void setJsonAddRegionComment(Map<String, Object> jsonAddRegionComment) {
+		this.jsonAddRegionComment = jsonAddRegionComment;
+	}
+
 	private Map<String, Object> jsonAddRegionComment = new LinkedHashMap<String, Object>();
 	
 	public String addPhotoRegion() {
