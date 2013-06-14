@@ -1,7 +1,5 @@
 package edu.cmu.photogenome.util;
 
-import java.io.InputStream;
-
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
@@ -44,7 +42,7 @@ public abstract class HibernateDbUnitTestCase extends DBTestCase {
 
 	@After
 	public void tearDown() throws Exception {
-		session.getTransaction().rollback();
+		session.getTransaction().commit();
 		session.close();
 		super.tearDown();
 	}
