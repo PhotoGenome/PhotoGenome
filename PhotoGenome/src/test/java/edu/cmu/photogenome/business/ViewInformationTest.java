@@ -2,11 +2,15 @@ package edu.cmu.photogenome.business;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
 import edu.cmu.photogenome.util.HibernateUtil;
 
@@ -18,14 +22,36 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		Photo photo = null;
 		photo = vi.getPhoto(1);
 		assertNotNull(photo);
-		//assertTrue(true);
+		assertEquals(1, photo.getPhotoId().intValue());
 	}
 
 	@Test
+	public void testGetPhotoNull() {
+		ViewInformation vi = new ViewInformation();
+		Photo photo = null;
+		photo = vi.getPhoto(-1);
+		assertNull(photo);
+	}
+	
+	@Test
 	public void testGetPhotoComments() {
-		fail("Not yet implemented");
+		ViewInformation vi = new ViewInformation();
+		List<PhotoComment> commentsList = null;
+		commentsList = (ArrayList<PhotoComment>) vi.getPhotoComments(1);
+		assertNotNull(commentsList);
+		assertEquals(1, commentsList.size());
+		assertEquals(1, commentsList.get(0).getPhotoCommentId().intValue());
 	}
 
+	@Test
+	public void testGetPhotoCommentsNull() {
+		ViewInformation vi = new ViewInformation();
+		List<PhotoComment> commentsList = null;
+		commentsList = (ArrayList<PhotoComment>) vi.getPhotoComments(-1);
+		assertNotNull(commentsList);
+		assertEquals(0, commentsList.size());
+	}
+	
 	@Test
 	public void testGetPhotoCategories() {
 		fail("Not yet implemented");
