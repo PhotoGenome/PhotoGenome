@@ -19,7 +19,7 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 	final Logger log = LoggerFactory.getLogger(GenericAbstractDaoImpl.class);
 	
 	//@SessionTarget
-	protected Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+	protected Session session;
 	
 	//@TransactionTarget
 	//Transaction transaction;
@@ -31,18 +31,15 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
         type = (Class<T>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
-	
+    
     public boolean delete(T entity) {
     	boolean result = false;
     	
     	try {
-    		session.beginTransaction();
 			session.delete(entity);
 			result = true;
-			session.getTransaction().commit();
 		}
 		catch(Exception e) {
-			session.getTransaction().rollback();
 			log.warn(e.getMessage(), e);
 		}
     	
@@ -54,12 +51,9 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		T entity = null;
 
 		try {
-			session.beginTransaction();
 			entity = (T) session.get(type, id);
-			session.getTransaction().commit();
 		}
 		catch(Exception e) {
-			session.getTransaction().rollback();
 			log.warn(e.getMessage(), e);
 		}
 		
@@ -71,12 +65,9 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		List<T> list = null;
 		
 		try {
-			session.beginTransaction();
 			list = (List<T>) session.createCriteria(type).list();
-			session.getTransaction().commit();
 		}
 		catch(Exception e) {
-			session.getTransaction().rollback();
 			log.warn(e.getMessage(), e);
 		}
 		
@@ -87,13 +78,10 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		boolean result = false;
 		
 		try {
-			session.beginTransaction();
 			session.save(entity);
 			result = true;
-			session.getTransaction().commit();
 		}
 		catch(Exception e) {
-			session.getTransaction().rollback();
 			log.warn(e.getMessage(), e);
 		}
 		
@@ -104,16 +92,21 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		boolean result = false;
 		
 		try {
-			session.beginTransaction();
 			session.saveOrUpdate(entity);
 			result = true;
-			session.getTransaction().commit();
 		}
 		catch(Exception e) {
-			session.getTransaction().rollback();
 			log.warn(e.getMessage(), e);
 		}
 		
 		return result;
 	}
+	
+    public Session getSession() {
+    	return session;
+    }
+    
+    public void setSession(Session session) {
+    	this.session = session;
+    }
 }

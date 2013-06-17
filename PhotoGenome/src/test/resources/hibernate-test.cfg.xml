@@ -6,9 +6,10 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">root</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/PG_DB_Test</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/PG_DB</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
+        <property name="hibernate.current_session_context_class">org.hibernate.context.ManagedSessionContext</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         
         <mapping class="edu.cmu.photogenome.domain.Photo"/>
         <mapping class="edu.cmu.photogenome.domain.PhotoCategory"/>

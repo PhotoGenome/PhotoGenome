@@ -12,12 +12,9 @@ public class PhotoRegionDaoImpl extends GenericAbstractDaoImpl<PhotoRegion, Inte
 	public List<PhotoRegion> findByPhotoId(int photoId) {
 		List<PhotoRegion> list = null;
 		try {
-			session.beginTransaction();
 			list = (List<PhotoRegion>) session.createCriteria(type).add(Restrictions.eq("photoId", photoId)).list();
-			session.getTransaction().commit();
 		}
 		catch(Exception e) {
-			session.getTransaction().rollback();
 			log.warn(e.getMessage(), e);
 		}
 		

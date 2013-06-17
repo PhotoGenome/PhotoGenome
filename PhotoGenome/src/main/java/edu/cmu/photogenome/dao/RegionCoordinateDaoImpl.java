@@ -12,12 +12,9 @@ public class RegionCoordinateDaoImpl extends GenericAbstractDaoImpl<RegionCoordi
 	public List<RegionCoordinate> findByRegionId(int regionId) {
 		List<RegionCoordinate> list = null;
 		try {
-			session.beginTransaction();
 			list = (List<RegionCoordinate>) session.createCriteria(type).add(Restrictions.eq("regionId", regionId)).list();
-			session.getTransaction().commit();
 		}
 		catch(Exception e) {
-			session.getTransaction().rollback();
 			log.warn(e.getMessage(), e);
 		}
 		
