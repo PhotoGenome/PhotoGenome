@@ -4,8 +4,10 @@ import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.context.ManagedSessionContext;
 import org.junit.After;
 import org.junit.Before;
 import org.slf4j.Logger;
@@ -23,7 +25,7 @@ public abstract class HibernateDbUnitTestCase extends DBTestCase {
     
     public HibernateDbUnitTestCase() {
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.mysql.jdbc.Driver");  
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://localhost:3306/PG_DB_Test");  
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://localhost:3306/PG_DB");  
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "root");  
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "root");  
     }
@@ -35,15 +37,22 @@ public abstract class HibernateDbUnitTestCase extends DBTestCase {
             sessionFactory = HibernateUtil.getSessionFactory("hibernate-test.cfg.xml");  
         }  
   
-        session = sessionFactory.openSession();  
-        session.beginTransaction();
+        //session = sessionFactory.openSession();
+        //session.setFlushMode(FlushMode.MANUAL);
+        //ManagedSessionContext.bind((org.hibernate.classic.Session) session);
+        //session.beginTransaction();
+        session = sessionFactory.openSession();
+        HibernateUtil.beginTransaction(session);
         super.setUp(); 
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		session.getTransaction().commit();
-		session.close();
+		//ManagedSessionContext.unbind(sessionFactory);
+		//session.flush();
+		//session.getTransaction().commit();
+		//session.close();
+		HibernateUtil.commitTransaction(session);
 		super.tearDown();
 	}
     

@@ -13,8 +13,10 @@ import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
 import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
-import edu.cmu.photogenome.util.HibernateUtil;
 
+/**
+ *	JUnit test case for View Information business logic
+ */
 public class ViewInformationTest extends HibernateDbUnitTestCase {
 
 	@Test

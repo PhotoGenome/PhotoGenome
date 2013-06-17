@@ -16,7 +16,7 @@ public class DatabaseExportSample
         // database connection
         Class driverClass = Class.forName("com.mysql.jdbc.Driver");
         Connection jdbcConnection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/photogenomeDatabase", "root", "root");
+                "jdbc:mysql://localhost:3306/PG_DB", "root", "root");
         IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
         // full database export

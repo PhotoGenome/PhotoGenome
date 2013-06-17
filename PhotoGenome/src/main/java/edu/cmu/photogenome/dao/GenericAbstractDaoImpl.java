@@ -5,6 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.StaleStateException;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,10 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 			session.delete(entity);
 			result = true;
 		}
+    	catch(StaleStateException sse) { // the object trying to be deleted does not exist
+    		log.warn(sse.getMessage(), sse);
+    		result = true; // object does not exist, so return true
+    	}
 		catch(Exception e) {
 			log.warn(e.getMessage(), e);
 		}
