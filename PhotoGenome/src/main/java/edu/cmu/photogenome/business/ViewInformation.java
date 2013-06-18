@@ -2,6 +2,7 @@ package edu.cmu.photogenome.business;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +48,17 @@ public class ViewInformation {
 		regionCommentDao = new RegionCommentDaoImpl();
 		regionCategoryDao =new RegionCategoryDaoImpl();
 		regionCoordinateDao = new RegionCoordinateDaoImpl();
+	}
+	
+	public ViewInformation(Session session) {
+		this();
+		photoDao.setSession(session);
+		photoCommentDao.setSession(session);
+		photoCategoryDao.setSession(session);
+		photoRegionDao.setSession(session);
+		regionCommentDao.setSession(session);
+		regionCategoryDao.setSession(session);
+		regionCoordinateDao.setSession(session);
 	}
 	
 	/**
