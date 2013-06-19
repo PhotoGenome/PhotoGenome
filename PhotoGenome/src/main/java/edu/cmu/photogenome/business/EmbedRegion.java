@@ -2,6 +2,7 @@ package edu.cmu.photogenome.business;
 
 import java.util.Date;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,27 @@ public class EmbedRegion {
 		photoRegionDao = new PhotoRegionDaoImpl();
 		regionCommentDao = new RegionCommentDaoImpl();
 		regionCoordinateDao = new RegionCoordinateDaoImpl();
+	}
+	
+	/**
+	 * Constructor that also sets the Hibernate session to be used
+	 * 
+	 * @param session	Hibernate session to use when calling DAOs
+	 */
+	public EmbedRegion(Session session) {
+		this();
+		setSession(session);
+	}
+	
+	/**
+	 * Set the Hibernate session to use when calling DAOs
+	 * 
+	 * @param session
+	 */
+	public void setSession(Session session) {
+		photoRegionDao.setSession(session);
+		regionCommentDao.setSession(session);
+		regionCoordinateDao.setSession(session);
 	}
 	
 	/**

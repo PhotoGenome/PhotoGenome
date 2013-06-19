@@ -86,6 +86,8 @@
 			<result type="json">
 				<param name="root">jsonAddPhotoRegion</param>
 			</result>
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
 		</action>
 
 		<action name="deletePhotoRegion" method="deletePhotoRegion"
@@ -99,6 +101,8 @@
 			<result type="json">
 				<param name="root">jsonAddRegionComment</param>
 			</result>
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
 		</action>
 
 		<action name="deleteRegionComment" method="deleteRegionComment"
@@ -130,6 +134,8 @@
 			<result type="json">
 				<param name="root">jsonAddPhotoComments</param>
 			</result>
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
 		</action>
 
 		<action name="addPhotoCategories" method="addPhotoCategories"
@@ -137,6 +143,8 @@
 			<result type="json">
 				<param name="root">jsonAddPhotoCategories</param>
 			</result>
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
 		</action>
 		<!-- End adding actions for connecting UI with business logic -->
 	</package>
