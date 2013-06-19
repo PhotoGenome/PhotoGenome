@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.apache.struts2.json.JSONException;
 import org.apache.struts2.json.JSONWriter;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -19,20 +22,16 @@ import edu.cmu.photogenome.domain.PhotoRegion;
 import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
+import edu.cmu.photogenome.util.HibernateUtil;
 
 public class ViewInformationAction extends ActionSupport{
 
-	private final String jsonKey  = getText("json.key");
+	final Logger log = LoggerFactory.getLogger(ViewInformationAction.class);
+	
+	private final String jsonKey = getText("json.key");
 
 	private Integer photoId;
-	
-	public Integer getPhotoId() {
-		return photoId;
-	}
-
-	public void setPhotoId(Integer photoId) {
-		this.photoId = photoId;
-	}
+	private Integer regionId;
 
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonGetPhoto = new LinkedHashMap<String, Object>();
@@ -47,213 +46,215 @@ public class ViewInformationAction extends ActionSupport{
 
 	PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl();
 
-	/**Get photo using photoId
+	/**
+	 * Get photo from photoId
 	 * 
 	 * @return
 	 */
 	public String getPhoto(){
-
-		JSONWriter jsonWriter = null;
 		Photo photo = null;
-
-		try{
-			jsonWriter = new JSONWriter();
-			if((photo = viewInformation.getPhoto(photoId)) != null){
-				//jsonGetPhoto.put(String.valueOf(photo.getPhotoId()), jsonWriter.write(photo));
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		try {
+			if((photo = viewInformation.getPhoto(photoId)) != null) {
 				jsonGetPhoto.put(jsonKey, photo);
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			}else {
+			} 
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
 			}
-		}catch(Exception e){
+		} 
+		catch(Exception e) {
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
-
 	}
 
 	/**
-	 * Get photo comments
+	 * Get photo comments from photoId
 	 * 
 	 * @return 
 	 */
-	public String getPhotoComments(){
-
-
-		JSONWriter jsonWriter = null;
+	public String getPhotoComments() {
 		List<PhotoComment> list = null;
-		System.out.println("PHOTO ID = " + photoId);
-		try{
-			jsonWriter = new JSONWriter();
-			//System.out.println("PHOTO COMMENT= " + photoCommentDao.findById(1).getPhotoCommentText());
-
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		try {
+//			System.out.println("PHOTO COMMENT= " + photoCommentDao.findById(1).getPhotoCommentText());
 			if((list = viewInformation.getPhotoComments(photoId)) != null){
-				System.out.println(viewInformation.getPhotoComments(photoId).size());
-				//for (PhotoComment comment : list){
+//				System.out.println(viewInformation.getPhotoComments(photoId).size());
 				jsonGetPhotoComments.put(jsonKey, list);
-				System.out.println(jsonWriter.write(jsonGetPhotoComments));
-				//}
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
 			}else {
-				System.out.println("error");
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
 			}
-		}catch(JSONException e){
-			e.printStackTrace();
-			return ERROR;
 		} catch(Exception e){
-			e.printStackTrace();
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
 
 	}
 
 	/**
-	 * Get photo categories
+	 * Get photo categories from photoId
 	 * 
 	 * @return
 	 */
-
-	public String getPhotoCategories(){
-
-		JSONWriter jsonWriter = null;
+	public String getPhotoCategories() {
 		List<PhotoCategory> list = null;
-
-		try{
-			jsonWriter = new JSONWriter();
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		try {
 			if((list = viewInformation.getPhotoCategories(photoId)) != null){
-
-				//for (PhotoCategory category : list){
-				//jsonGetPhotoCategories.put(String.valueOf(category.getPhotoCategoryId()), jsonWriter.write(category));
 				jsonGetPhotoCategories.put(jsonKey, list);
-				//}
-
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			}else {
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
 			}
-		}catch(Exception e){
+		} catch(Exception e) {
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
-
 	}
 
 	/**
-	 * Get photo regions
+	 * Get photo regions from photoId
 	 * 
 	 * @return
 	 */
-	public String getPhotoRegions(){
-
-		JSONWriter jsonWriter = null;
+	public String getPhotoRegions() {
 		List<PhotoRegion> list = null;
-
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
 		try{
-			jsonWriter = new JSONWriter();
-			if( (list = viewInformation.getPhotoRegions(photoId)) != null){
-
-				//for (PhotoRegion region : list){
-				//	jsonGetPhotoRegions.put(String.valueOf(region.getRegionId()), jsonWriter.write(region));
-				//}
+			if((list = viewInformation.getPhotoRegions(photoId)) != null){
 				jsonGetPhotoRegions.put(jsonKey, list);
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			}else {
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
 			}
-		}catch(Exception e){
+		} catch(Exception e){
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
-
 	}
 
 	/**
-	 * Get region comments
+	 * Get region comments from regionId
 	 * 
 	 * @return
 	 */
-
 	public String getRegionComments(){
-
-		JSONWriter jsonWriter = null;
 		List<RegionComment> list = null;
-
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
 		try{
-			jsonWriter = new JSONWriter();
-			if( (list = viewInformation.getRegionComments(photoId)) != null){
-
-				//for (RegionComment regionComment : list){
-				//	jsonGetRegionComments.put(String.valueOf(regionComment.getRegionCommentId()), jsonWriter.write(regionComment));
-				//}
+			if((list = viewInformation.getRegionComments(regionId)) != null){
 				jsonGetRegionComments.put(jsonKey, list);
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			}else {
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
 			}
-		}catch(Exception e){
+		} catch(Exception e){
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
 
 	}
 
 	/**
-	 * Get region categories
+	 * Get region categories from regionId
 	 * 
 	 * @return
 	 */
-
 	public String getRegionCategories(){
-
-		JSONWriter jsonWriter = null;
 		List<RegionCategory> list = null;
-
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
 		try{
-			jsonWriter = new JSONWriter();
-			if( (list = viewInformation.getRegionCategories((photoId))) != null){
-
-				//for (RegionCategory regionCategory : list){
-				//	jsonGetRegionCategories.put(String.valueOf(regionCategory.getRegionCategoryId()), jsonWriter.write(regionCategory));
-				//}
-
+			if((list = viewInformation.getRegionCategories(regionId)) != null){
 				jsonGetRegionCategories.put(jsonKey, list);
-
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			}else {
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
 			}
-		}catch(Exception e){
+		} catch(Exception e){
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
-
 	}
 
 	/**
-	 * Get region co-ordinates
+	 * Get region coordinates from regionId
 	 * 
 	 * @return
 	 */
-
 	public String getRegionCoordinates(){
-
-		JSONWriter jsonWriter = null;
 		List<RegionCoordinate> list = null;
-
-		try{
-			jsonWriter = new JSONWriter();
-			if( (list = viewInformation.getRegionCoordinates((photoId))) != null){
-
-				//for (RegionCoordinate regionCoordinate: list){
-				//	jsonGetRegionCoordinates.put(String.valueOf(regionCoordinate.getRegionCoordinateId()),jsonWriter.write(regionCoordinate));
-				//}
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		try {
+			if((list = viewInformation.getRegionCoordinates(regionId)) != null){
 				jsonGetRegionCoordinates.put(jsonKey, list);
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			}else {
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
 			}
-		}catch(Exception e){
+		} catch(Exception e){
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
-
 	}
 
+	public Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
+	}
+
+	public Integer getPhotoId() {
+		return photoId;
+	}
+
+	public void setPhotoId(Integer photoId) {
+		this.photoId = photoId;
+	}
+	
 	public Map<String, Object> getJsonGetPhoto() {
 		return jsonGetPhoto;
 	}

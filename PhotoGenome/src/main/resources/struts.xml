@@ -32,7 +32,6 @@
 			<result type="json">
 				<param name="root">jsonGetPhotoComments</param>
 			</result>
-
 		</action>
 
 		<!-- Begin adding actions for connecting UI with business logic -->
@@ -41,6 +40,7 @@
 			<result type="json">
 				<param name="root">jsonGetPhoto</param>
 			</result>
+			<result name="error">Login.jsp</result>
 		</action>
 
 		<action name="getPhotoCategories" method="getPhotoCategories"

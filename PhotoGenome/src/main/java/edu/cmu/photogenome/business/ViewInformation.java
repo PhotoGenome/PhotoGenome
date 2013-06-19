@@ -50,8 +50,22 @@ public class ViewInformation {
 		regionCoordinateDao = new RegionCoordinateDaoImpl();
 	}
 	
+	/**
+	 * Constructor that also sets the Hibernate session to be used
+	 * 
+	 * @param session	Hibernate session to use when calling DAOs
+	 */
 	public ViewInformation(Session session) {
 		this();
+		setSession(session);
+	}
+	
+	/**
+	 * Set the Hibernate session to use when calling DAOs
+	 * 
+	 * @param session
+	 */
+	public void setSession(Session session) {
 		photoDao.setSession(session);
 		photoCommentDao.setSession(session);
 		photoCategoryDao.setSession(session);
