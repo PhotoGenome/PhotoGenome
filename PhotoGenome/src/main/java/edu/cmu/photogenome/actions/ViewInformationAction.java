@@ -58,6 +58,7 @@ public class ViewInformationAction extends ActionSupport{
 		HibernateUtil.beginTransaction(session);
 		try {
 			if((photo = viewInformation.getPhoto(photoId)) != null) {
+				//List<Photo>
 				jsonGetPhoto.put(jsonKey, photo);
 				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
@@ -223,7 +224,7 @@ public class ViewInformationAction extends ActionSupport{
 		viewInformation.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		try {
-			if((list = viewInformation.getRegionCoordinates(regionId)) != null){
+			if((list = viewInformation.getRegionCoordinates(photoId)) != null){
 				jsonGetRegionCoordinates.put(jsonKey, list);
 				HibernateUtil.commitTransaction(session);
 				return SUCCESS;

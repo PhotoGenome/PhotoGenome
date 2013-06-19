@@ -237,16 +237,16 @@ public class ViewInformationActionTest extends StrutsTestCase {
 	 */
 	@Test
 	public void testGetRegionCoordinates() throws Exception {
-		request.setParameter("regionId", "1");
+		request.setParameter("photoId", "1");
 		ActionProxy proxy = getActionProxy("/getRegionCoordinates");
 		ViewInformationAction viewInfoAction = (ViewInformationAction) proxy.getAction();
 		String result = proxy.execute();
 		Map<String, Object> jsonData = viewInfoAction.getJsonGetRegionCoordinates();
 		assertNotNull(jsonData);
 		List<RegionCoordinate> list = (List<RegionCoordinate>) jsonData.get("items");
-		assertEquals(1, list.size());
+		assertEquals(2, list.size());
 		for(RegionCoordinate r : list)
-			assertEquals(1, r.getRegionId());
+			assertEquals(1, r.getPhotoId());
 		assertEquals("success", result);
 	}
 
@@ -256,7 +256,7 @@ public class ViewInformationActionTest extends StrutsTestCase {
 	 */
 	@Test
 	public void testGetRegionCoordinatesEmpty() throws Exception {
-		request.setParameter("regionId", "-1");
+		request.setParameter("photoId", "-1");
 		ActionProxy proxy = getActionProxy("/getRegionCoordinates");
 		ViewInformationAction viewInfoAction = (ViewInformationAction) proxy.getAction();
 		String result = proxy.execute();

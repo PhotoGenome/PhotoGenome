@@ -196,12 +196,12 @@ public class ViewInformation {
 	}
 	
 	/**
-	 * Get the list of region coordinates for the given region id
+	 * Get the list of region coordinates for the given photo id
 	 * 
-	 * @param regionId
-	 * @return list of region coordinates, null if region not found
+	 * @param photoId
+	 * @return list of region coordinates, null if photo not found
 	 */
-	public List<RegionCoordinate> getRegionCoordinates(int regionId){
-		return regionCoordinateDao.findByRegionId(regionId);
+	public List<RegionCoordinate> getRegionCoordinates(int photoId){
+		return regionCoordinateDao.findByPhotoId(photoId);
 	}
 }

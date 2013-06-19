@@ -239,7 +239,7 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		List<RegionCoordinate> list = null;
 		list = (ArrayList<RegionCoordinate>) vi.getRegionCoordinates(1);
 		assertNotNull(list);
-		assertEquals(1, list.size());
+		assertEquals(2, list.size());
 		assertEquals(1, list.get(0).getRegionCoordinateId().intValue());
 	}
 
