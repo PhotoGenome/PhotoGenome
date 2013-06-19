@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,36 @@ public class EmbedPhoto {
 	private RegionCategoryDao regionCategoryDao = new RegionCategoryDaoImpl();
 	private PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl();
 
-
+	/**
+	 * Default constructor for initializing DAO's
+	 */
+	public EmbedPhoto() {
+		photoCategoryDao = new PhotoCategoryDaoImpl();
+		regionCategoryDao = new RegionCategoryDaoImpl();
+		photoCommentDao = new PhotoCommentDaoImpl();	
+	}
+	
+	/**
+	 * Constructor that also sets the Hibernate session to be used
+	 * 
+	 * @param session	Hibernate session to use when calling DAOs
+	 */
+	public EmbedPhoto(Session session) {
+		this();
+		setSession(session);
+	}
+	
+	/**
+	 * Set the Hibernate session to use when calling DAOs
+	 * 
+	 * @param session
+	 */
+	public void setSession(Session session) {
+		photoCategoryDao.setSession(session);
+		regionCategoryDao.setSession(session);
+		photoCommentDao.setSession(session);
+	}
+	
 	/**
 	 * Add comments
 	 * 
