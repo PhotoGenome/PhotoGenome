@@ -13,24 +13,24 @@
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result name="success">Login.jsp</result>
 		</action>
-		
+
 		<action name="remove" method="removeUser"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result name="success">Login.jsp</result>
 		</action>
-		
+
 		<action name="update" method="updateUser"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result name="success">Login.jsp</result>
 		</action>
-		
+
 		<action name="find" method="findUser"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>
 		</action>
-		
+
 		<action name="getPhotoComments" method="getPhotoComments"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
 			<result type="json">
@@ -116,6 +116,39 @@
 			<result name="success">Login.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
+
+		<!-- Start Added more action tags -->
+		<action name="editPhotoCategories" method="editPhotoCategories"
+			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<action name="editPhotoComments" method="editPhotoComments"
+			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<action name="editRegionCategories" method="editRegionCategories"
+			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<action name="deletePhotoComments" method="deletePhotoComments"
+			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<action name="deletePhotoCategories" method="deletePhotoCategories"
+			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<!-- End Added more action tags -->
 
 		<action name="deleteRegionCoordinate" method="deleteRegionCoordinate"
 			class="edu.cmu.photogenome.actions.EmbedRegionAction">
