@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import edu.cmu.photogenome.domain.PhotoRegion;
 import edu.cmu.photogenome.domain.RegionComment;
+import edu.cmu.photogenome.domain.RegionCoordinate;
 import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
 
 public class EmbedRegionTest extends HibernateDbUnitTestCase {
@@ -59,25 +60,61 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 		RegionComment regionComment = null;
 		assertEquals(false, embedRegion.editRegionComment(regionComment));
 	}
-	
+
 	@Test
 	public void testEditRegionCoordinate() {
-		fail("Not yet implemented");
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		RegionCoordinate coordinate = new RegionCoordinate();
+		coordinate.setPhotoId(1);
+		coordinate.setRegionCoordinateId(1);
+		coordinate.setRegionId(1);
+		coordinate.setRegionX(15);
+		coordinate.setRegionY(25);
+		coordinate.setUserId(1001);
+		assertEquals(true, embedRegion.editRegionCoordinate(coordinate));
+	}
+
+	@Test
+	public void testEditRegionCoordinateFalse() {
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		RegionCoordinate coordinate = null;
+		assertEquals(false, embedRegion.editRegionCoordinate(coordinate));
 	}
 
 	@Test
 	public void testDeletePhotoRegion() {
-		fail("Not yet implemented");
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		assertEquals(true, embedRegion.deletePhotoRegion(1));
+	}
+
+	@Test
+	public void testDeletePhotoRegionFalse() {
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		assertEquals(false, embedRegion.deletePhotoRegion(-1));
 	}
 
 	@Test
 	public void testDeleteRegionComment() {
-		fail("Not yet implemented");
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		assertEquals(true, embedRegion.deleteRegionComment(1));
+	}
+
+	@Test
+	public void testDeleteRegionCommentFalse() {
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		assertEquals(true, embedRegion.deleteRegionComment(-1));
 	}
 
 	@Test
 	public void testDeleteRegionCoordinate() {
-		fail("Not yet implemented");
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		assertEquals(true, embedRegion.deleteRegionCoordinate(1));
+	}
+	
+	@Test
+	public void testDeleteRegionCoordinateFalse() {
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		assertEquals(false, embedRegion.deleteRegionCoordinate(-1));
 	}
 
 }
