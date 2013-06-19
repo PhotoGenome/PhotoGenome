@@ -13,20 +13,24 @@
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result name="success">Login.jsp</result>
 		</action>
+		
 		<action name="remove" method="removeUser"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result name="success">Login.jsp</result>
 		</action>
+		
 		<action name="update" method="updateUser"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result name="success">Login.jsp</result>
 		</action>
+		
 		<action name="find" method="findUser"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>
 		</action>
+		
 		<action name="getPhotoComments" method="getPhotoComments"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
 			<result type="json">
@@ -34,7 +38,6 @@
 			</result>
 		</action>
 
-		<!-- Begin adding actions for connecting UI with business logic -->
 		<action name="getPhoto" method="getPhoto"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
 			<result type="json">
@@ -85,11 +88,41 @@
 			</result>
 		</action>
 
+		<action name="deletePhotoRegion" method="deletePhotoRegion"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
 		<action name="addRegionComment" method="addRegionComment"
 			class="edu.cmu.photogenome.actions.EmbedRegionAction">
 			<result type="json">
 				<param name="root">jsonAddRegionComment</param>
 			</result>
+		</action>
+
+		<action name="deleteRegionComment" method="deleteRegionComment"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<action name="editRegionComment" method="editRegionComment"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<action name="deleteRegionCoordinate" method="deleteRegionCoordinate"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+		</action>
+
+		<action name="editRegionCoordinate" method="editRegionCoordinate"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
 		</action>
 
 		<action name="addPhotoComments" method="addPhotoComments"

@@ -37,6 +37,23 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	}
 	
 	@Test
+	public void testGetPhotoComment() {
+		ViewInformation vi = new ViewInformation(session);
+		PhotoComment photoComment = null;
+		photoComment = vi.getPhotoComment(1);
+		assertNotNull(photoComment);
+		assertEquals(1, photoComment.getPhotoCommentId().intValue());
+	}
+	
+	@Test
+	public void testGetPhotoCommentNull() {
+		ViewInformation vi = new ViewInformation(session);
+		PhotoComment photoComment = null;
+		photoComment = vi.getPhotoComment(-1);
+		assertNull(photoComment);
+	}
+	
+	@Test
 	public void testGetPhotoComments() {
 		ViewInformation vi = new ViewInformation(session);
 		List<PhotoComment> list = null;
@@ -53,6 +70,23 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		list = (ArrayList<PhotoComment>) vi.getPhotoComments(-1);
 		assertNotNull(list);
 		assertEquals(0, list.size());
+	}
+	
+	@Test
+	public void testGetPhotoCategory() {
+		ViewInformation vi = new ViewInformation(session);
+		PhotoCategory photoCategory = null;
+		photoCategory = vi.getPhotoCategory(1);
+		assertNotNull(photoCategory);
+		assertEquals(1, photoCategory.getPhotoCategoryId().intValue());
+	}
+	
+	@Test
+	public void testGetPhotoCategoryNull() {
+		ViewInformation vi = new ViewInformation(session);
+		PhotoCategory photoCategory = null;
+		photoCategory = vi.getPhotoCategory(-1);
+		assertNull(photoCategory);
 	}
 	
 	@Test
@@ -75,6 +109,23 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	}
 	
 	@Test
+	public void testGetPhotoRegion() {
+		ViewInformation vi = new ViewInformation(session);
+		PhotoRegion photoRegion = null;
+		photoRegion = vi.getPhotoRegion(1);
+		assertNotNull(photoRegion);
+		assertEquals(1, photoRegion.getRegionId().intValue());
+	}
+	
+	@Test
+	public void testGetPhotoRegionNull() {
+		ViewInformation vi = new ViewInformation(session);
+		PhotoRegion photoRegion = null;
+		photoRegion = vi.getPhotoRegion(-1);
+		assertNull(photoRegion);
+	}
+	
+	@Test
 	public void testGetPhotoRegions() {
 		ViewInformation vi = new ViewInformation(session);
 		List<PhotoRegion> list = null;
@@ -91,6 +142,23 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		list = (ArrayList<PhotoRegion>) vi.getPhotoRegions(-1);
 		assertNotNull(list);
 		assertEquals(0, list.size());
+	}
+	
+	@Test
+	public void testGetRegionComment() {
+		ViewInformation vi = new ViewInformation(session);
+		RegionComment regionComment = null;
+		regionComment = vi.getRegionComment(1);
+		assertNotNull(regionComment);
+		assertEquals(1, regionComment.getRegionCommentId().intValue());
+	}
+	
+	@Test
+	public void testGetRegionCommentNull() {
+		ViewInformation vi = new ViewInformation(session);
+		RegionComment regionComment = null;
+		regionComment = vi.getRegionComment(-1);
+		assertNull(regionComment);
 	}
 	
 	@Test
@@ -113,6 +181,23 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	}
 
 	@Test
+	public void testGetRegionCategory() {
+		ViewInformation vi = new ViewInformation(session);
+		RegionCategory regionCategory = null;
+		regionCategory = vi.getRegionCategory(1);
+		assertNotNull(regionCategory);
+		assertEquals(1, regionCategory.getRegionCategoryId().intValue());
+	}
+	
+	@Test
+	public void testGetRegionCategoryNull() {
+		ViewInformation vi = new ViewInformation(session);
+		RegionCategory regionCategory = null;
+		regionCategory = vi.getRegionCategory(-1);
+		assertNull(regionCategory);
+	}
+	
+	@Test
 	public void testGetRegionCategories() {
 		ViewInformation vi = new ViewInformation(session);
 		List<RegionCategory> list = null;
@@ -131,6 +216,23 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		assertEquals(0, list.size());
 	}
 
+	@Test
+	public void testGetRegionCoordinate() {
+		ViewInformation vi = new ViewInformation(session);
+		RegionCoordinate regionCoordinate = null;
+		regionCoordinate = vi.getRegionCoordinate(1);
+		assertNotNull(regionCoordinate);
+		assertEquals(1, regionCoordinate.getRegionCoordinateId().intValue());
+	}
+	
+	@Test
+	public void testGetRegionCoordinateNull() {
+		ViewInformation vi = new ViewInformation(session);
+		RegionCoordinate regionCoordinate = null;
+		regionCoordinate = vi.getRegionCoordinate(-1);
+		assertNull(regionCoordinate);
+	}
+	
 	@Test
 	public void testGetRegionCoordinates() {
 		ViewInformation vi = new ViewInformation(session);

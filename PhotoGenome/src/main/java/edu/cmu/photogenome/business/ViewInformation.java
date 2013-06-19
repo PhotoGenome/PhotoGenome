@@ -86,6 +86,16 @@ public class ViewInformation {
 	}
 	
 	/**
+	 * Get the photo comment for the given id
+	 * 
+	 * @param photoCommentId
+	 * @return the photo comment, or null if the id not found
+	 */
+	public PhotoComment getPhotoComment(int photoCommentId) {
+		return photoCommentDao.findById(photoCommentId);
+	}
+	
+	/**
 	 * Get the list of photo comments for the given photo id
 	 * 
 	 * @param photoId
@@ -94,7 +104,17 @@ public class ViewInformation {
 	public List<PhotoComment> getPhotoComments(int photoId) {
 		return photoCommentDao.findByPhotoId(photoId);
 	}
-
+	
+	/**
+	 * Get the photo category from the given id
+	 * 
+	 * @param photoCategoryId
+	 * @return the photo category, or null if the id is not found
+	 */
+	public PhotoCategory getPhotoCategory(int photoCategoryId) {
+		return photoCategoryDao.findById(photoCategoryId);
+	}
+	
 	/**
 	 * Get the list of photo categories for the given photo id
 	 * 
@@ -103,6 +123,16 @@ public class ViewInformation {
 	 */
 	public List<PhotoCategory> getPhotoCategories(int photoId) {
 		return photoCategoryDao.findByPhotoId(photoId);
+	}
+	
+	/**
+	 * Get the photo region for the given id
+	 * 
+	 * @param photoRegionId
+	 * @return the photo region, or null if the id is not found
+	 */
+	public PhotoRegion getPhotoRegion(int photoRegionId) {
+		return photoRegionDao.findById(photoRegionId);
 	}
 	
 	/**
@@ -116,6 +146,16 @@ public class ViewInformation {
 	}
 
 	/**
+	 * Get the region comment for the given id
+	 * 
+	 * @param regionCommentId
+	 * @return the region comment, or null if the id is not found
+	 */
+	public RegionComment getRegionComment(int regionCommentId) {
+		return regionCommentDao.findById(regionCommentId);
+	}
+	
+	/**
 	 * Get the list of region comments for the given region id
 	 * 
 	 * @param regionId
@@ -124,7 +164,17 @@ public class ViewInformation {
 	public List<RegionComment> getRegionComments(int regionId) {
 		return regionCommentDao.findByRegionId(regionId);
 	}
-
+	
+	/**
+	 * Get the region category for the given id
+	 * 
+	 * @param regionCategoryId
+	 * @return the region category, or null if the id is not found
+	 */
+	public RegionCategory getRegionCategory(int regionCategoryId) {
+		return regionCategoryDao.findById(regionCategoryId);
+	}
+	
 	/**
 	 * Get the list of region categories for the given region id
 	 * 
@@ -133,6 +183,16 @@ public class ViewInformation {
 	 */
 	public List<RegionCategory> getRegionCategories(int regionId){
 		return regionCategoryDao.findByRegionId(regionId);
+	}
+	
+	/**
+	 * Get the region coordinate for the given id
+	 * 
+	 * @param regionCoordinateId
+	 * @return the region coordinate, or null if the id is not found
+	 */
+	public RegionCoordinate getRegionCoordinate(int regionCoordinateId) {
+		return regionCoordinateDao.findById(regionCoordinateId);
 	}
 	
 	/**
