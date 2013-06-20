@@ -71,6 +71,7 @@ public class EmbedPhoto {
 		photoComment.setPhotoId(photoId);
 		photoComment.setUserId(userId);
 		photoComment.setPhotoCommentText(comment);
+		photoComment.setPhotoCommentTimestamp(new Date());
 
 		if(photoCommentDao.save(photoComment)) {
 			log.debug("Photo comments saved for photo ", photoComment.getPhotoId());	
