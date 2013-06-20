@@ -551,7 +551,7 @@ function getPhotoComments(){
 
 	  function deleteRegionCategory(regionCategoryId){
 			$.getJSON(
-		    	'deleteRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCategoryId:regionCategoryId},
+		    	'deleteRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCategoryId:parseInt(regionCategoryId)},
 		         	  function(jsonRegionCategories) {
 		       	 });
 		       return false;
@@ -559,7 +559,7 @@ function getPhotoComments(){
 		  
 		 function deleteRegionComment(regionCommentId){
 				$.getJSON(
-			    	'deleteRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCommentId:regionCommentId},
+			    	'deleteRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCommentId:parseInt(regionCommentId)},
 			         	  function(jsonRegionCategories) {
 			       	 });
 			       return false;
@@ -567,21 +567,21 @@ function getPhotoComments(){
 	  
 			  function deletePhotoRegion(regionId){
 					$.getJSON(
-				    	'deletePhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:regionId},
+				    	'deletePhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:parseInt(regionId)},
 				         	  function(jsonPhotoRegion) {
 				       	 });
 				       return false;
 				  };
 		  function deletePhotoCategory(photoCategoryId){
 					$.getJSON(
-				    	'deletePhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCategoryId:photoCategoryId},
+				    	'deletePhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCategoryId:parseInt(photoCategoryId)},
 				         	  function(jsonRegionCategories) {
 				       	 });
 				       return false;
 				  };
 		function deletePhotoComment(photoCommentId){
 						$.getJSON(
-					    	'deletePhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCommentId:photoCommentId},
+					    	'deletePhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCommentId:parseInt(photoCommentId)},
 					         	  function(jsonRegionCategories) {
 					       	 });
 					       return false;
