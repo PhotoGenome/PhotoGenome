@@ -128,6 +128,8 @@ public class EmbedRegionAction extends ActionSupport {
 			return ERROR;
 		}
 		else {
+			categoryDetails = new ArrayList<SimpleEntry<String, String>>();
+			categoryDetails.add(new SimpleEntry<String, String>(categoryName, regionCategoryText));
 			if((category = embedRegion.addRegionCategory(regionId, photoId, userId, categoryDetails)) != null) {
 				jsonAddRegionCategory.put(jsonKey, category);
 				HibernateUtil.commitTransaction(session);
