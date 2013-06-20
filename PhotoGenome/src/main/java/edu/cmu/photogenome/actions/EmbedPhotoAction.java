@@ -171,7 +171,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		embedPhoto.setSession(session);
 		HibernateUtil.beginTransaction(session);
-		
+		photoDao.setSession(session);
 		try{
 			photo = photoDao.findById(photoId);
 
@@ -209,6 +209,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		embedPhoto.setSession(session);
 		HibernateUtil.beginTransaction(session);
+		photoDao.setSession(session);
 		
 		try{
 			categoryList = new ArrayList<SimpleEntry<String, String>>();
@@ -249,6 +250,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		embedPhoto.setSession(session);
 		HibernateUtil.beginTransaction(session);
+		photoCommentDao.setSession(session);
 		
 		if((photoComment = photoCommentDao.findById(photoCommentId)) == null) {
 			HibernateUtil.rollbackTransaction(session);
@@ -311,6 +313,8 @@ public class EmbedPhotoAction extends ActionSupport {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		embedPhoto.setSession(session);
 		HibernateUtil.beginTransaction(session);
+		
+		regionCategoryDao.setSession(session);
 		
 		if((regionCategory = regionCategoryDao.findById(regionCategoryId)) == null) {
 			HibernateUtil.rollbackTransaction(session);
