@@ -15,24 +15,24 @@ import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
 public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 
 	@Test
-	public void testAddPhotoComments() {
+	public void testAddPhotoComment() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoComment photoComment = null;
-		photoComment = embedPhoto.addPhotoComments(1, 1, "testing");
+		photoComment = embedPhoto.addPhotoComment(1, 1, "testing");
 		assertNotNull(photoComment);
 		assertEquals(1, photoComment.getPhotoId());
 	}
 
 	@Test
-	public void testAddPhotoCommentsNull() {
+	public void testAddPhotoCommentNull() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoComment photoComment = null;
-		photoComment = embedPhoto.addPhotoComments(0, 0, "testing");
+		photoComment = embedPhoto.addPhotoComment(0, 0, "testing");
 		assertNull(photoComment);
 	}
 
 	@Test
-	public void testAddPhotoCategories() {
+	public void testAddPhotoCategory() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoCategory photoCategory = null;
 
@@ -42,29 +42,29 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 		categoryDetails.add(pair1);
 		categoryDetails.add(pair2);
 
-		photoCategory = embedPhoto.addPhotoCategories(1, 1, categoryDetails);
+		photoCategory = embedPhoto.addPhotoCategory(1, 1, categoryDetails);
 
 		assertNotNull(photoCategory);
 		assertEquals(1, photoCategory.getPhotoId());
 	}
 
 	@Test
-	public void testAddPhotoCategoriesNull() {
+	public void testAddPhotoCategoryNull() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoCategory photoCategory = null;
-		photoCategory = embedPhoto.addPhotoCategories(1, 1, null);
+		photoCategory = embedPhoto.addPhotoCategory(1, 1, null);
 
 		assertNull(photoCategory);
 
 	}
 
 	@Test
-	public void testEditPhotoComments() {
+	public void testEditPhotoComment() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoComment photoComment = new PhotoComment();
 		photoComment.setPhotoCommentTimestamp(new Date());
 		photoComment.setPhotoCommentText("test comment");
-		assertEquals(true, embedPhoto.editPhotoComments(photoComment));
+		assertEquals(true, embedPhoto.editPhotoComment(photoComment));
 
 	}
 
@@ -72,69 +72,69 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 	public void testEditPhotoCommentsFalse() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoComment photoComment = null;
-		assertEquals(false, embedPhoto.editPhotoComments(photoComment));
+		assertEquals(false, embedPhoto.editPhotoComment(photoComment));
 	}
 
 	@Test
-	public void testDeletePhotoComments() {
+	public void testDeletePhotoComment() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
-		assertEquals(true, embedPhoto.deletePhotoComments(1));
+		assertEquals(true, embedPhoto.deletePhotoComment(1));
 	}
 
 	@Test
-	public void testDeletePhotoCommentsFalse() {
+	public void testDeletePhotoCommentFalse() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
-		assertEquals(true, embedPhoto.deletePhotoComments(0));
+		assertEquals(true, embedPhoto.deletePhotoComment(0));
 	}
 
 	@Test
-	public void testEditPhotoCategories() {
+	public void testEditPhotoCategory() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoCategory category = new PhotoCategory();
 		//category.setPhotoId(1);
 		category.setPhotoCategoryId(1);
 		category.setPhotoCategoryText("Test Text");
 		category.setPhotoCategoryName("Test Name");
-		assertEquals(true, embedPhoto.editPhotoCategories(category));
+		assertEquals(true, embedPhoto.editPhotoCategory(category));
 	}
 
 	@Test
-	public void testEditPhotoCategoriesFalse() {
+	public void testEditPhotoCategoryFalse() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoCategory category = new PhotoCategory();
 		//category.setPhotoId(1);
 		category.setPhotoCategoryId(-1);
 		category.setPhotoCategoryText("Test Text");
 		category.setPhotoCategoryName("Test Name");
-		assertEquals(false, embedPhoto.editPhotoCategories(category));
+		assertEquals(false, embedPhoto.editPhotoCategory(category));
 	}
 
 	@Test
-	public void testEditRegionCategories() {
+	public void testEditRegionCategory() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		RegionCategory category = new RegionCategory();
 		category.setRegionCategoryId(1);
 		category.setCategoryName("Test Name");
 		category.setRegionCategoryText("Test Text");
-		assertEquals(true, embedPhoto.editRegionCategories(category));
+		assertEquals(true, embedPhoto.editRegionCategory(category));
 	}
 
 	@Test
-	public void testEditRegionCategoriesFalse() {
+	public void testEditRegionCategoryFalse() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
-		assertEquals(false, embedPhoto.editRegionCategories(null));
+		assertEquals(false, embedPhoto.editRegionCategory(null));
 	}
 
 	@Test
-	public void testDeletePhotoCategories() {
+	public void testDeletePhotoCategory() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
-		assertEquals(true, embedPhoto.deletePhotoCategories(1));
+		assertEquals(true, embedPhoto.deletePhotoCategory(1));
 	}
 
 	@Test
-	public void testDeletePhotoCategoriesFalse() {
+	public void testDeletePhotoCategoryFalse() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
-		assertEquals(false, embedPhoto.deletePhotoCategories(-1));
+		assertEquals(false, embedPhoto.deletePhotoCategory(-1));
 	}
 
 }

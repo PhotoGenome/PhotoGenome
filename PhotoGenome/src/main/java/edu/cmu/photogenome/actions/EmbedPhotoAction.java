@@ -160,7 +160,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	 * @return
 	 */
 
-	public String addPhotoComments(){
+	public String addPhotoComment(){
 
 		Photo photo = null;
 		PhotoComment photoComment = null;
@@ -169,7 +169,7 @@ public class EmbedPhotoAction extends ActionSupport {
 			photo = photoDao.findById(photoId);
 
 			if(photo != null) {
-				if((photoComment = embedPhoto.addPhotoComments(photoId, userId, photoCommentText)) == null)
+				if((photoComment = embedPhoto.addPhotoComment(photoId, userId, photoCommentText)) == null)
 					return ERROR;
 			}else
 				return ERROR;
@@ -188,7 +188,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	 * @return true if category is added, otherwise false
 	 */
 
-	public String addPhotoCategories(){
+	public String addPhotoCategory(){
 
 		Photo photo = null;
 		PhotoCategory photoCategory = null;
@@ -201,7 +201,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		if(photo != null) {
 			categoryList.add(new SimpleEntry<String, String>(photoCategoryName, photoCategoryText));
 					
-			if((photoCategory = embedPhoto.addPhotoCategories(photoId, userId, categoryList))==null)
+			if((photoCategory = embedPhoto.addPhotoCategory(photoId, userId, categoryList))==null)
 				return ERROR;
 		}else{
 
@@ -223,7 +223,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	 * @return true if comment is updated, otherwise false
 	 */
 
-	public String editPhotoComments(){
+	public String editPhotoComment(){
 
 		PhotoComment photoComment = null;
 		if((photoComment = photoCommentDao.findById(photoCommentId)) == null)
@@ -231,7 +231,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		else {
 			photoComment.setPhotoCommentTimestamp(new Date());
 			photoComment.setPhotoCommentText(photoCommentText);
-			if (embedPhoto.editPhotoComments(photoComment))
+			if (embedPhoto.editPhotoComment(photoComment))
 				return SUCCESS;
 			else 
 				return ERROR;
@@ -244,14 +244,14 @@ public class EmbedPhotoAction extends ActionSupport {
 	 * @return true if category is updated, otherwise false
 	 */
 
-	public String editPhotoCategories(){
+	public String editPhotoCategory(){
 
 		PhotoCategory photoCategory = photoCategoryDao.findById(photoId);
 
 		if(photoCategory != null) {
 			photoCategory.setPhotoCategoryName(photoCategoryName);
 			photoCategory.setPhotoCategoryText(photoCategoryText);
-			if(!embedPhoto.editPhotoCategories(photoCategory))
+			if(!embedPhoto.editPhotoCategory(photoCategory))
 				return ERROR;
 		}else
 			return "invalid_photo_category";
@@ -266,7 +266,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	 * @return true if region category is updated, otherwise false
 	 */
 
-	public String editRegionCategories(){
+	public String editRegionCategory(){
 
 		RegionCategory regionCategory = null;
 		if((regionCategory = regionCategoryDao.findById(regionCategoryId)) == null)
@@ -274,7 +274,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		else {
 			regionCategory.setCategoryName(categoryName);
 			regionCategory.setRegionCategoryText(regionCategoryText);
-			if (embedPhoto.editRegionCategories(regionCategory))
+			if (embedPhoto.editRegionCategory(regionCategory))
 				return SUCCESS;
 			else 
 				return ERROR;
@@ -287,8 +287,8 @@ public class EmbedPhotoAction extends ActionSupport {
 	 * @return true if comment is deleted, otherwise false
 	 */
 
-	public String deletePhotoComments(){
-		if(embedPhoto.deletePhotoComments(photoCommentId))
+	public String deletePhotoComment(){
+		if(embedPhoto.deletePhotoComment(photoCommentId))
 			return SUCCESS;
 		else
 			return ERROR;
@@ -301,9 +301,9 @@ public class EmbedPhotoAction extends ActionSupport {
 	 * @return true if photo category is deleted, otherwise false
 	 */
 
-	public String deletePhotoCategories(){
+	public String deletePhotoCategory(){
 
-		if(embedPhoto.deletePhotoCategories(photoCategoryId))
+		if(embedPhoto.deletePhotoCategory(photoCategoryId))
 			return SUCCESS;
 		else
 			return ERROR;

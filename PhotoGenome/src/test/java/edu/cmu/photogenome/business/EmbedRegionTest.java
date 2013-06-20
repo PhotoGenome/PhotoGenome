@@ -1,5 +1,7 @@
 package edu.cmu.photogenome.business;
 
+import java.util.Date;
+
 import org.junit.Test;
 
 import edu.cmu.photogenome.domain.PhotoRegion;
@@ -49,6 +51,7 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		RegionComment regionComment = new RegionComment();
 		regionComment.setPhotoId(1);
+		regionComment.setRegionCommentTimestamp(new Date());
 		regionComment.setRegionCommentId(1);
 		regionComment.setRegionCommentText("test comment");
 		assertEquals(true, embedRegion.editRegionComment(regionComment));
@@ -66,6 +69,7 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		RegionCoordinate coordinate = new RegionCoordinate();
 		coordinate.setPhotoId(1);
+		coordinate.setRegionCoordinateTimestamp(new Date());
 		coordinate.setRegionCoordinateId(1);
 		coordinate.setRegionId(1);
 		coordinate.setRegionX(15);
@@ -77,7 +81,8 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 	@Test
 	public void testEditRegionCoordinateFalse() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
-		RegionCoordinate coordinate = null;
+		RegionCoordinate coordinate = new RegionCoordinate();
+		coordinate.setRegionCoordinateId(-1);
 		assertEquals(false, embedRegion.editRegionCoordinate(coordinate));
 	}
 
