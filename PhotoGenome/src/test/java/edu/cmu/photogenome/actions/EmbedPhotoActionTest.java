@@ -18,7 +18,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 		request.setParameter("userId", "1000");
 		request.setParameter("photoCommentText", "test comment");
 
-		ActionProxy proxy = getActionProxy("/addPhotoComments");
+		ActionProxy proxy = getActionProxy("/addPhotoComment");
 		EmbedPhotoAction action = (EmbedPhotoAction) proxy.getAction();
 		String result = proxy.execute();
 		Map<String, Object> jsonData = action.getJsonAddPhotoComments();
@@ -32,7 +32,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 	public void testAddPhotoCommentsNull() throws Exception {
 		request.setParameter("photoId", "-1");
 
-		ActionProxy proxy = getActionProxy("/addPhotoComments");
+		ActionProxy proxy = getActionProxy("/addPhotoComment");
 		//EmbedPhotoAction action = (EmbedPhotoAction) proxy.getAction();
 		String result = proxy.execute();
 		assertEquals("error", result);
@@ -45,7 +45,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 		request.setParameter("photoCategoryName", "test category name");
 		request.setParameter("photoCategoryText", "test category text");		
 
-		ActionProxy proxy = getActionProxy("/addPhotoCategories");
+		ActionProxy proxy = getActionProxy("/addPhotoCategory");
 		EmbedPhotoAction action = (EmbedPhotoAction) proxy.getAction();
 		String result = proxy.execute();
 		Map<String, Object> jsonData = action.getJsonAddPhotoCategories();
@@ -59,7 +59,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 	public void testAddPhotoCategoriesNull() throws Exception {
 		request.setParameter("photoId", "-1");
 
-		ActionProxy proxy = getActionProxy("/addPhotoCategories");
+		ActionProxy proxy = getActionProxy("/addPhotoCategory");
 		//EmbedPhotoAction action = (EmbedPhotoAction) proxy.getAction();
 		String result = proxy.execute();
 		assertEquals("error", result);
@@ -71,7 +71,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 		request.setParameter("photoCommentId", "1");
 		request.setParameter("photoCommentText", "test action comment");
 
-		ActionProxy proxy = getActionProxy("/editPhotoComments");
+		ActionProxy proxy = getActionProxy("/editPhotoComment");
 		//EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
 		String result = proxy.execute();
 		assertEquals("success", result);
@@ -83,7 +83,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 		request.setParameter("photoCategoryName", "test category name");
 		request.setParameter("photoCategoryText", "test category text");
 
-		ActionProxy proxy = getActionProxy("/editPhotoCategories");
+		ActionProxy proxy = getActionProxy("/editPhotoCategory");
 		//EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
 		String result = proxy.execute();
 		assertEquals("success", result);
@@ -95,7 +95,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 		request.setParameter("categoryName", "test category name");
 		request.setParameter("regionCategoryText", "test category text");
 
-		ActionProxy proxy = getActionProxy("/editRegionCategories");
+		ActionProxy proxy = getActionProxy("/editRegionCategory");
 		//EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
 		String result = proxy.execute();
 		assertEquals("success", result);
@@ -105,7 +105,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 	public void testDeletePhotoComments() throws Exception {
 		request.setParameter("photoCommentId", "1");
 
-		ActionProxy proxy = getActionProxy("/deletePhotoComments");
+		ActionProxy proxy = getActionProxy("/deletePhotoComment");
 		//EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
 		String result = proxy.execute();
 		assertEquals("success", result);
@@ -115,7 +115,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 	public void testDeletePhotoCategories() throws Exception {
 		request.setParameter("photoCategoryId", "1");
 
-		ActionProxy proxy = getActionProxy("/deletePhotoCategories");
+		ActionProxy proxy = getActionProxy("/deletePhotoCategory");
 		//EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
 		String result = proxy.execute();
 		assertEquals("success", result);

@@ -153,7 +153,7 @@
 	
 		</action>
 
-		<action name="addPhotoComment" method="addPhotoComments"
+		<action name="addPhotoComment" method="addPhotoComment"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result type="json">
 				<param name="root">jsonAddPhotoComments</param>
