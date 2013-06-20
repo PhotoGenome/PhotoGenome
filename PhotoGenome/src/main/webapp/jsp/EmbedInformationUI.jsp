@@ -110,7 +110,7 @@
         $(document).on('click','.RCatsubmit_box',function(){
             var categoryParent= $(this).parent().parent();
             var category= categoryParent.find('.RCatcomment_box');
-            var regionCategoryText=category.text().split(':');
+           var regionCategoryText=category.text().split(':');
             alert(regionCategoryText[0]+' '+regionCategoryText[1]+' '+category.attr('regionCategoryId'));
             editRegionCategory(regionCategoryText[0],regionCategoryText[1],category.attr('regionCategoryId'));
             return false;
@@ -524,10 +524,8 @@ function getPhotoComments(){
 		         	};	
 		      
 		function editRegionCategory(categoryName,regionCategoryText,regionCategoryId){
-			 alert(categoryName+'  '+regionCategortyText +'  '+ regionCategoryId);
-				
 			$.getJSON(
-		    	'editRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCategoryId:regionCategoryId,categoryName:categoryName,regionCategortyText:regionCategoryText,},
+		    	'editRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCategoryId:regionCategoryId,categoryName:categoryName,regionCategoryText:regionCategoryText},
 		         	  function(jsonRegionCategories) {
 		         });
 		       return false;
@@ -602,7 +600,7 @@ function addBox(x,y,w,h,regionId){
 	var canvas = $('#canvas');
 	 canvas.append('<div id="'+'regionx_' + x + '_y_' +y+'_w_' + w + '_h_' + h+'"></div>');
 	 $('#'+'regionx_' + x + '_y_' +y+'_w_' + w + '_h_' + h).addClass('ui-boxer')
-	     .css({ border: '1px solid red',
+	     .css({ border: '2px solid white',
 	             padding: '0.5em',
 	             position: 'absolute',
 	            'z-index': 100,
@@ -610,6 +608,7 @@ function addBox(x,y,w,h,regionId){
 	             width: parseInt(w), height: parseInt(h)})
 	     .append('<div regionId="'+regionId+'" class="Rclose_box"></div> ')
 		.click(function () {
+			$(this).css({ border: '2px solid red', padding: '0.5em' });
 			jQuery('#regionComments').html('');
 			jQuery('#regionCategories').html('');
 			$('#txtRegionCategories').attr('disabled', false).focus();
@@ -747,21 +746,20 @@ $.extend($.ui.boxer, {
 $('#canvas').boxer({
 	stop: function(event, ui) {
 		var offset = ui.box.offset();
-		var regionId=0;
+		var regionId;
 		$.getJSON(
 		    	'addPhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,shapeId:1,regionX:parseInt(offset.left),regionY:parseInt(offset.top),width:parseInt(ui.box.width()),height:parseInt(ui.box.height())},
 		         	  function(jsonRegionCoordinates) {
-		    	  for (coordinate in jsonRegionCoordinates.items) {
-		       		regionId=  jsonRegionCoordinates.items[coordinate].regionId;
-		       	  }
+		    	    regionId=  jsonRegionCoordinates.items.regionId;
+		             	 
 		         });
-		
-		ui.box.css({ border: '1px solid red', padding: '0.5em' });
+		ui.box.css({ border: '2px solid white', padding: '0.5em' });
 		ui.box.attr('id', regionId);
 		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box"></div> ');
 		ui.box.click(function () {
 			jQuery('#regionComments').html('');
 			jQuery('#regionCategories').html('');
+			$(this).css({ border: '2px solid red', padding: '0.5em' });
 			$('#txtRegionCategories').attr('disabled', false).focus();
 		    $('#txtRegionComments').attr('disabled', false).focus();
 		    getRegionComments(regionId);
