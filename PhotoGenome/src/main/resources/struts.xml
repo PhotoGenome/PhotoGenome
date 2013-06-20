@@ -184,7 +184,7 @@
 			<result name="success">Login.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
-		<!-- End adding actions for connecting UI with business logic -->
+		<!-- End adding actions for connecting UI with business logic   -->
 	</package>
 
 	<package name=""></package>
