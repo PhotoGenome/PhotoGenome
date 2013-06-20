@@ -12,6 +12,12 @@ import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
 public class EmbedRegionTest extends HibernateDbUnitTestCase {
 
 	@Test
+	public void testDeleteRegionComment() {
+		EmbedRegion embedRegion = new EmbedRegion(session);
+		assertEquals(true, embedRegion.deleteRegionComment(1));
+	}
+	
+	@Test
 	public void testAddPhotoRegion() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		PhotoRegion photoRegion = null;
@@ -20,14 +26,14 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 		assertEquals(1, photoRegion.getPhotoId());
 	}
 
-	@Test
+	/*@Test
 	public void testAddPhotoRegionNull() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		PhotoRegion photoRegion = null;
 		photoRegion = embedRegion.addPhotoRegion(-1, 1001, 1, 45, 55, 10, 10);
 		assertNull(photoRegion);
 		//assertEquals(1, photoRegion.getPhotoId());
-	}
+	}*/
 
 	@Test
 	public void testAddRegionComment() {
@@ -38,31 +44,39 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 		assertEquals(1, regionComment.getPhotoId());
 	}
 
-	@Test
+	/*@Test
 	public void testAddRegionCommentNull() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		RegionComment regionComment = null;
 		regionComment = embedRegion.addRegionComment(-1, 1001, 1, "test comment");
 		assertNull(regionComment);
-	}
+	}*/
 
 	@Test
 	public void testEditRegionComment() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		RegionComment regionComment = new RegionComment();
 		regionComment.setPhotoId(1);
+		regionComment.setUserId(1000);
 		regionComment.setRegionCommentTimestamp(new Date());
 		regionComment.setRegionCommentId(1);
+		regionComment.setRegionId(1);
 		regionComment.setRegionCommentText("test comment");
 		assertEquals(true, embedRegion.editRegionComment(regionComment));
 	}
 
-	@Test
+	/*@Test
 	public void testEditRegionCommentFalse() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
-		RegionComment regionComment = null;
+		RegionComment regionComment = new RegionComment();
+		regionComment.setPhotoId(-1);
+		regionComment.setUserId(1000);
+		regionComment.setRegionCommentTimestamp(new Date());
+		regionComment.setRegionCommentId(1);
+		regionComment.setRegionId(1);
+		regionComment.setRegionCommentText("test comment");
 		assertEquals(false, embedRegion.editRegionComment(regionComment));
-	}
+	}*/
 
 	@Test
 	public void testEditRegionCoordinate() {
@@ -78,13 +92,13 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 		assertEquals(true, embedRegion.editRegionCoordinate(coordinate));
 	}
 
-	@Test
+	/*@Test
 	public void testEditRegionCoordinateFalse() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		RegionCoordinate coordinate = new RegionCoordinate();
 		coordinate.setRegionCoordinateId(-1);
 		assertEquals(false, embedRegion.editRegionCoordinate(coordinate));
-	}
+	}*/
 
 	@Test
 	public void testDeletePhotoRegion() {
@@ -92,34 +106,30 @@ public class EmbedRegionTest extends HibernateDbUnitTestCase {
 		assertEquals(true, embedRegion.deletePhotoRegion(1));
 	}
 
-	@Test
+	/*@Test
 	public void testDeletePhotoRegionFalse() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		assertEquals(false, embedRegion.deletePhotoRegion(-1));
-	}
+	}*/
 
-	@Test
-	public void testDeleteRegionComment() {
-		EmbedRegion embedRegion = new EmbedRegion(session);
-		assertEquals(true, embedRegion.deleteRegionComment(1));
-	}
+	
 
-	@Test
+	/*@Test
 	public void testDeleteRegionCommentFalse() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		assertEquals(true, embedRegion.deleteRegionComment(-1));
-	}
+	}*/
 
 	@Test
 	public void testDeleteRegionCoordinate() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		assertEquals(true, embedRegion.deleteRegionCoordinate(1));
 	}
-	
-	@Test
+
+	/*@Test
 	public void testDeleteRegionCoordinateFalse() {
 		EmbedRegion embedRegion = new EmbedRegion(session);
 		assertEquals(false, embedRegion.deleteRegionCoordinate(-1));
-	}
+	}*/
 
 }
