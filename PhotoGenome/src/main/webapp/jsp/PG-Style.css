@@ -8,156 +8,187 @@
   
  
   .box{
+   border:1px solid darkGrey;
     position:relative;
     float:left;
     background:#eee;
     width:400px;
     left:0px;
-    padding:10px;
-    margin:0px;
+    padding:0px;
+    margin:2px;
   }
   .PCclose_box{
-    background:grey;
-    color:#fff;
+      background-image:url('Close.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:15px;
-    border-radius:3px;
     cursor:pointer;
   }
    .PCedit_box{
-    background:red;
-    color:#fff;
+    background-image:url('Edit.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
    .PCsubmit_box{
-    background:green;
-    color:#fff;
+    background-image:url('Sub.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
   .PCcomment_box{
     width:400px;
+    font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
   }
    .PCatclose_box{
-    background:grey;
-    color:#fff;
-    padding:2px 5px;
+     background-image:url('Close.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
+    padding:2px;
     display:inline;
     position:absolute;
     right:15px;
-    border-radius:3px;
     cursor:pointer;
   }
   
   .PCatedit_box{
-    background:red;
-    color:#fff;
+    background-image:url('Edit.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
    .PCatsubmit_box{
-    background:green;
-    color:#fff;
+    background-image:url('Sub.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
   .PCatcomment_box{
     width:400px;
+    font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
   }
   
    .RCclose_box{
-    background:grey;
-    color:#fff;
-    padding:2px 5px;
+      background-image:url('Close.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
+    padding:2px;
     display:inline;
     position:absolute;
     right:15px;
-    border-radius:3px;
     cursor:pointer;
   }
   
   .RCedit_box{
-    background:red;
-    color:#fff;
+    background-image:url('Edit.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
    .RCsubmit_box{
-    background:green;
-    color:#fff;
+    background-image:url('Sub.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
   .RCcomment_box{
     width:400px;
+    font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
   }
   
-   .RCatclose_box{
-    background:grey;
-    color:#fff;
-    padding:2px 5px;
+   .RCatclose_box{  background-image:url('Close.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
+    padding:2px;
     display:inline;
     position:absolute;
     right:15px;
-    border-radius:3px;
     cursor:pointer;
   }
   
   .RCatedit_box{
-    background:red;
-    color:#fff;
+    background-image:url('Edit.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
    .RCatsubmit_box{
-    background:green;
-    color:#fff;
+    background-image:url('Sub.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
     padding:2px;
     display:inline;
     position:absolute;
     right:35px;
-    border-radius:3px;
     cursor:pointer;
   }
   .RCatcomment_box{
     width:400px;
+    font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
   }
   
    .Rclose_box{
-    background:grey;
-    color:#fff;
-    padding:2px 5px;
+    background-image:url('Close.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+     color:#fff;
+    padding:2px;
     display:inline;
     position:absolute;
     right:15px;
@@ -168,7 +199,7 @@
    .close_box{
     background:grey;
     color:#fff;
-    padding:2px 5px;
+    padding:2px;
     display:inline;
     position:absolute;
     right:15px;

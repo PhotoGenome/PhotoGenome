@@ -111,21 +111,24 @@
             var categoryParent= $(this).parent().parent();
             var category= categoryParent.find('.RCatcomment_box');
             var regionCategoryText=category.text().split(':');
+            alert(regionCategoryText[0]+' '+regionCategoryText[1]+' '+category.attr('regionCategoryId'));
             editRegionCategory(regionCategoryText[0],regionCategoryText[1],category.attr('regionCategoryId'));
             return false;
         });
        
             $(document).ready(function() {                        
                 $('#submitRCat').click(function(event) {  
-                	if($("input[name='RCategoryType']").val()==='Custom')
+                	if($('input[name=RCategoryType]:checked', '#form1').val()==='Custom')
                 	{
                 		var regionCategories=$('#txtRegionCategories').val();
                     	var regionCategoryText=$('#txtRegionCategoryText').val();
+                        
                     	addRegionCategory(regionCategories,regionCategoryText);
-                	} else if($("input[name='RCategoryType']").val()==='Predefined')
+                	} else if($('input[name=RCategoryType]:checked', '#form1').val()==='Predefined')
                     {
                 		var regionCategories=$('#cbRegionCategories').val();
                     	var regionCategoryText=$('#txtPRegionCategoryText').val();
+                    
                     	addRegionCategory(regionCategories,regionCategoryText);	
                     }	 
                     
@@ -336,14 +339,14 @@ function getPhotoCategories(){
          		 	for (category in jsonPhotoCategories.items) {
          		 		$('#photoCategories').append('<div class="box"> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+
-         		 				'" class="PCatedit_box">e</div> <div photoCategoryId="'
+         		 				'" class="PCatedit_box"></div> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+
-         		 				'"class="PCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div  photoCategoryId="'
+         		 				'"class="PCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div  photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+'" class="PCatcomment_box">'
          		 				+jsonPhotoCategories.items[category].photoCategoryName+':'+jsonPhotoCategories.items[category].photoCategoryText+
          		 				'</div></td><td valign="top" width="10%"><div photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+
-         		 				'" class="PCatsubmit_box">s</div></td></tr></table></div>');
+         		 				'" class="PCatsubmit_box"></div></td></tr></table></div>');
     	                 }
     	            	  });
          	 return false;
@@ -354,18 +357,19 @@ function getRegionCategories(regionId){
 	$.getJSON(
     	'getRegionCategories.action' , {regionId:regionId},
          	  function(jsonRegionCategories) {
-    		  for (category in jsonRegionCategories.items) {
-	         	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'
-	         			  +jsonRegionCategories.items[category].regionCategorytId+
-	         			  '" class="RCatedit_box">e</div> <div regionCategoryId="'
+    		for (category in jsonRegionCategories.items) {
+    		 	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'
 	         			  +jsonRegionCategories.items[category].regionCategoryId+
-	         			  '"class="RCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCategoryId="'
-	         			  +jsonRegionCategories.items[category].regionCategorytId+
+	         			  '" class="RCatedit_box"></div> <div regionCategoryId="'
+	         			  +jsonRegionCategories.items[category].regionCategoryId+
+	         			  '" class="RCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCategoryId="'
+	         			  +jsonRegionCategories.items[category].regionCategoryId+
 	         			  '" class="RCatcomment_box">'
-	         			  +jsonRegionCategories.items[category].categoryName+':'+jsonRegionCategories.items[category].regionCategoryText+
+	         			  +jsonRegionCategories.items[category].categoryName+
+	         			  ':'+jsonRegionCategories.items[category].regionCategoryText+
 	         			  '</div></td><td valign="top" width="10%"><div regionCategoryId="'
 	         			  +jsonRegionCategories.items[category].regionCatgoryId+
-	         			  '"class="RCatsubmit_box">s</div></td></tr></table></div>');
+	         			  '"class="RCatsubmit_box"></div></td></tr></table></div>');
 	         	  }
     		  });
        return false;
@@ -377,15 +381,15 @@ function getPhotoComments(){
         	  for (comment in jsonPhotoComments.items) {
         		  $('#photoComments').append('<div class="box"> <div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
-        				  '" class="PCedit_box">e</div> <div photoCommentId="'
+        				  '" class="PCedit_box"></div> <div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
-        				  '"class="PCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div photoCommentId="'
+        				  '"class="PCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
         				  '" class="PCcomment_box">'
         				  +jsonPhotoComments.items[comment].photoCommentText+
         				  '</div></td><td valign="top" width="10%"><div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
-        				  '"class="PCsubmit_box">s</div></td></tr></table></div>');
+        				  '"class="PCsubmit_box"></div></td></tr></table></div>');
 	         	  }
          });
       return false;
@@ -398,15 +402,15 @@ function getPhotoComments(){
         	 for (comment in jsonRegionComments.items) {
 	         	  $('#regionComments').append('<div class="box"> <div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
-	         			  '" class="RCedit_box">e</div><div regionCommentId="'
+	         			  '" class="RCedit_box"></div><div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
-	         			  '" class="RCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCommentId="'
+	         			  '" class="RCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
 	         			  '" class="RCcomment_box">'
 	         			  +jsonRegionComments.items[comment].regionCommentText+
 	         			  '</div></td><td valign="top" width="10%"><div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
-	         			  '"class="RCsubmit_box">s</div></td></tr></table></div>');
+	         			  '"class="RCsubmit_box"></div></td></tr></table></div>');
 	         	  }
          });
       return false;
@@ -435,15 +439,15 @@ function getPhotoComments(){
 	         	  function(jsonPhotoCategories) {
 	         			$('#photoCategories').append('<div class="box"> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items.photoCategoryId+
-         		 				'" class="PCatedit_box">e</div> <div photoCategoryId="'
+         		 				'" class="PCatedit_box"></div> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items.photoCategoryId+
-         		 				'"class="PCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div photoCategoryId="'
+         		 				'"class="PCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div photoCategoryId="'
          		 				+jsonPhotoCategories.items.photoCategoryId+
          		 				'" class="PCatcomment_box">'
          		 				+jsonPhotoCategories.items.photoCategoryName+':'+jsonPhotoCategories.items.photoCategoryText+
          		 				'</div></td><td valign="top" width="10%"><div photoCategoryId="'
          		 				+jsonPhotoCategories.items.photoCategoryId+
-         		 				'" class="PCatsubmit_box">s</div></td></tr></table></div>');
+         		 				'" class="PCatsubmit_box"></div></td></tr></table></div>');
     	             
 	         	  });
 	         	 return false;
@@ -451,19 +455,19 @@ function getPhotoComments(){
 	      
 	function addRegionCategory(categoryName,regionCategoryText){
 		$.getJSON(
-	    	'addRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:$('#submitRCat').attr('currentRegionId'),categoryName:categoryName,regionCategortyText:regionCategoryText,},
+	    	'addRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:$('#submitRCat').attr('currentRegionId'),categoryName:categoryName,regionCategoryText:regionCategoryText},
 	         	  function(jsonRegionCategories) {
 	         	  	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'+
 		         			  jsonRegionCategories.items.regionCategorytId+
-		         			  '" class="RCatedit_box">e</div> <div regionCategoryId="'
+		         			  '" class="RCatedit_box"></div> <div regionCategoryId="'
 		         			  +jsonRegionCategories.items.regionCategoryId+
-		         			  '"class="RCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCategoryId="'+
+		         			  '"class="RCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCategoryId="'+
 		         			  jsonRegionCategories.items.regionCategorytId+
 		         			  '" class="RCatcomment_box">'
 		         			  +jsonRegionCategories.items.categoryName+':'+jsonRegionCategories.items.regionCategoryText+
 		         			  '</div></td><td valign="top" width="10%"><div regionCategoryId="'
 		         			  +jsonRegionCategories.items.regionCatgoryId+
-		         			  '"class="RCatsubmit_box">s</div></td></tr></table></div>');
+		         			  '"class="RCatsubmit_box"></div></td></tr></table></div>');
 	         	  
 	         });
 	       return false;
@@ -475,15 +479,15 @@ function getPhotoComments(){
 	        	 alert(jsonPhotoComments);
 	        		  $('#photoComments').append('<div class="box"> <div photoCommentId="'+
 	        				  jsonPhotoComments.items.photoCommentId+
-	        				  '" class="PCedit_box">e</div> <div photoCommentId="'
+	        				  '" class="PCedit_box"></div> <div photoCommentId="'
 	        				  +jsonPhotoComments.items.photoCommentId+
-	        				  '"class="PCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div photoCommentId="'+
+	        				  '"class="PCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div photoCommentId="'+
 	        				  jsonPhotoComments.items.photoCommentId+
 	        				  '" class="PCcomment_box">'
 	        				  +jsonPhotoComments.items.photoCommentText+
 	        				  '</div></td><td valign="top" width="10%"><div photoCommentId="'
 	        				  +jsonPhotoComments.items.photoCommentId+
-	        				  '"class="PCsubmit_box">s</div></td></tr></table></div>');
+	        				  '"class="PCsubmit_box"></div></td></tr></table></div>');
 	         	 
 	         });
 	      return false;
@@ -496,15 +500,15 @@ function getPhotoComments(){
 	         	  function(jsonRegionComments) {
 	         	    $('#regionComments').append('<div class="box"> <div regionCommentId="'+
 	         				  jsonRegionComments.items.regionCommentId
-	         				  +'" class="RCedit_box">e</div><div regionCommentId="'+
+	         				  +'" class="RCedit_box"></div><div regionCommentId="'+
 	         				  jsonRegionComments.items.regionCommentId
-	         				  +'"class="RCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCommentId="'+
+	         				  +'"class="RCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCommentId="'+
 	         				  jsonRegionComments.items.regionCommentId
 	         				  +'" class="RCcomment_box">'
 	         				  +jsonRegionComments.items.regionCommentText+
 	         				  '</div></td><td valign="top" width="10%"><div photoCommentId="'
 	         				  +jsonRegionComments.items.regionCommentId
-	         				  +'"class="RCsubmit_box">s</div></td></tr></table></div>');
+	         				  +'"class="RCsubmit_box"></div></td></tr></table></div>');
 	         	  
 	         });
 	      return false;
@@ -588,7 +592,7 @@ function getPhotoComments(){
 		  alert('hie1');
 		  jsonRegionComments={"items":[{"photoDesc":"my description","photoId":10,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0},{"photoDesc":"my description 2","photoId":20,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0}]};
 	         	  for (comment in jsonRegionComments.items) {
-	         		  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].photoDesc+'"class="close_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].photoDesc+'</p></div>');
+	         		  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].photoDesc+'"class="close_box">X</div> <h6>Apoorvi</h6><p>'+jsonRegionComments.items[comment].photoDesc+'</p></div>');
 	         	  	}
 	       
 	      return false;
@@ -604,7 +608,7 @@ function addBox(x,y,w,h,regionId){
 	            'z-index': 100,
 	             left: parseInt(x), top: parseInt(y),
 	             width: parseInt(w), height: parseInt(h)})
-	     .append('<div regionId="'+regionId+'" class="Rclose_box">x</div> ')
+	     .append('<div regionId="'+regionId+'" class="Rclose_box"></div> ')
 		.click(function () {
 			jQuery('#regionComments').html('');
 			jQuery('#regionCategories').html('');
@@ -754,7 +758,7 @@ $('#canvas').boxer({
 		
 		ui.box.css({ border: '1px solid red', padding: '0.5em' });
 		ui.box.attr('id', regionId);
-		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box">x</div> ');
+		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box"></div> ');
 		ui.box.click(function () {
 			jQuery('#regionComments').html('');
 			jQuery('#regionCategories').html('');
