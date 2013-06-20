@@ -30,11 +30,13 @@ public class ViewInformationActionTest extends StrutsTestCase {
 		String result = proxy.execute();
 		Map<String, Object> jsonData = viewInfoAction.getJsonGetPhoto();
 		assertNotNull(jsonData);
-		Photo photo = (Photo) jsonData.get("items");
+		List<Photo> list = (List<Photo>) jsonData.get("items");
+		assertEquals(1, list.size());
+		Photo photo = list.get(0);
 		assertEquals(1, photo.getPhotoId().intValue());
 		assertEquals("success", result);
 	}
-
+	
 	/**
 	 * Test getting non-existent photo
 	 * @throws Exception
@@ -47,8 +49,9 @@ public class ViewInformationActionTest extends StrutsTestCase {
 		String result = proxy.execute();
 		Map<String, Object> jsonData = viewInfoAction.getJsonGetPhoto();
 		assertNotNull(jsonData);
-		assertEquals(0, jsonData.size());
-		assertEquals("error", result);
+		List list = (List) jsonData.get("items");
+		assertEquals(0, list.size());
+		assertEquals("success", result);
 	}
 	
 	/**

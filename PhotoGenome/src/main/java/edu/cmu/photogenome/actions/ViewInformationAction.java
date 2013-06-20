@@ -1,11 +1,10 @@
 package edu.cmu.photogenome.actions;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.json.JSONException;
-import org.apache.struts2.json.JSONWriter;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.ViewInformation;
-import edu.cmu.photogenome.dao.PhotoCommentDao;
-import edu.cmu.photogenome.dao.PhotoCommentDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
@@ -44,8 +41,6 @@ public class ViewInformationAction extends ActionSupport{
 
 	private ViewInformation viewInformation = new ViewInformation();
 
-	PhotoCommentDao photoCommentDao = new PhotoCommentDaoImpl();
-
 	/**
 	 * Get photo from photoId
 	 * 
@@ -53,20 +48,17 @@ public class ViewInformationAction extends ActionSupport{
 	 */
 	public String getPhoto(){
 		Photo photo = null;
+		List<Photo> list = new ArrayList<Photo>();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		viewInformation.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		try {
 			if((photo = viewInformation.getPhoto(photoId)) != null) {
-				//List<Photo>
-				jsonGetPhoto.put(jsonKey, photo);
-				HibernateUtil.commitTransaction(session);
-				return SUCCESS;
-			} 
-			else {
-				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				list.add(photo);
 			}
+			jsonGetPhoto.put(jsonKey, list);
+			HibernateUtil.commitTransaction(session);
+			return SUCCESS;
 		} 
 		catch(Exception e) {
 			log.warn(e.getMessage(), e);
@@ -74,7 +66,7 @@ public class ViewInformationAction extends ActionSupport{
 			return ERROR;
 		}
 	}
-
+	
 	/**
 	 * Get photo comments from photoId
 	 * 
@@ -86,9 +78,7 @@ public class ViewInformationAction extends ActionSupport{
 		viewInformation.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		try {
-//			System.out.println("PHOTO COMMENT= " + photoCommentDao.findById(1).getPhotoCommentText());
 			if((list = viewInformation.getPhotoComments(photoId)) != null){
-//				System.out.println(viewInformation.getPhotoComments(photoId).size());
 				jsonGetPhotoComments.put(jsonKey, list);
 				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
