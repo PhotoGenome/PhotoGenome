@@ -72,13 +72,18 @@
 			<result type="json">
 				<param name="root">jsonGetRegionCategories</param>
 			</result>
+			<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
 		</action>
 
 		<action name="getRegionCoordinates" method="getRegionCoordinates"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
 			<result type="json">
 				<param name="root">jsonGetRegionCoordinates</param>
-			</result>
+				</result>
+				<result name="success">Login.jsp</result>
+			<result name="error">Login.jsp</result>
+			
 		</action>
 
 		<action name="addPhotoRegion" method="addPhotoRegion"
@@ -118,31 +123,31 @@
 		</action>
 
 		<!-- Start Added more action tags -->
-		<action name="editPhotoCategories" method="editPhotoCategories"
+		<action name="editPhotoCategory" method="editPhotoCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result name="success">Login.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
 
-		<action name="editPhotoComments" method="editPhotoComments"
+		<action name="editPhotoComment" method="editPhotoComment"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result name="success">Login.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
 
-		<action name="editRegionCategories" method="editRegionCategories"
+		<action name="editRegionCategory" method="editRegionCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result name="success">Login.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
 
-		<action name="deletePhotoComments" method="deletePhotoComments"
+		<action name="deletePhotoComment" method="deletePhotoComment"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result name="success">Login.jsp</result>
 			<result name="error">Login.jsp</result>
 		</action>
 
-		<action name="deletePhotoCategories" method="deletePhotoCategories"
+		<action name="deletePhotoCategory" method="deletePhotoCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result name="success">Login.jsp</result>
 			<result name="error">Login.jsp</result>
@@ -162,7 +167,7 @@
 			<result name="error">Login.jsp</result>
 		</action>
 
-		<action name="addPhotoComments" method="addPhotoComments"
+		<action name="addPhotoComment" method="addPhotoComments"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result type="json">
 				<param name="root">jsonAddPhotoComments</param>
@@ -171,7 +176,7 @@
 			<result name="error">Login.jsp</result>
 		</action>
 
-		<action name="addPhotoCategories" method="addPhotoCategories"
+		<action name="addPhotoCategory" method="addPhotoCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			<result type="json">
 				<param name="root">jsonAddPhotoCategories</param>
