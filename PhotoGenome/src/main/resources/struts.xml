@@ -115,6 +115,24 @@
 		
 		</action>
 
+		<action name="addRegionCategory" method="addRegionCategory"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+			<result type="json">
+				<param name="root">jsonAddRegionCategory</param>
+			</result>
+		
+		</action>
+
+		<action name="editRegionCategory" method="editRegionCategory"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+		
+		</action>
+
+		<action name="deleteRegionCategory" method="deleteRegionCategory"
+			class="edu.cmu.photogenome.actions.EmbedRegionAction">
+		
+		</action>
+
 		<!-- Start Added more action tags -->
 		<action name="editPhotoCategory" method="editPhotoCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
@@ -124,11 +142,6 @@
 		<action name="editPhotoComment" method="editPhotoComment"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
 			
-		</action>
-
-		<action name="editRegionCategory" method="editRegionCategory"
-			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
-		
 		</action>
 
 		<action name="deletePhotoComment" method="deletePhotoComment"
