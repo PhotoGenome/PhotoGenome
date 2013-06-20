@@ -19,13 +19,17 @@
         var RRadio=null;
         $(document).on('click','.Rclose_box',function(){
             $(this).parent().fadeTo(300,0,function(){
-                  $(this).remove();
+            	 var region= $(this).find('.Rclose_box');
+            	 deletePhotoRegion( region.attr('regionId'));
+                      	$(this).remove();
             });
         });
 
         $(document).on('click','.PCclose_box',function(){
             $(this).parent().fadeTo(300,0,function(){
-                  $(this).remove();
+                var comment= $(this).find('.PCclose_box');
+                deletePhotoComment( comment.attr('photoCommentId'));
+                $(this).remove();
             });
         });
 
@@ -37,30 +41,80 @@
             return false;
         });
         $(document).on('click','.PCsubmit_box',function(){
-            var commentParent= $(this).parent();
+            var commentParent= $(this).parent().parent();
             var comment= commentParent.find('.PCcomment_box');
             var photoCommentText=comment.text();
-            addPhotoComment(photoCommentText);
+            editPhotoComment(photoCommentText,comment.attr('photoCommentId'));
             return false;
         });
         $(document).on('click','.RCclose_box',function(){
             $(this).parent().fadeTo(300,0,function(){
+                  var comment= $(this).find('.RCclose_box');
+                  deleteRegionComment( comment.attr('regionCommentId'));
                   $(this).remove();
+                  
             });
         });
-
+        $(document).on('click','.RCedit_box',function(){
+            var commentParent= $(this).parent();
+            var comment= commentParent.find('.RCcomment_box');
+            comment.attr("contentEditable","true");
+            comment.focus();
+            return false;
+        });
+        $(document).on('click','.RCsubmit_box',function(){
+        	var commentParent= $(this).parent().parent();
+            var comment= commentParent.find('.RCcomment_box');
+            var regionCommentText=comment.text();
+            editRegionComment(regionCommentText,comment.attr('regionCommentId'));
+            return false;
+        });
+       
         $(document).on('click','.PCatclose_box',function(){
             $(this).parent().fadeTo(300,0,function(){
-                  $(this).remove();
+                var category= $(this).find('.PCatclose_box');
+                deletePhotoCategory( category.attr('photoCategoryId'));
+                $(this).remove();
             });
         });
-
+        $(document).on('click','.PCatedit_box',function(){
+            var commentParent= $(this).parent();
+            var comment= commentParent.find('.PCatcomment_box');
+            comment.attr("contentEditable","true");
+            comment.focus();
+            return false;
+        });
+        $(document).on('click','.PCatsubmit_box',function(){
+        	var categoryParent= $(this).parent().parent();
+            var category= categoryParent.find('.PCatcomment_box');
+            var photoCategoryText=category.text().split(':');
+            alert(photoCategoryText[0]+' '+photoCategoryText[1]+' '+category.attr('photoCategoryId'));
+            editPhotoCategory(photoCategoryText[0],photoCategoryText[1],category.attr('photoCategoryId'));
+            return false;
+        });
+       
         $(document).on('click','.RCatclose_box',function(){
             $(this).parent().fadeTo(300,0,function(){
-                  $(this).remove();
+            	   var category= $(this).find('.RCatclose_box');
+                   deleteRegionCategory( category.attr('regionCategoryId'));
+                     $(this).remove();
             });
         });
-
+        $(document).on('click','.RCatedit_box',function(){
+            var commentParent= $(this).parent();
+            var comment= commentParent.find('.RCatcomment_box');
+            comment.attr("contentEditable","true");
+            comment.focus();
+            return false;
+        });
+        $(document).on('click','.RCatsubmit_box',function(){
+            var categoryParent= $(this).parent().parent();
+            var category= categoryParent.find('.RCatcomment_box');
+            var regionCategoryText=category.text().split(':');
+            editRegionCategory(regionCategoryText[0],regionCategoryText[1],category.attr('regionCategoryId'));
+            return false;
+        });
+       
             $(document).ready(function() {                        
                 $('#submitRCat').click(function(event) {  
                 	if($("input[name='RCategoryType']").val()==='Custom')
@@ -68,7 +122,7 @@
                 		var regionCategories=$('#txtRegionCategories').val();
                     	var regionCategoryText=$('#txtRegionCategoryText').val();
                     	addRegionCategory(regionCategories,regionCategoryText);
-                	} else if($("input[name='RCategoryType']").val()==='Custom')
+                	} else if($("input[name='RCategoryType']").val()==='Predefined')
                     {
                 		var regionCategories=$('#cbRegionCategories').val();
                     	var regionCategoryText=$('#txtPRegionCategoryText').val();
@@ -84,8 +138,7 @@
                 	$('#txtRegionCategories').text('');
                 });
                 $('#submitPCat').click(function(event) {  
-                	alert('I reached here'+$('input[name=PCategoryType]:checked', '#form1').val());
-            		
+                	
                 	if($('input[name=PCategoryType]:checked', '#form1').val()==='Custom')
                 	{
                 		var photoCategories=$('#txtPhotoCategories').val();
@@ -93,10 +146,8 @@
                     	addPhotoCategory(photoCategories,photoCategoryText);
                 	} else if($('input[name=PCategoryType]:checked', '#form1').val()==='Predefined')
                     {
-                		alert('I reached');
                 		var photoCategories=$('#cbPhotoCategories').val();
                     	var photoCategoryText=$('#txtPPhotoCategoryText').val();
-                    	alert('JQ'+photoCategories+':'+photoCategortyText);
                     	addPhotoCategory(photoCategories,photoCategoryText);	
                     }
                 	$('#txtPhotoCategories').text('');
@@ -171,7 +222,7 @@
 <body designMode="on">
 <form id="form1">
 <table width="100%" bordercolor="black">
-<tr><td width="70%" bordercolor="black">
+<tr><td width="70%" bordercolor="black" valign="top">
 <div id="canvas" photoId="1" style="border:solid black; background-image:url('https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-ash3/942522_10151496380413710_188944828_n.jpg');"></div>
 </td><td valign="top">
 <table >
@@ -215,6 +266,8 @@ Enter Comments Here.
 </table>
 </td>
 </tr>
+<tr><td><input type="button" id="stop" value="Stop!" />
+<input type="button" id="start" value="Start!" /></td></tr>
 <tr><td>Photo Categories</td></tr>
 <tr><td><div id="photoCategories"></div> </td></tr>
 <tr>
@@ -254,8 +307,6 @@ Enter Comments Here.
 <input type="button" id="submitPCom" value="Comments Submit"/>
 </td></tr>
 </table>
-<input type="button" id="stop" value="Stop!" />
-<input type="button" id="start" value="Start!" />
 
 
 <script>
@@ -283,21 +334,38 @@ function getPhotoCategories(){
          	  'getPhotoCategories.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoCategories) {
          		 	for (category in jsonPhotoCategories.items) {
-         		 		$('#photoCategories').append('<div class="box"> <div photoCategoryId="'+jsonPhotoCategories.items[category].photoCategoryId+'" class="PCatedit_box">e</div> <div photoCategoryId="'+jsonPhotoCategories.items[category].photoCategoryId+'"class="PCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div class="PCatcomment_box">'+jsonPhotoCategories.items[category].photoCategoryName+':'+jsonPhotoCategories.items[category].photoCategoryText+'</div></td><td valign="top" width="10%"><div photoCategoryId="'+jsonPhotoCategories.items[category].photoCategoryId+'" class="PCatsubmit_box">s</div></td></tr></table></div>');
+         		 		$('#photoCategories').append('<div class="box"> <div photoCategoryId="'
+         		 				+jsonPhotoCategories.items[category].photoCategoryId+
+         		 				'" class="PCatedit_box">e</div> <div photoCategoryId="'
+         		 				+jsonPhotoCategories.items[category].photoCategoryId+
+         		 				'"class="PCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div  photoCategoryId="'
+         		 				+jsonPhotoCategories.items[category].photoCategoryId+'" class="PCatcomment_box">'
+         		 				+jsonPhotoCategories.items[category].photoCategoryName+':'+jsonPhotoCategories.items[category].photoCategoryText+
+         		 				'</div></td><td valign="top" width="10%"><div photoCategoryId="'
+         		 				+jsonPhotoCategories.items[category].photoCategoryId+
+         		 				'" class="PCatsubmit_box">s</div></td></tr></table></div>');
     	                 }
     	            	  });
          	 return false;
          	};	
       
 function getRegionCategories(regionId){
-	  alert(regionId);
-	    
+	   
 	$.getJSON(
     	'getRegionCategories.action' , {regionId:regionId},
          	  function(jsonRegionCategories) {
-    		alert('hi');
     		  for (category in jsonRegionCategories.items) {
-	         	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'+jsonRegionCategory.items[category].regionCategorytId+'" class="RCatedit_box">e</div> <div regionCategoryId="'+jsonRegionCategories.items[category].regionCategoryId+'"class="RCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div class="RCatcomment_box">'+jsonRegionCategories.items[category].regionCategoryName+':'+jsonRegionCategories.items[category].regionCategoryText+'</div></td><td valign="top" width="10%"><div regionCategoryId="'+jsonRegionCategory.items[category].regionCatgoryId+'"class="RCatsubmit_box">s</div></td></tr></table></div>');
+	         	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'
+	         			  +jsonRegionCategories.items[category].regionCategorytId+
+	         			  '" class="RCatedit_box">e</div> <div regionCategoryId="'
+	         			  +jsonRegionCategories.items[category].regionCategoryId+
+	         			  '"class="RCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCategoryId="'
+	         			  +jsonRegionCategories.items[category].regionCategorytId+
+	         			  '" class="RCatcomment_box">'
+	         			  +jsonRegionCategories.items[category].categoryName+':'+jsonRegionCategories.items[category].regionCategoryText+
+	         			  '</div></td><td valign="top" width="10%"><div regionCategoryId="'
+	         			  +jsonRegionCategories.items[category].regionCatgoryId+
+	         			  '"class="RCatsubmit_box">s</div></td></tr></table></div>');
 	         	  }
     		  });
        return false;
@@ -307,7 +375,17 @@ function getPhotoComments(){
          'getPhotoComments.action' , {photoId:$('#canvas').attr('photoId')},
          	  function(jsonPhotoComments) {
         	  for (comment in jsonPhotoComments.items) {
-        		  $('#photoComments').append('<div class="box"> <div photoCommentId="'+jsonPhotoComments.items[comment].photoCommentId+'" class="PCedit_box">e</div> <div photoCommentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div class="PCcomment_box">'+jsonPhotoComments.items[comment].photoCommentText+'</div></td><td valign="top" width="10%"><div photoCommentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCsubmit_box">s</div></td></tr></table></div>');
+        		  $('#photoComments').append('<div class="box"> <div photoCommentId="'
+        				  +jsonPhotoComments.items[comment].photoCommentId+
+        				  '" class="PCedit_box">e</div> <div photoCommentId="'
+        				  +jsonPhotoComments.items[comment].photoCommentId+
+        				  '"class="PCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div photoCommentId="'
+        				  +jsonPhotoComments.items[comment].photoCommentId+
+        				  '" class="PCcomment_box">'
+        				  +jsonPhotoComments.items[comment].photoCommentText+
+        				  '</div></td><td valign="top" width="10%"><div photoCommentId="'
+        				  +jsonPhotoComments.items[comment].photoCommentId+
+        				  '"class="PCsubmit_box">s</div></td></tr></table></div>');
 	         	  }
          });
       return false;
@@ -318,7 +396,17 @@ function getPhotoComments(){
          'getRegionComments.action' , {regionId:regionId},
          	  function(jsonRegionComments) {
         	 for (comment in jsonRegionComments.items) {
-	         	  $('#regionComments').append('<div class="box"> <div regionCommentId="'+jsonRegionComments.items[comment].regionCommentId+'" class="RCedit_box">e</div><div regionCommentId="'+jsonRegionComments.items[comment].regionCommentId+'"class="RCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div class="RCcomment_box">'+jsonRegionComments.items[comment].regionCommentText+'</div></td><td valign="top" width="10%"><div photoCommentId="'+jsonRegionComments.items[comment].regionCommentId+'"class="RCsubmit_box">s</div></td></tr></table></div>');
+	         	  $('#regionComments').append('<div class="box"> <div regionCommentId="'
+	         			  +jsonRegionComments.items[comment].regionCommentId+
+	         			  '" class="RCedit_box">e</div><div regionCommentId="'
+	         			  +jsonRegionComments.items[comment].regionCommentId+
+	         			  '" class="RCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCommentId="'
+	         			  +jsonRegionComments.items[comment].regionCommentId+
+	         			  '" class="RCcomment_box">'
+	         			  +jsonRegionComments.items[comment].regionCommentText+
+	         			  '</div></td><td valign="top" width="10%"><div regionCommentId="'
+	         			  +jsonRegionComments.items[comment].regionCommentId+
+	         			  '"class="RCsubmit_box">s</div></td></tr></table></div>');
 	         	  }
          });
       return false;
@@ -329,7 +417,11 @@ function getPhotoComments(){
 	    	'getRegionCoordinates.action' , {photoId:$('#canvas').attr('photoId')},
 	         	  function(jsonRegionCoordinates) {
 	    		for (coordinate in jsonRegionCoordinates.items) {
-	    		addBox(jsonRegionCoordinates.items[coordinate].regionX,jsonRegionCoordinates.items[coordinate].regionY,jsonRegionCoordinates.items[coordinate].width,jsonRegionCoordinates.items[coordinate].height,jsonRegionCoordinates.items[coordinate].regionId); 
+	    		addBox(jsonRegionCoordinates.items[coordinate].regionX,
+	    				jsonRegionCoordinates.items[coordinate].regionY,
+	    				jsonRegionCoordinates.items[coordinate].width,
+	    				jsonRegionCoordinates.items[coordinate].height,
+	    				jsonRegionCoordinates.items[coordinate].regionId); 
 	         	  }
 	         });
 	       return false;
@@ -337,79 +429,117 @@ function getPhotoComments(){
 	  
 	 
   function addPhotoCategory(photoCategoryName,photoCategortyText){
-	 
+	 	
 		 $.getJSON(
-	         	  'addPhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
+	         	  'addPhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
 	         	  function(jsonPhotoCategories) {
-	         		 alert(photoCategoryName+':'+photoCategortyText);
-	         		for (category in jsonPhotoCategories.items) {
-	         		$('#photoCategories').append('<div class="box"> <div categoryId="'+jsonPhotoCategories.items[category].photoCategoryId+'"class="PCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoCategories.items[category].photoCategoryName+':'+jsonPhotoCategories.items[category].photoCategoryText+'</p></div>');
-	                 }
+	         			$('#photoCategories').append('<div class="box"> <div photoCategoryId="'
+         		 				+jsonPhotoCategories.items.photoCategoryId+
+         		 				'" class="PCatedit_box">e</div> <div photoCategoryId="'
+         		 				+jsonPhotoCategories.items.photoCategoryId+
+         		 				'"class="PCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div photoCategoryId="'
+         		 				+jsonPhotoCategories.items.photoCategoryId+
+         		 				'" class="PCatcomment_box">'
+         		 				+jsonPhotoCategories.items.photoCategoryName+':'+jsonPhotoCategories.items.photoCategoryText+
+         		 				'</div></td><td valign="top" width="10%"><div photoCategoryId="'
+         		 				+jsonPhotoCategories.items.photoCategoryId+
+         		 				'" class="PCatsubmit_box">s</div></td></tr></table></div>');
+    	             
 	         	  });
 	         	 return false;
 	         	};	
 	      
-	function addRegionCategory(regionCategoryName,regionCategoryText){
+	function addRegionCategory(categoryName,regionCategoryText){
 		$.getJSON(
-	    	'addRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCategoryName:regionCategoryName,regionCategortyText:regionCategoryText,},
+	    	'addRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:$('#submitRCat').attr('currentRegionId'),categoryName:categoryName,regionCategortyText:regionCategoryText,},
 	         	  function(jsonRegionCategories) {
-	         	  for (category in jsonRegionCategories.items) {
-	         	  $('#regionCategories').append('<div class="box"> <div categoryId="'+jsonRegionCategory.items[category].regionCategoryId+'"class="RCatclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionCategory.items[category].regionCategoryName+':'+jsonRegionCategory.items[category].regionCategoryText+'</p></div>');
-	         	  }
+	         	  	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'+
+		         			  jsonRegionCategories.items.regionCategorytId+
+		         			  '" class="RCatedit_box">e</div> <div regionCategoryId="'
+		         			  +jsonRegionCategories.items.regionCategoryId+
+		         			  '"class="RCatclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCategoryId="'+
+		         			  jsonRegionCategories.items.regionCategorytId+
+		         			  '" class="RCatcomment_box">'
+		         			  +jsonRegionCategories.items.categoryName+':'+jsonRegionCategories.items.regionCategoryText+
+		         			  '</div></td><td valign="top" width="10%"><div regionCategoryId="'
+		         			  +jsonRegionCategories.items.regionCatgoryId+
+		         			  '"class="RCatsubmit_box">s</div></td></tr></table></div>');
+	         	  
 	         });
 	       return false;
 	  };	
 	function addPhotoComment(photoCommentText){
-	alert(photoCommentText);
 	      $.getJSON(
-	         'addPhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1,photoCommentText:photoCommentText},
+	         'addPhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCommentText:photoCommentText},
 	         	  function(jsonPhotoComments) {
-	        	  for (comment in jsonPhotoComments.items) {
-	         	  $('#photoComments').append('<div class="box"> <div commentId="'+jsonPhotoComments.items[comment].photoCommentId+'"class="PCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonPhotoComments.items[comment].photoCommentText+'</p></div>');
-	         	  }
+	        	 alert(jsonPhotoComments);
+	        		  $('#photoComments').append('<div class="box"> <div photoCommentId="'+
+	        				  jsonPhotoComments.items.photoCommentId+
+	        				  '" class="PCedit_box">e</div> <div photoCommentId="'
+	        				  +jsonPhotoComments.items.photoCommentId+
+	        				  '"class="PCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div photoCommentId="'+
+	        				  jsonPhotoComments.items.photoCommentId+
+	        				  '" class="PCcomment_box">'
+	        				  +jsonPhotoComments.items.photoCommentText+
+	        				  '</div></td><td valign="top" width="10%"><div photoCommentId="'
+	        				  +jsonPhotoComments.items.photoCommentId+
+	        				  '"class="PCsubmit_box">s</div></td></tr></table></div>');
+	         	 
 	         });
 	      return false;
 	  };	
 
-	  function addRegionComments(regionCommentText){
+	  function addRegionComment(regionCommentText){
+		  
 	      $.getJSON(
-	         'addRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCommentText:regionCommentText},
+	         'addRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:$('#submitRCom').attr('currentRegionId'),regionCommentText:regionCommentText},
 	         	  function(jsonRegionComments) {
-	         	  for (comment in jsonRegionComments.items) {
-	         	  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].regionCommentId+'"class="RCclose_box">X</div> <h2>Apoorvi</h2><p>'+jsonRegionComments.items[comment].regionCommentText+'</p></div>');
-	         	  }
+	         	    $('#regionComments').append('<div class="box"> <div regionCommentId="'+
+	         				  jsonRegionComments.items.regionCommentId
+	         				  +'" class="RCedit_box">e</div><div regionCommentId="'+
+	         				  jsonRegionComments.items.regionCommentId
+	         				  +'"class="RCclose_box">x</div> <h2>Apoorvi</h2><table><tr><td valign="top" width="90%"><div regionCommentId="'+
+	         				  jsonRegionComments.items.regionCommentId
+	         				  +'" class="RCcomment_box">'
+	         				  +jsonRegionComments.items.regionCommentText+
+	         				  '</div></td><td valign="top" width="10%"><div photoCommentId="'
+	         				  +jsonRegionComments.items.regionCommentId
+	         				  +'"class="RCsubmit_box">s</div></td></tr></table></div>');
+	         	  
 	         });
 	      return false;
 	  };
 
-	  function editPhotoCategory(photoCategoryName,photoCategortyText){
-			 
+	  function editPhotoCategory(photoCategoryName,photoCategortyText, photoCategoryId){
+			 alert(photoCategoryName+'  '+photoCategortyText +'  '+ photoCategoryId);
 			 $.getJSON(
-		         	  'editPhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
+		         	  'editPhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCategoryId:photoCategoryId,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
 		         	  function(jsonPhotoCategories) {
 		         	  });
 		         	 return false;
 		         	};	
 		      
-		function editRegionCategory(regionCategoryName,regionCategoryText){
+		function editRegionCategory(categoryName,regionCategoryText,regionCategoryId){
+			 alert(categoryName+'  '+regionCategortyText +'  '+ regionCategoryId);
+				
 			$.getJSON(
-		    	'editRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCategoryName:regionCategoryName,regionCategortyText:regionCategoryText,},
+		    	'editRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCategoryId:regionCategoryId,categoryName:categoryName,regionCategortyText:regionCategoryText,},
 		         	  function(jsonRegionCategories) {
 		         });
 		       return false;
 		  };	
-		function editPhotoComment(photoCommentText){
+		function editPhotoComment(photoCommentText,photoCommentId){
 		
 		      $.getJSON(
-		         'editPhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1,photoCommentText:photoCommentText},
+		         'editPhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCommentId:photoCommentId,photoCommentText:photoCommentText},
 		         	  function(jsonPhotoComments) {
 		        	});
 		      return false;
 		  };	
 
-		  function editRegionComments(regionCommentText){
+		  function editRegionComment(regionCommentText,regionCommentId){
 		      $.getJSON(
-		         'editRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCommentText:regionCommentText},
+		         'editRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCommentId:regionCommentId,regionCommentText:regionCommentText},
 		         	  function(jsonRegionComments) {
 		         	  
 		         });
@@ -419,7 +549,7 @@ function getPhotoComments(){
 
 	  function deleteRegionCategory(regionCategoryId){
 			$.getJSON(
-		    	'deleteRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCategoryId:regionCategoryId},
+		    	'deleteRegionCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCategoryId:regionCategoryId},
 		         	  function(jsonRegionCategories) {
 		       	 });
 		       return false;
@@ -427,22 +557,29 @@ function getPhotoComments(){
 		  
 		 function deleteRegionComment(regionCommentId){
 				$.getJSON(
-			    	'deleteRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionCommentId:regionCommentId},
+			    	'deleteRegionComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionCommentId:regionCommentId},
 			         	  function(jsonRegionCategories) {
 			       	 });
 			       return false;
 			  };
 	  
-		function deletePhotoCategory(photoCategoryId){
+			  function deletePhotoRegion(regionId){
 					$.getJSON(
-				    	'deletePhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1,photoCategoryId:photoCategoryId},
+				    	'deletePhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:regionId},
+				         	  function(jsonPhotoRegion) {
+				       	 });
+				       return false;
+				  };
+		  function deletePhotoCategory(photoCategoryId){
+					$.getJSON(
+				    	'deletePhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCategoryId:photoCategoryId},
 				         	  function(jsonRegionCategories) {
 				       	 });
 				       return false;
 				  };
 		function deletePhotoComment(photoCommentId){
 						$.getJSON(
-					    	'deletePhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1,photoCommentId:photoCommentId},
+					    	'deletePhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCommentId:photoCommentId},
 					         	  function(jsonRegionCategories) {
 					       	 });
 					       return false;
@@ -463,16 +600,21 @@ function addBox(x,y,w,h,regionId){
 	 $('#'+'regionx_' + x + '_y_' +y+'_w_' + w + '_h_' + h).addClass('ui-boxer')
 	     .css({ border: '1px solid red',
 	             padding: '0.5em',
-	             position: 'relative',
+	             position: 'absolute',
 	            'z-index': 100,
 	             left: parseInt(x), top: parseInt(y),
 	             width: parseInt(w), height: parseInt(h)})
-	     .append('<div id="'+regionId+'"class="Rclose_box">X</div> ')
+	     .append('<div regionId="'+regionId+'" class="Rclose_box">x</div> ')
 		.click(function () {
 			jQuery('#regionComments').html('');
-			jQuery('#regionCategories div').html('');
-				getRegionComments(regionId);
-				getRegionCategories(regionId);
+			jQuery('#regionCategories').html('');
+			$('#txtRegionCategories').attr('disabled', false).focus();
+		    $('#txtRegionComments').attr('disabled', false).focus();
+		    getRegionComments(regionId);
+			getRegionCategories(regionId);
+			$('#submitRCom').attr('currentRegionId', regionId);
+			$('#submitRCat').attr('currentRegionId', regionId);
+
 
 
 		});
@@ -603,22 +745,25 @@ $('#canvas').boxer({
 		var offset = ui.box.offset();
 		var regionId=0;
 		$.getJSON(
-		    	'addPhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1,regionX:offset.left,regionY:offset.top,width:ui.box.width(),height:ui.box.height()},
+		    	'addPhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,shapeId:1,regionX:parseInt(offset.left),regionY:parseInt(offset.top),width:parseInt(ui.box.width()),height:parseInt(ui.box.height())},
 		         	  function(jsonRegionCoordinates) {
-		    		alert('I came back');
-		       	  for (coordinate in jsonRegionCoordinates.items) {
+		    	  for (coordinate in jsonRegionCoordinates.items) {
 		       		regionId=  jsonRegionCoordinates.items[coordinate].regionId;
 		       	  }
 		         });
 		
 		ui.box.css({ border: '1px solid red', padding: '0.5em' });
 		ui.box.attr('id', regionId);
-		ui.box.append('<div id="'+regionId+'"class="Rclose_box">X</div> ');
+		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box">x</div> ');
 		ui.box.click(function () {
 			jQuery('#regionComments').html('');
-			jQuery('#regionCategories div').html('');
-				getRegionComments(regionId);
-				getRegionCategories(regionId);
+			jQuery('#regionCategories').html('');
+			$('#txtRegionCategories').attr('disabled', false).focus();
+		    $('#txtRegionComments').attr('disabled', false).focus();
+		    getRegionComments(regionId);
+			getRegionCategories(regionId);
+			$('#submitRCom').attr('currentRegionId', regionId);
+			$('#submitRCat').attr('currentRegionId', regionId);
 
 			
 		});
