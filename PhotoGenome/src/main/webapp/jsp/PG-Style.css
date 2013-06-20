@@ -1,0 +1,178 @@
+@CHARSET "ISO-8859-1";
+ article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+  body{font: normal 16px/1.2em Arial, Helvetica, sans-serif;color:#444}
+  *{margin:0;padding:0;}
+  ul{list-style:none;}
+  a{text-decoration:none;color:#666;}
+  
+ 
+  .box{
+    position:relative;
+    float:left;
+    background:#eee;
+    width:400px;
+    left:0px;
+    padding:10px;
+    margin:0px;
+  }
+  .PCclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .PCedit_box{
+    background:red;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .PCsubmit_box{
+    background:green;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .PCcomment_box{
+    width:400px;
+  }
+   .PCatclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  
+  .PCatedit_box{
+    background:red;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .PCatsubmit_box{
+    background:green;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .PCatcomment_box{
+    width:400px;
+  }
+  
+   .RCclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  
+  .RCedit_box{
+    background:red;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .RCsubmit_box{
+    background:green;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .RCcomment_box{
+    width:400px;
+  }
+  
+   .RCatclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  
+  .RCatedit_box{
+    background:red;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+   .RCatsubmit_box{
+    background:green;
+    color:#fff;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:35px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  .RCatcomment_box{
+    width:400px;
+  }
+  
+   .Rclose_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  
+   .close_box{
+    background:grey;
+    color:#fff;
+    padding:2px 5px;
+    display:inline;
+    position:absolute;
+    right:15px;
+    border-radius:3px;
+    cursor:pointer;
+  }
+  
