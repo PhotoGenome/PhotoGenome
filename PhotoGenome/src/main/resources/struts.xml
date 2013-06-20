@@ -43,7 +43,7 @@
 			<result type="json">
 				<param name="root">jsonGetPhoto</param>
 			</result>
-			<result name="error">Login.jsp</result>
+			
 		</action>
 
 		<action name="getPhotoCategories" method="getPhotoCategories"
@@ -72,8 +72,7 @@
 			<result type="json">
 				<param name="root">jsonGetRegionCategories</param>
 			</result>
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 		</action>
 
 		<action name="getRegionCoordinates" method="getRegionCoordinates"
@@ -81,8 +80,7 @@
 			<result type="json">
 				<param name="root">jsonGetRegionCoordinates</param>
 				</result>
-				<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 			
 		</action>
 
@@ -91,14 +89,12 @@
 			<result type="json">
 				<param name="root">jsonAddPhotoRegion</param>
 			</result>
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+			
 		</action>
 
 		<action name="deletePhotoRegion" method="deletePhotoRegion"
 			class="edu.cmu.photogenome.actions.EmbedRegionAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+	
 		</action>
 
 		<action name="addRegionComment" method="addRegionComment"
@@ -106,65 +102,55 @@
 			<result type="json">
 				<param name="root">jsonAddRegionComment</param>
 			</result>
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 		</action>
 
 		<action name="deleteRegionComment" method="deleteRegionComment"
 			class="edu.cmu.photogenome.actions.EmbedRegionAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 		</action>
 
 		<action name="editRegionComment" method="editRegionComment"
 			class="edu.cmu.photogenome.actions.EmbedRegionAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 		</action>
 
 		<!-- Start Added more action tags -->
 		<action name="editPhotoCategory" method="editPhotoCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+	
 		</action>
 
 		<action name="editPhotoComment" method="editPhotoComment"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+			
 		</action>
 
 		<action name="editRegionCategory" method="editRegionCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 		</action>
 
 		<action name="deletePhotoComment" method="deletePhotoComment"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+			
 		</action>
 
 		<action name="deletePhotoCategory" method="deletePhotoCategory"
 			class="edu.cmu.photogenome.actions.EmbedPhotoAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+	
 		</action>
 
 		<!-- End Added more action tags -->
 
 		<action name="deleteRegionCoordinate" method="deleteRegionCoordinate"
 			class="edu.cmu.photogenome.actions.EmbedRegionAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+	
 		</action>
 
 		<action name="editRegionCoordinate" method="editRegionCoordinate"
 			class="edu.cmu.photogenome.actions.EmbedRegionAction">
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+	
 		</action>
 
 		<action name="addPhotoComment" method="addPhotoComments"
@@ -172,8 +158,7 @@
 			<result type="json">
 				<param name="root">jsonAddPhotoComments</param>
 			</result>
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 		</action>
 
 		<action name="addPhotoCategory" method="addPhotoCategory"
@@ -181,8 +166,7 @@
 			<result type="json">
 				<param name="root">jsonAddPhotoCategories</param>
 			</result>
-			<result name="success">Login.jsp</result>
-			<result name="error">Login.jsp</result>
+		
 		</action>
 		<!-- End adding actions for connecting UI with business logic   -->
 	</package>
