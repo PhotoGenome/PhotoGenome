@@ -42,7 +42,7 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 		categoryDetails.add(pair1);
 		categoryDetails.add(pair2);
 
-		photoCategory = embedPhoto.addPhotoCategory(1, 1, categoryDetails);
+		photoCategory = embedPhoto.addPhotoCategory(1, 1000, categoryDetails);
 
 		assertNotNull(photoCategory);
 		assertEquals(1, photoCategory.getPhotoId());
@@ -52,7 +52,7 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 	public void testAddPhotoCategoryNull() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoCategory photoCategory = null;
-		photoCategory = embedPhoto.addPhotoCategory(1, 1, null);
+		photoCategory = embedPhoto.addPhotoCategory(1, 1000, null);
 
 		assertNull(photoCategory);
 
@@ -71,7 +71,8 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 	@Test
 	public void testEditPhotoCommentsFalse() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
-		PhotoComment photoComment = null;
+		PhotoComment photoComment = new PhotoComment();
+		photoComment.setPhotoCommentId(-1);
 		assertEquals(false, embedPhoto.editPhotoComment(photoComment));
 	}
 
@@ -91,7 +92,9 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 	public void testEditPhotoCategory() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoCategory category = new PhotoCategory();
-		//category.setPhotoId(1);
+		category.setPhotoId(1);
+		category.setUserId(1000);
+		category.setPhotoCategoryTimestamp(new Date());
 		category.setPhotoCategoryId(1);
 		category.setPhotoCategoryText("Test Text");
 		category.setPhotoCategoryName("Test Name");
@@ -122,7 +125,9 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 	@Test
 	public void testEditRegionCategoryFalse() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
-		assertEquals(false, embedPhoto.editRegionCategory(null));
+		RegionCategory regionCategory = new RegionCategory();
+		regionCategory.setRegionCategoryId(-1);
+		assertEquals(false, embedPhoto.editRegionCategory(regionCategory));
 	}
 
 	@Test
