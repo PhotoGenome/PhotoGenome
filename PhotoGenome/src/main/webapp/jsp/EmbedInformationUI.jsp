@@ -608,7 +608,6 @@ function addBox(x,y,w,h,regionId){
 	             width: parseInt(w), height: parseInt(h)})
 	     .append('<div regionId="'+regionId+'" class="Rclose_box"></div> ')
 		.click(function () {
-			$(this).css({ border: '2px solid red', padding: '0.5em' });
 			jQuery('#regionComments').html('');
 			jQuery('#regionCategories').html('');
 			$('#txtRegionCategories').attr('disabled', false).focus();
@@ -617,8 +616,11 @@ function addBox(x,y,w,h,regionId){
 			getRegionCategories(regionId);
 			$('#submitRCom').attr('currentRegionId', regionId);
 			$('#submitRCat').attr('currentRegionId', regionId);
-
-
+			$('.ui-boxer').each(function() {
+				$(this).css({ border: '2px solid white', padding: '0.5em' });
+			});
+			$(this).css({ border: '2px solid red', padding: '0.5em' });
+			
 
 		});
 
@@ -754,19 +756,23 @@ $('#canvas').boxer({
 		             	 
 		         });
 		ui.box.css({ border: '2px solid white', padding: '0.5em' });
+		ui.box.addClass('ui-boxer');
 		ui.box.attr('id', regionId);
 		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box"></div> ');
 		ui.box.click(function () {
 			jQuery('#regionComments').html('');
 			jQuery('#regionCategories').html('');
-			$(this).css({ border: '2px solid red', padding: '0.5em' });
 			$('#txtRegionCategories').attr('disabled', false).focus();
 		    $('#txtRegionComments').attr('disabled', false).focus();
 		    getRegionComments(regionId);
 			getRegionCategories(regionId);
 			$('#submitRCom').attr('currentRegionId', regionId);
 			$('#submitRCat').attr('currentRegionId', regionId);
-
+			$('.ui-boxer').each(function() {
+				$(this).css({ border: '2px solid white', padding: '0.5em' });
+			});
+			$(this).css({ border: '2px solid red', padding: '0.5em' });
+			
 			
 		});
 		
