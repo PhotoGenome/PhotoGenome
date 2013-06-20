@@ -97,7 +97,7 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		boolean result = false;
 		
 		try {
-			session.saveOrUpdate(entity);
+			session.update(entity);
 			result = true;
 		}
 		catch(Exception e) {
