@@ -65,7 +65,7 @@ public class EmbedPhoto {
 	 * @param comment
 	 * @return newly created photoComment, otherwise null
 	 */
-	public PhotoComment addPhotoComments(int photoId, int userId, String comment){
+	public PhotoComment addPhotoComment(int photoId, int userId, String comment){
 		PhotoComment photoComment = new PhotoComment();
 
 		photoComment.setPhotoId(photoId);
@@ -92,7 +92,7 @@ public class EmbedPhoto {
 	 * @return newly created category, otherwise null
 	 */
 
-	public PhotoCategory addPhotoCategories(int photoId, int userId, List<SimpleEntry<String, String>> categoryDetails){
+	public PhotoCategory addPhotoCategory(int photoId, int userId, List<SimpleEntry<String, String>> categoryDetails){
 		PhotoCategory category = new PhotoCategory(photoId, userId, new Date());
 
 		for (SimpleEntry<String, String> details : categoryDetails){
@@ -118,7 +118,7 @@ public class EmbedPhoto {
 	 * @return	true if comment is updated, otherwise false
 	 */
 
-	public boolean editPhotoComments(PhotoComment photoComment){
+	public boolean editPhotoComment(PhotoComment photoComment){
 
 		if(photoCommentDao.update(photoComment)) {
 			log.debug("Photo comments updated for photo ", photoComment.getPhotoId());	
@@ -139,7 +139,7 @@ public class EmbedPhoto {
 	 * @return true if comment is deleted, otherwise false
 	 */
 
-	public boolean deletePhotoComments(int photoCommentId){
+	public boolean deletePhotoComment(int photoCommentId){
 		PhotoComment photoComment;
 
 		if((photoComment = photoCommentDao.findById(photoCommentId)) != null) {
@@ -164,7 +164,7 @@ public class EmbedPhoto {
 	 * @return	true if category is updated, otherwise false
 	 */
 
-	public boolean editPhotoCategories(PhotoCategory photoCategory){
+	public boolean editPhotoCategory(PhotoCategory photoCategory){
 
 		if(!photoCategoryDao.update(photoCategory)) {
 			log.error("Failed to update category for photo ", photoCategory.getPhotoId());
@@ -184,7 +184,7 @@ public class EmbedPhoto {
 	 * @return	true if category is updated, otherwise false
 	 */
 
-	public boolean editRegionCategories(RegionCategory regionCategory){
+	public boolean editRegionCategory(RegionCategory regionCategory){
 
 		if(!regionCategoryDao.update(regionCategory)) {
 			log.error("Failed to update region category for photo ", regionCategory.getPhotoId());
@@ -202,7 +202,7 @@ public class EmbedPhoto {
 	 * @return	true if category is deleted, otherwise false
 	 */
 
-	public boolean deletePhotoCategories(int photoCategoryId){
+	public boolean deletePhotoCategory(int photoCategoryId){
 
 		PhotoCategory category;
 		if((category = photoCategoryDao.findById(photoCategoryId)) != null)
