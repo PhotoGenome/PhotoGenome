@@ -68,7 +68,9 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 	@Test
 	public void testEditPhotoComments() throws Exception {
 
-		request.setParameter("photoCommentId", "1");
+		request.setParameter("photoId", "1");
+		request.setParameter("userId", "1000");
+		request.setParameter("photoCommentId", "2");
 		request.setParameter("photoCommentText", "test action comment");
 
 		ActionProxy proxy = getActionProxy("/editPhotoComment");
