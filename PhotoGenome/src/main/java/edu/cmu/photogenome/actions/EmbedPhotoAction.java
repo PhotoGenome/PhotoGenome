@@ -278,7 +278,7 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	public String editPhotoCategory(){
 
-		PhotoCategory photoCategory = photoCategoryDao.findById(photoId);
+		PhotoCategory photoCategory = photoCategoryDao.findById(photoCategoryId);
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		embedPhoto.setSession(session);

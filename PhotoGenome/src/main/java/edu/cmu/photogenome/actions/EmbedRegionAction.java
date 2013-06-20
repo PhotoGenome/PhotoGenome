@@ -1,7 +1,10 @@
 package edu.cmu.photogenome.actions;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.AbstractMap.SimpleEntry;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -19,7 +22,10 @@ import edu.cmu.photogenome.dao.RegionCommentDao;
 import edu.cmu.photogenome.dao.RegionCommentDaoImpl;
 import edu.cmu.photogenome.dao.RegionCoordinateDao;
 import edu.cmu.photogenome.dao.RegionCoordinateDaoImpl;
+import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoRegion;
+import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
 import edu.cmu.photogenome.util.HibernateUtil;
@@ -36,13 +42,13 @@ public class EmbedRegionAction extends ActionSupport {
 	private int photoId;
 	private int userId;
 	private int shapeId;
-
 	private Integer regionCommentId;
 	private String regionCommentText;
-		
+	private Integer regionCategoryId;
+	private String categoryName;
+	private String regionCategoryText;
 	private Integer regionCoordinateId;
 	private int regionX;
-	
 	private int regionY;
 	private int height;
 	private int width;
@@ -50,6 +56,7 @@ public class EmbedRegionAction extends ActionSupport {
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonAddPhotoRegion = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonAddRegionComment = new LinkedHashMap<String, Object>();
+	private Map<String, Object> jsonAddRegionCategory = new LinkedHashMap<String, Object>();
 	
 	public String addPhotoRegion() {
 		PhotoRegion region;
@@ -89,8 +96,40 @@ public class EmbedRegionAction extends ActionSupport {
 			return ERROR;
 		}
 		else {
-			if((regionComment = embedRegion.addRegionComment(photoId, userId, regionId, regionCommentText))!=null) {
+			if((regionComment = embedRegion.addRegionComment(photoId, userId, regionId, regionCommentText)) !=null) {
 				jsonAddRegionComment.put(jsonKey, regionComment);
+				HibernateUtil.commitTransaction(session);
+				return SUCCESS;
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
+				return ERROR;
+			}
+		}
+	}
+	
+	/**
+	 * Add a region category
+	 * 
+	 * @return success if added, otherwise error
+	 */
+	public String addRegionCategory(){
+
+		RegionCategory category = null;
+		List<SimpleEntry<String, String>> categoryDetails = null;
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedRegion.setSession(session);
+		ViewInformation viewInfo = new ViewInformation(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if(viewInfo.getPhotoRegion(regionId) == null) {
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+		else {
+			if((category = embedRegion.addRegionCategory(regionId, photoId, userId, categoryDetails)) != null) {
+				jsonAddRegionCategory.put(jsonKey, category);
 				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
 			}
@@ -131,6 +170,26 @@ public class EmbedRegionAction extends ActionSupport {
 		}
 	}
 	
+	/**
+	 * Delete a region category
+	 * 
+	 * @return success if deleted, otherwise error
+	 */
+	public String deleteRegionCategory() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedRegion.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if(embedRegion.deleteRegionCategory(regionCategoryId)) {
+			HibernateUtil.commitTransaction(session);
+			return SUCCESS;
+		}
+		else {
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+	}
+	
 	public String deleteRegionCoordinate() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		embedRegion.setSession(session);
@@ -154,11 +213,44 @@ public class EmbedRegionAction extends ActionSupport {
 		ViewInformation viewInfo = new ViewInformation(session);
 		HibernateUtil.beginTransaction(session);
 		
-		if((comment = viewInfo.getRegionComment(regionCommentId)) == null)
+		if((comment = viewInfo.getRegionComment(regionCommentId)) == null) {
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
+		}
 		else { // update the comment
 			comment.setRegionCommentText(regionCommentText);
 			if(embedRegion.editRegionComment(comment)) {
+				HibernateUtil.commitTransaction(session);
+				return SUCCESS;
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
+				return ERROR;
+			}
+		}
+	}
+	
+	/**
+	 * Edit region category
+	 * 
+	 * @return true if region category is updated, otherwise false
+	 */
+	public String editRegionCategory() {
+		RegionCategory regionCategory = null;
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedRegion.setSession(session);
+		ViewInformation viewInfo = new ViewInformation(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if((regionCategory = viewInfo.getRegionCategory(regionCategoryId)) == null) {
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+		else {
+			regionCategory.setCategoryName(categoryName);
+			regionCategory.setRegionCategoryText(regionCategoryText);
+			if (embedRegion.editRegionCategory(regionCategory)) {
 				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
 			}
@@ -245,6 +337,14 @@ public class EmbedRegionAction extends ActionSupport {
 		this.regionCommentText = regionCommentText;
 	}
 
+	public Integer getRegionCategoryId() {
+		return regionCategoryId;
+	}
+
+	public void setRegionCategoryId(Integer regionCategoryId) {
+		this.regionCategoryId = regionCategoryId;
+	}
+
 	public Integer getRegionCoordinateId() {
 		return regionCoordinateId;
 	}
@@ -300,4 +400,13 @@ public class EmbedRegionAction extends ActionSupport {
 	public void setJsonAddRegionComment(Map<String, Object> jsonAddRegionComment) {
 		this.jsonAddRegionComment = jsonAddRegionComment;
 	}
+
+	public Map<String, Object> getJsonAddRegionCategory() {
+		return jsonAddRegionCategory;
+	}
+
+	public void setJsonAddRegionCategory(Map<String, Object> jsonAddRegionCategory) {
+		this.jsonAddRegionCategory = jsonAddRegionCategory;
+	}
+	
 }

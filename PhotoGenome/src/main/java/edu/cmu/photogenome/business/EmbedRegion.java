@@ -1,6 +1,8 @@
 package edu.cmu.photogenome.business;
 
 import java.util.Date;
+import java.util.List;
+import java.util.AbstractMap.SimpleEntry;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -8,11 +10,14 @@ import org.slf4j.LoggerFactory;
 
 import edu.cmu.photogenome.dao.PhotoRegionDao;
 import edu.cmu.photogenome.dao.PhotoRegionDaoImpl;
+import edu.cmu.photogenome.dao.RegionCategoryDao;
+import edu.cmu.photogenome.dao.RegionCategoryDaoImpl;
 import edu.cmu.photogenome.dao.RegionCommentDao;
 import edu.cmu.photogenome.dao.RegionCommentDaoImpl;
 import edu.cmu.photogenome.dao.RegionCoordinateDao;
 import edu.cmu.photogenome.dao.RegionCoordinateDaoImpl;
 import edu.cmu.photogenome.domain.PhotoRegion;
+import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
 
@@ -21,11 +26,13 @@ public class EmbedRegion {
 	final Logger log = LoggerFactory.getLogger(EmbedRegion.class);
 	
 	private PhotoRegionDao photoRegionDao;
+	private RegionCategoryDao regionCategoryDao;
 	private RegionCommentDao regionCommentDao;
 	private RegionCoordinateDao regionCoordinateDao;
 
 	public EmbedRegion() {
 		photoRegionDao = new PhotoRegionDaoImpl();
+		regionCategoryDao = new RegionCategoryDaoImpl();
 		regionCommentDao = new RegionCommentDaoImpl();
 		regionCoordinateDao = new RegionCoordinateDaoImpl();
 	}
@@ -47,6 +54,7 @@ public class EmbedRegion {
 	 */
 	public void setSession(Session session) {
 		photoRegionDao.setSession(session);
+		regionCategoryDao.setSession(session);
 		regionCommentDao.setSession(session);
 		regionCoordinateDao.setSession(session);
 	}
@@ -106,7 +114,7 @@ public class EmbedRegion {
 	 * @param userId
 	 * @param regionId
 	 * @param regionCommentText
-	 * @return newly created regioncomment, otherwise null
+	 * @return newly created region comment, otherwise null
 	 */
 	public RegionComment addRegionComment(int photoId, int userId, int regionId, String regionCommentText) {
 		RegionComment comment = new RegionComment(photoId, regionId, userId, new Date());
@@ -120,6 +128,32 @@ public class EmbedRegion {
 			return null;
 	}
 	
+	/**
+	 * Save a region category
+	 * 
+	 * @param regionId
+	 * @param photoId
+	 * @param userId
+	 * @param categoryDetails
+	 * @return newly created region category, otherwise null
+	 */
+	public RegionCategory addRegionCategory(int regionId, int photoId, int userId, 
+			List<SimpleEntry<String, String>> categoryDetails) {
+		RegionCategory category = new RegionCategory(regionId, photoId, userId, new Date());
+		
+		for(SimpleEntry<String, String> details : categoryDetails) {
+			log.debug("Saving region category with regionId={}, photoId={}, userId={}, categoryName={}, categoryValue={}", 
+					regionId, photoId, userId, details.getKey(), details.getValue());
+			category.setCategoryName(details.getKey());
+			category.setRegionCategoryText(details.getValue());
+			if(!regionCategoryDao.save(category))
+				return null;
+		}
+		
+		log.debug("Region category added with regionCategoryId={}", category.getRegionCategoryId());
+		return category;
+	}
+		
 	/**
 	 * Private helper method to save a set of region coordinates
 	 * 
@@ -137,8 +171,8 @@ public class EmbedRegion {
 		RegionCoordinate coordinate = new RegionCoordinate(regionId, photoId, userId, regionX, regionY, 
 				height, width, new Date());
 		
-		log.debug("Saving region coordinate with regionId, photoId={}, userId={}, regionX={}, regionY={}," +
-				" height={}, width={}", photoId, userId, regionX, regionY, height, width);
+		log.debug("Saving region coordinate with regionId={}, photoId={}, userId={}, regionX={}, regionY={}," +
+				" height={}, width={}", regionId, photoId, userId, regionX, regionY, height, width);
 		if(regionCoordinateDao.save(coordinate))
 				return coordinate;
 		else
@@ -159,6 +193,23 @@ public class EmbedRegion {
 			return false;
 	}
 
+	/**
+	 * Edit region categories
+	 * 
+	 * @param regionCategory
+	 * @return	true if category is updated, otherwise false
+	 */
+	public boolean editRegionCategory(RegionCategory regionCategory){
+		log.debug("Updating region category with ID = {}", regionCategory.getRegionCategoryId());
+		if(regionCategoryDao.update(regionCategory)) {
+			return true;
+		}
+		else {
+			log.error("Failed to update region category with ID = {}", regionCategory.getRegionCategoryId());
+			return false;
+		}
+	}
+	
 	/**
 	 * Edit a region coordinate
 	 * @param coordinate
@@ -204,6 +255,26 @@ public class EmbedRegion {
 		}
 		else
 			log.debug("Region comment with ID = {} does not exist. Nothing to delete", regionCommentId);
+		
+		return true;
+	}
+
+	/**
+	 * Delete a region category 
+	 * @param regionCategoryId
+	 * @return true if region category no longer exists, else false
+	 */
+	public boolean deleteRegionCategory(int regionCategoryId) {
+		RegionCategory category;
+		if((category = regionCategoryDao.findById(regionCategoryId)) != null) {
+			log.debug("Deleting region category with ID = {}", regionCategoryId);
+			if(!regionCategoryDao.delete(category)) {
+				log.error("Failed to delete region category with ID = {}", regionCategoryId);
+				return false;
+			}
+		}
+		else
+			log.debug("Region category with ID = {} does not exist. Nothing to delete", regionCategoryId);
 		
 		return true;
 	}
