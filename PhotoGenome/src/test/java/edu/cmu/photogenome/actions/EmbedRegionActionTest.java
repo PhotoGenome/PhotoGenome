@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.opensymphony.xwork2.ActionProxy;
 
 import edu.cmu.photogenome.domain.PhotoRegion;
+import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
 
 public class EmbedRegionActionTest extends StrutsTestCase {
@@ -71,6 +72,37 @@ public class EmbedRegionActionTest extends StrutsTestCase {
 	}
 	
 	@Test
+	public void testAddRegionCategory() throws Exception {
+		request.setParameter("regionId", "1");
+		request.setParameter("photoId", "1");
+		request.setParameter("userId", "1000");
+		request.setParameter("categoryName", "Building");
+		request.setParameter("regionCategoryText", "Cathedral of Learning");
+		
+		ActionProxy proxy = getActionProxy("/addRegionCategory");
+		EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
+		String result = proxy.execute();
+		Map<String, Object> jsonData = action.getJsonAddRegionCategory();
+		assertNotNull(jsonData);
+		RegionCategory regionCategory = (RegionCategory) jsonData.get("items");
+		assertEquals(1, regionCategory.getRegionId());
+		assertEquals(3, regionCategory.getRegionCategoryId().intValue());
+		//assertEquals("success", result);
+	}
+	
+	@Test
+	public void testAddRegionCategoryNull() throws Exception {
+		request.setParameter("regionId", "-1");
+		
+		ActionProxy proxy = getActionProxy("/addRegionCategory");
+		EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
+		String result = proxy.execute();
+		Map<String, Object> jsonData = action.getJsonAddRegionCategory();
+		assertEquals(0, jsonData.size());
+		//assertEquals("error", result);
+	}
+	
+	@Test
 	public void testDeletePhotoRegion() throws Exception {
 		request.setParameter("regionId", "1");
 		
@@ -90,6 +122,16 @@ public class EmbedRegionActionTest extends StrutsTestCase {
 		//assertEquals("success", result);
 	}
 
+	@Test
+	public void testDeleteRegionCategory() throws Exception {
+		request.setParameter("regionCategoryId", "1");
+		
+		ActionProxy proxy = getActionProxy("/deleteRegionCategory");
+		EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
+		String result = proxy.execute();
+		//assertEquals("success", result);
+	}
+	
 	@Test
 	public void testDeleteRegionCoordinate() throws Exception {
 		request.setParameter("regionCoordinateId", "1");
@@ -117,6 +159,30 @@ public class EmbedRegionActionTest extends StrutsTestCase {
 		request.setParameter("regionCommentText", "SAMPLE TEXT");
 		
 		ActionProxy proxy = getActionProxy("/editRegionComment");
+		EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
+		String result = proxy.execute();
+		//assertEquals("error", result);
+	}
+	
+	@Test
+	public void testEditRegionCategory() throws Exception {
+		request.setParameter("regionCategoryId", "1");
+		request.setParameter("categoryName", "SAMPLE NAME");
+		request.setParameter("regionCategoryText", "SAMPLE TEXT");
+		
+		ActionProxy proxy = getActionProxy("/editRegionCategory");
+		EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
+		String result = proxy.execute();
+		//assertEquals("success", result);
+	}
+
+	@Test
+	public void testEditRegionCategoryNotExist() throws Exception {
+		request.setParameter("regionCategoryId", "-1");
+		request.setParameter("categoryName", "SAMPLE NAME");
+		request.setParameter("regionCategoryText", "SAMPLE TEXT");
+		
+		ActionProxy proxy = getActionProxy("/editRegionCategory");
 		EmbedRegionAction action = (EmbedRegionAction) proxy.getAction();
 		String result = proxy.execute();
 		//assertEquals("error", result);

@@ -14,16 +14,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.EmbedRegion;
 import edu.cmu.photogenome.business.ViewInformation;
-import edu.cmu.photogenome.dao.PhotoDao;
-import edu.cmu.photogenome.dao.PhotoDaoImpl;
-import edu.cmu.photogenome.dao.PhotoRegionDao;
-import edu.cmu.photogenome.dao.PhotoRegionDaoImpl;
-import edu.cmu.photogenome.dao.RegionCommentDao;
-import edu.cmu.photogenome.dao.RegionCommentDaoImpl;
-import edu.cmu.photogenome.dao.RegionCoordinateDao;
-import edu.cmu.photogenome.dao.RegionCoordinateDaoImpl;
-import edu.cmu.photogenome.domain.Photo;
-import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoRegion;
 import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
@@ -46,6 +36,7 @@ public class EmbedRegionAction extends ActionSupport {
 	private String regionCommentText;
 	private Integer regionCategoryId;
 	private String categoryName;
+
 	private String regionCategoryText;
 	private Integer regionCoordinateId;
 	private int regionX;
@@ -181,7 +172,7 @@ public class EmbedRegionAction extends ActionSupport {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		embedRegion.setSession(session);
 		HibernateUtil.beginTransaction(session);
-		
+
 		if(embedRegion.deleteRegionCategory(regionCategoryId)) {
 			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
@@ -385,6 +376,22 @@ public class EmbedRegionAction extends ActionSupport {
 
 	public void setWidth(int width) {
 		this.width = width;
+	}
+	
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getRegionCategoryText() {
+		return regionCategoryText;
+	}
+
+	public void setRegionCategoryText(String regionCategoryText) {
+		this.regionCategoryText = regionCategoryText;
 	}
 	
 	public Map<String, Object> getJsonAddPhotoRegion() {
