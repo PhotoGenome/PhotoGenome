@@ -18,7 +18,7 @@ public class EmbedPhotoTest extends HibernateDbUnitTestCase{
 	public void testAddPhotoComment() {
 		EmbedPhoto embedPhoto = new EmbedPhoto(session);
 		PhotoComment photoComment = null;
-		photoComment = embedPhoto.addPhotoComment(1, 1000, "testing");
+		photoComment = embedPhoto.addPhotoComment(1, 1000, "new testing");
 		assertNotNull(photoComment);
 		assertEquals(1, photoComment.getPhotoId());
 	}

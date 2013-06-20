@@ -8,12 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.EmbedPhoto;
+import edu.cmu.photogenome.business.ViewInformation;
 import edu.cmu.photogenome.dao.PhotoCategoryDao;
 import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
 import edu.cmu.photogenome.dao.PhotoCommentDao;
@@ -26,6 +28,7 @@ import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.RegionCategory;
+import edu.cmu.photogenome.util.HibernateUtil;
 
 public class EmbedPhotoAction extends ActionSupport {
 
@@ -165,16 +168,25 @@ public class EmbedPhotoAction extends ActionSupport {
 		Photo photo = null;
 		PhotoComment photoComment = null;
 
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedPhoto.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
 		try{
 			photo = photoDao.findById(photoId);
 
 			if(photo != null) {
-				if((photoComment = embedPhoto.addPhotoComment(photoId, userId, photoCommentText)) == null)
+				if((photoComment = embedPhoto.addPhotoComment(photoId, userId, photoCommentText)) == null) {
+					HibernateUtil.rollbackTransaction(session);
 					return ERROR;
-			}else
+				}
+			}else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
+			}
 
 			jsonAddPhotoComments.put(jsonKey, photoComment);
+			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
 
 		}catch(Exception ex) {
@@ -194,6 +206,10 @@ public class EmbedPhotoAction extends ActionSupport {
 		PhotoCategory photoCategory = null;
 		List<SimpleEntry<String, String>> categoryList = null;
 		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedPhoto.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
 		try{
 			categoryList = new ArrayList<SimpleEntry<String, String>>();
 			photo = photoDao.findById(photoId);
@@ -201,14 +217,17 @@ public class EmbedPhotoAction extends ActionSupport {
 		if(photo != null) {
 			categoryList.add(new SimpleEntry<String, String>(photoCategoryName, photoCategoryText));
 					
-			if((photoCategory = embedPhoto.addPhotoCategory(photoId, userId, categoryList))==null)
+			if((photoCategory = embedPhoto.addPhotoCategory(photoId, userId, categoryList))==null) {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
+			}
 		}else{
-
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
 		
-		jsonAddPhotoCategories.put(jsonKey, photoCategory);		
+		jsonAddPhotoCategories.put(jsonKey, photoCategory);
+		HibernateUtil.commitTransaction(session);
 		return SUCCESS;
 		
 		}catch(Exception ex)
@@ -226,15 +245,26 @@ public class EmbedPhotoAction extends ActionSupport {
 	public String editPhotoComment(){
 
 		PhotoComment photoComment = null;
-		if((photoComment = photoCommentDao.findById(photoCommentId)) == null)
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedPhoto.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if((photoComment = photoCommentDao.findById(photoCommentId)) == null) {
+			HibernateUtil.rollbackTransaction(session);
 			return "invalid_photo_comment";
+		}
 		else {
 			photoComment.setPhotoCommentTimestamp(new Date());
 			photoComment.setPhotoCommentText(photoCommentText);
-			if (embedPhoto.editPhotoComment(photoComment))
+			if (embedPhoto.editPhotoComment(photoComment)) {
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			else 
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
+			}
 		}
 	}
 
@@ -248,14 +278,22 @@ public class EmbedPhotoAction extends ActionSupport {
 
 		PhotoCategory photoCategory = photoCategoryDao.findById(photoId);
 
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedPhoto.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
 		if(photoCategory != null) {
 			photoCategory.setPhotoCategoryName(photoCategoryName);
 			photoCategory.setPhotoCategoryText(photoCategoryText);
-			if(!embedPhoto.editPhotoCategory(photoCategory))
+			if(!embedPhoto.editPhotoCategory(photoCategory)) {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
-		}else
+			}
+		}else {
+			HibernateUtil.rollbackTransaction(session);
 			return "invalid_photo_category";
-
+		}
+		HibernateUtil.commitTransaction(session);
 		return SUCCESS;
 
 	}
@@ -269,15 +307,26 @@ public class EmbedPhotoAction extends ActionSupport {
 	public String editRegionCategory(){
 
 		RegionCategory regionCategory = null;
-		if((regionCategory = regionCategoryDao.findById(regionCategoryId)) == null)
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedPhoto.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if((regionCategory = regionCategoryDao.findById(regionCategoryId)) == null) {
+			HibernateUtil.rollbackTransaction(session);
 			return "invalid_region_category";
+		}
 		else {
 			regionCategory.setCategoryName(categoryName);
 			regionCategory.setRegionCategoryText(regionCategoryText);
-			if (embedPhoto.editRegionCategory(regionCategory))
+			if (embedPhoto.editRegionCategory(regionCategory)) {
+				HibernateUtil.commitTransaction(session);
 				return SUCCESS;
-			else 
+			}
+			else {
+				HibernateUtil.rollbackTransaction(session);
 				return ERROR;
+			}
 		}
 	}
 
@@ -288,10 +337,19 @@ public class EmbedPhotoAction extends ActionSupport {
 	 */
 
 	public String deletePhotoComment(){
-		if(embedPhoto.deletePhotoComment(photoCommentId))
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedPhoto.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if(embedPhoto.deletePhotoComment(photoCommentId)) {
+			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
-		else
+		}
+		else {
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
+		}
 	}
 
 
@@ -303,10 +361,18 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	public String deletePhotoCategory(){
 
-		if(embedPhoto.deletePhotoCategory(photoCategoryId))
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		embedPhoto.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if(embedPhoto.deletePhotoCategory(photoCategoryId)) {
+			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
-		else
+		}
+		else {
+			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
+		}
 	}
 
 }
