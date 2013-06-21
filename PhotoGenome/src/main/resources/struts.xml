@@ -178,6 +178,34 @@
 			</result>
 		
 		</action>
+		
+		<action name="fileUploadAction" class="edu.cmu.photogenome.actions.FileUploadAction" method="display">
+			<result name="none">jsp/PhotoLayout.jsp</result>
+		</action>
+		
+		<action name="resultAction" class="edu.cmu.photogenome.actions.FileUploadAction">
+
+			<interceptor-ref name="exception"/>
+            <interceptor-ref name="i18n"/>
+            <interceptor-ref name="fileUpload">
+       			<param name="allowedTypes">image/png,image/gif,image/jpeg,image/pjpeg</param>
+       			<param name="maximumSize">1024000</param>
+  			</interceptor-ref> 
+            <interceptor-ref name="params">
+                <param name="excludeParams">dojo\..*,^struts\..*</param>
+            </interceptor-ref>
+            <interceptor-ref name="validation">
+                <param name="excludeMethods">input,back,cancel,browse</param>
+            </interceptor-ref>
+            <interceptor-ref name="workflow">
+                <param name="excludeMethods">input,back,cancel,browse</param>
+            </interceptor-ref>
+    
+			<result name="success">jsp/UploadResult.jsp</result>
+			<result name="input">jsp/PhotoLayout.jsp</result>
+			
+		</action>
+		
 		<!-- End adding actions for connecting UI with business logic   -->
 	</package>
 
