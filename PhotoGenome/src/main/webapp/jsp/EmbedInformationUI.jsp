@@ -563,6 +563,7 @@ function getPhotoComments(){
 			  };
 	  
 			  function deletePhotoRegion(regionId){
+				  alert(regionId);
 					$.getJSON(
 				    	'deletePhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,regionId:parseInt(regionId)},
 				         	  function(jsonPhotoRegion) {
@@ -750,12 +751,14 @@ $('#canvas').boxer({
 		    	'addPhotoRegion.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,shapeId:1,regionX:parseInt(offset.left),regionY:parseInt(offset.top),width:parseInt(ui.box.width()),height:parseInt(ui.box.height())},
 		         	  function(jsonRegionCoordinates) {
 		    	    regionId=  jsonRegionCoordinates.items.regionId;
+		    		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box"></div> ');
 		             	 
 		         });
+		
 		ui.box.css({ border: '2px solid white', padding: '0.5em' });
 		ui.box.addClass('ui-boxer');
 		ui.box.attr('id', regionId);
-		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box"></div> ');
+	//	ui.box.append('<div regionId="'+regionId+'" class="Rclose_box"></div> ');
 		ui.box.click(function () {
 			jQuery('#regionComments').html('');
 			jQuery('#regionCategories').html('');
