@@ -6,24 +6,14 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.StaleStateException;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.googlecode.s2hibernate.struts2.plugin.annotations.SessionTarget;
-import com.googlecode.s2hibernate.struts2.plugin.annotations.TransactionTarget;
-
-import edu.cmu.photogenome.util.HibernateUtil;
 
 public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implements GenericDao<T, ID> {
 
 	final Logger log = LoggerFactory.getLogger(GenericAbstractDaoImpl.class);
 	
-	//@SessionTarget
 	protected Session session;
-	
-	//@TransactionTarget
-	//Transaction transaction;
 	
     protected Class<T> type;
 

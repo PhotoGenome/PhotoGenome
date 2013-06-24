@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.struts2.json.JSONWriter;
+import org.hibernate.Session;
 
 import com.cedarsoftware.util.io.JsonWriter;
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,6 +15,7 @@ import edu.cmu.photogenome.dao.UserDao;
 import edu.cmu.photogenome.dao.UserDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.User;
+import edu.cmu.photogenome.util.HibernateUtil;
 
 public class LoginAction extends ActionSupport {
     private String username;
@@ -64,15 +66,23 @@ public class LoginAction extends ActionSupport {
     }
     
     public String updateUser() {
+    	
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+    	HibernateUtil.beginTransaction(session);
+    	userDao.setSession(session);
+    	//HibernateUtil.beginTransaction(userDao.getSession());
     	User user = userDao.findById(Integer.parseInt(this.username));
+    	System.out.println("FIRST NAME = " + user.getUserFirstName());
     	user.setUserFirstName(this.password);
-    	userDao.update(user);
+    	if(userDao.update(user))
+    		HibernateUtil.commitTransaction(userDao.getSession());
+    	else
+    		HibernateUtil.rollbackTransaction(userDao.getSession());
     	
     	return SUCCESS;
     }
     
     public String findUser() {
-    	System.out.println("FIND USER *****");
     	Photo photo = new Photo();
     	//photo.setPhotoDesc("my description");
     	//photo.setPhotoId(10);
