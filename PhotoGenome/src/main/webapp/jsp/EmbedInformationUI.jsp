@@ -88,7 +88,6 @@
         	var categoryParent= $(this).parent().parent();
             var category= categoryParent.find('.PCatcomment_box');
             var photoCategoryText=category.text().split(':');
-            alert(photoCategoryText[0]+' '+photoCategoryText[1]+' '+category.attr('photoCategoryId'));
             editPhotoCategory(photoCategoryText[0],photoCategoryText[1],category.attr('photoCategoryId'));
             return false;
         });
@@ -111,7 +110,6 @@
             var categoryParent= $(this).parent().parent();
             var category= categoryParent.find('.RCatcomment_box');
            var regionCategoryText=category.text().split(':');
-            alert(regionCategoryText[0]+' '+regionCategoryText[1]+' '+category.attr('regionCategoryId'));
             editRegionCategory(regionCategoryText[0],regionCategoryText[1],category.attr('regionCategoryId'));
             return false;
         });
@@ -476,7 +474,7 @@ function getPhotoComments(){
 	      $.getJSON(
 	         'addPhotoComment.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCommentText:photoCommentText},
 	         	  function(jsonPhotoComments) {
-	        	 alert(jsonPhotoComments);
+	        	
 	        		  $('#photoComments').append('<div class="box"> <div photoCommentId="'+
 	        				  jsonPhotoComments.items.photoCommentId+
 	        				  '" class="PCedit_box"></div> <div photoCommentId="'
@@ -515,7 +513,6 @@ function getPhotoComments(){
 	  };
 
 	  function editPhotoCategory(photoCategoryName,photoCategortyText, photoCategoryId){
-			 alert(photoCategoryName+'  '+photoCategortyText +'  '+ photoCategoryId);
 			 $.getJSON(
 		         	  'editPhotoCategory.action' , {photoId:$('#canvas').attr('photoId'),userId:1000,photoCategoryId:photoCategoryId,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
 		         	  function(jsonPhotoCategories) {
