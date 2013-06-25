@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,11 +44,18 @@ public class UploadPhoto {
 		photoDao.setSession(session);
 	}
 	
+	/**
+	 * Save a list of photo files and create database entries for each of them
+	 * 
+	 * @param userId	user who uploaded the photos
+	 * @param fileList	list of files to be saved
+	 * @return list of Photo entities that were saved
+	 */
 	public List<Photo> savePhoto(int userId, List<File> fileList) {
 		List<Photo> photoList = new ArrayList<Photo>();
 		
 		for(File file : fileList) {
-			Photo photo = savePhoto(userId, file.getName(), file);
+			Photo photo = savePhoto(userId, FilenameUtils.getBaseName(file.getName()), file);
 			if(photo != null)
 				photoList.add(photo);
 			else
@@ -56,6 +65,14 @@ public class UploadPhoto {
 		return photoList;
 	}
 	
+	/**
+	 * Save a photo file and create a database entry for it
+	 * 
+	 * @param userId	user who uploaded the photo
+	 * @param photoName	photo name
+	 * @param photoFile photo file to be saved
+	 * @return Photo entity if successful, else null
+	 */
 	private Photo savePhoto(int userId, String photoName, File photoFile) {
 		Photo photo = new Photo(userId, new Date());
 		photo.setPhotoName(photoName);
@@ -73,6 +90,13 @@ public class UploadPhoto {
 		}
 	}
 	
+	/**
+	 * Save a file to disk and set the photo link path on the photo entity
+	 * 
+	 * @param file	the file to save
+	 * @param photo	the photo whose link should be set to the saved file path
+	 * @return	true if successful, else false
+	 */
 	private boolean savePhotoLink(File file, Photo photo) {
 		Properties config = new Properties();
 		
@@ -84,28 +108,22 @@ public class UploadPhoto {
 			return false;
 		}
 		
-		String path = config.getProperty("photoLinkPath");
-		String name = getPhotoLinkUniqueName(photo);
-		photo.setPhotoLink(name);
-		
+		String path = config.getProperty("photoLinkPath"); // path is stored in config file
+		String name = getPhotoLinkUniqueName(photo) + "." + FilenameUtils.getExtension(file.getName());
+		photo.setPhotoLink(name); // photo link name is unique name appended by file extension
+
 		FileInputStream in = null;
 		FileOutputStream out = null;
 		
 		try {
 			File outFile = new File(path, name);
-			
 			if(!outFile.exists()) // create the file
 				outFile.createNewFile();
 			
-			in = new FileInputStream(file);
-			out = new FileOutputStream(new File(path, name), false);
-			int data;
-			while((data = in.read()) != -1)
-				out.write(data);
-		} 
-		catch (FileNotFoundException e) {
-			log.error(e.getMessage(), e);
-			return false;
+			in = new FileInputStream(file); // stream to source file
+			out = new FileOutputStream(new File(path, name), false); // stream to dest file
+			
+			IOUtils.copy(in, out); // write from the input stream to the output stream
 		} 
 		catch (IOException ioe) {
 			log.error(ioe.getMessage(), ioe);
@@ -138,6 +156,12 @@ public class UploadPhoto {
 		return String.valueOf(photo.getPhotoTimestamp().getTime()) + String.valueOf(photo.getPhotoId());
 	}
 	
+	/**
+	 * Save the metadata file containing the category information for a photo
+	 * 
+	 * @param photoId
+	 * @return true if successful, else false
+	 */
 	private boolean savePhotoMetadata(int photoId) {
 		return false;
 	}
