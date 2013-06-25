@@ -50,17 +50,19 @@ public class ViewInformationAction extends ActionSupport{
 	 */
 	public String getPhoto(){
 		Photo photo = null;
-		List<Photo> list = new ArrayList<Photo>();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		viewInformation.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		try {
 			if((photo = viewInformation.getPhoto(photoId)) != null) {
-				list.add(photo);
+				jsonGetPhoto.put(jsonKey, photo);
+				HibernateUtil.commitTransaction(session);
+				return SUCCESS;
 			}
-			jsonGetPhoto.put(jsonKey, list);
-			HibernateUtil.commitTransaction(session);
-			return SUCCESS;
+			else {
+				HibernateUtil.rollbackTransaction(session);
+				return ERROR;
+			}
 		} 
 		catch(Exception e) {
 			log.warn(e.getMessage(), e);
