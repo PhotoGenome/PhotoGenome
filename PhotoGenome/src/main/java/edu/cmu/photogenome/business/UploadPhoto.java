@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.domain.PhotoRegion;
 
 public class UploadPhoto {
 
@@ -42,6 +43,40 @@ public class UploadPhoto {
 	 */
 	public void setSession(Session session) {
 		photoDao.setSession(session);
+	}
+	
+	public boolean deletePhoto(int photoId){
+		Photo photo;
+		if((photo = photoDao.findById(photoId)) != null) {
+			if(!deletePhotoFile(photo.getPhotoLink())) // try to delete the photo file
+				log.error("Failed to delete file with name {}", photo.getPhotoLink());
+			
+			if(!deleteMetadataFile(photo.getPhotoMetadatalink()));
+				log.error("Failed to delete file with name {}", photo.getPhotoMetadatalink());
+				
+			log.debug("Deleting photo with ID = {}", photoId);
+			if(!photoDao.delete(photo))
+				return false;
+		}
+		else
+			log.debug("Photo with ID = {} does not exist. Nothing to delete", photoId);
+		
+		return true;
+	}
+	
+	private boolean deletePhotoFile(String name) {
+		Properties config = getApplicationProperties(); // try to load config properties
+		if(config == null)
+			return false;
+		
+		String path = config.getProperty("photoLinkPath");
+		File file = new File(path, name);
+
+		return file.delete();
+	}
+	
+	private boolean deleteMetadataFile(String name) {
+		return true;
 	}
 	
 	/**
@@ -80,7 +115,7 @@ public class UploadPhoto {
 		log.debug("Saving photo with userId={}, photoName={}", userId, photoName);
 		if(photoDao.save(photo)) {
 			if(savePhotoLink(photoFile, photo)// Save the photo file to some location
-					&& !savePhotoMetadata(photo.getPhotoId())) // Save category data for the photo to a file
+					&& savePhotoMetadata(photo)) // Save category data for the photo to a file
 				return photo;
 			else
 				return null;
@@ -98,16 +133,10 @@ public class UploadPhoto {
 	 * @return	true if successful, else false
 	 */
 	private boolean savePhotoLink(File file, Photo photo) {
-		Properties config = new Properties();
-		
-		try {
-			config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
-		}
-		catch(IOException ioe) {
-			log.error(ioe.getMessage(), ioe);
+		Properties config = getApplicationProperties(); // try to load config properties
+		if(config == null)
 			return false;
-		}
-		
+
 		String path = config.getProperty("photoLinkPath"); // path is stored in config file
 		String name = getPhotoLinkUniqueName(photo) + "." + FilenameUtils.getExtension(file.getName());
 		photo.setPhotoLink(name); // photo link name is unique name appended by file extension
@@ -121,9 +150,11 @@ public class UploadPhoto {
 				outFile.createNewFile();
 			
 			in = new FileInputStream(file); // stream to source file
-			out = new FileOutputStream(new File(path, name), false); // stream to dest file
+			out = new FileOutputStream(outFile, false); // stream to dest file
 			
+			log.debug("Writing file from {} to {}", file.getAbsolutePath(), outFile.getAbsolutePath());
 			IOUtils.copy(in, out); // write from the input stream to the output stream
+			log.debug("Saved photo file with name = {} to path = {}", name, path);
 		} 
 		catch (IOException ioe) {
 			log.error(ioe.getMessage(), ioe);
@@ -162,7 +193,41 @@ public class UploadPhoto {
 	 * @param photoId
 	 * @return true if successful, else false
 	 */
-	private boolean savePhotoMetadata(int photoId) {
-		return false;
+	private boolean savePhotoMetadata(Photo photo) {
+		Properties config = getApplicationProperties(); // try to load config properties
+		if(config == null)
+			return false;
+
+		String path = config.getProperty("photoLinkPath"); // path is stored in config file
+		String name = getPhotoLinkUniqueName(photo) + config.getProperty("metadataFileExtension");
+		photo.setPhotoMetadatalink(name); // metadata link name is unique name appended by file extension
+		
+		try {
+			File metadataFile = new File(path, name);
+			metadataFile.createNewFile();
+			log.debug("Saved metadata file with name = {} to path = {}", name, path);
+		} catch (IOException ioe) {
+			log.error(ioe.getMessage(), ioe);
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Helper method to return properties object with access to ApplicationResources.properties
+	 * 
+	 * @return properties object
+	 */
+	private Properties getApplicationProperties() {
+		Properties config = new Properties();
+		try {
+			config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
+			return config;
+		}
+		catch(IOException ioe) {
+			log.error(ioe.getMessage(), ioe);
+			return null;
+		}
 	}
 }

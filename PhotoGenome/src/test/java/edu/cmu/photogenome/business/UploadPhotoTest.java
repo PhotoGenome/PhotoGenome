@@ -39,9 +39,13 @@ public class UploadPhotoTest extends HibernateDbUnitTestCase {
 			Photo photo = outList.get(i);
 			assertEquals(userId, photo.getUserId());
 			assertEquals(nameList.get(i), photo.getPhotoName());
-			String photoLink = String.valueOf(photo.getPhotoTimestamp().getTime()) + String.valueOf(photo.getPhotoId() + ".jpg");
+			String uniqueName = String.valueOf(photo.getPhotoTimestamp().getTime()) + String.valueOf(photo.getPhotoId());
+			String photoLink = uniqueName + ".jpg";
 			assertEquals(photoLink, photo.getPhotoLink());
+			String metadataLink = uniqueName + ".txt";
+			assertEquals(metadataLink, photo.getPhotoMetadatalink());
 		}
 	}
+	
 	
 }
