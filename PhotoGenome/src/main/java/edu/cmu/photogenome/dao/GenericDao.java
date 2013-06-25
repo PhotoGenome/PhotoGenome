@@ -13,6 +13,8 @@ public interface GenericDao<T, ID extends Serializable> {
 	
 	public List<T> findAll();
 	
+	public List<T> findAllByCriteria(String propertyName, Object value);
+	
 	public boolean save(T entity);
 	
 	public boolean update(T entity);

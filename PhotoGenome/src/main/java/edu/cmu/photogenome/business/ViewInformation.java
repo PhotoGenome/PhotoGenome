@@ -85,6 +85,10 @@ public class ViewInformation {
 		return photoDao.findById(photoId);
 	}
 	
+	public List<Photo> getPhotos(String property, Object value) {
+		return photoDao.findAllByCriteria(property, value);
+	}
+	
 	/**
 	 * Get the photo comment for the given id
 	 * 

@@ -29,9 +29,11 @@ public class ViewInformationAction extends ActionSupport{
 
 	private Integer photoId;
 	private Integer regionId;
+	private Integer userId;
 
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonGetPhoto = new LinkedHashMap<String, Object>();
+	private Map<String, Object> jsonGetPhotos = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotoComments = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotoCategories = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotoRegions = new LinkedHashMap<String, Object>();
@@ -48,19 +50,42 @@ public class ViewInformationAction extends ActionSupport{
 	 */
 	public String getPhoto(){
 		Photo photo = null;
-		List<Photo> list = new ArrayList<Photo>();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		viewInformation.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		try {
 			if((photo = viewInformation.getPhoto(photoId)) != null) {
-				list.add(photo);
+				jsonGetPhoto.put(jsonKey, photo);
+				HibernateUtil.commitTransaction(session);
+				return SUCCESS;
 			}
-			jsonGetPhoto.put(jsonKey, list);
-			HibernateUtil.commitTransaction(session);
-			return SUCCESS;
+			else {
+				HibernateUtil.rollbackTransaction(session);
+				return ERROR;
+			}
 		} 
 		catch(Exception e) {
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+	}
+	
+	public String getPhotosByUserId() {
+		List<Photo> list = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		try {
+			if((list = viewInformation.getPhotos("userId", userId)) != null){
+				jsonGetPhotos.put(jsonKey, list);
+				HibernateUtil.commitTransaction(session);
+				return SUCCESS;
+			}else {
+				HibernateUtil.rollbackTransaction(session);
+				return ERROR;
+			}
+		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
@@ -91,7 +116,6 @@ public class ViewInformationAction extends ActionSupport{
 			HibernateUtil.rollbackTransaction(session);
 			return ERROR;
 		}
-
 	}
 
 	/**
@@ -246,12 +270,28 @@ public class ViewInformationAction extends ActionSupport{
 		this.photoId = photoId;
 	}
 	
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
 	public Map<String, Object> getJsonGetPhoto() {
 		return jsonGetPhoto;
 	}
 
 	public void setJsonGetPhoto(Map<String, Object> jsonGetPhoto) {
 		this.jsonGetPhoto = jsonGetPhoto;
+	}
+
+	public Map<String, Object> getJsonGetPhotos() {
+		return jsonGetPhotos;
+	}
+
+	public void setJsonGetPhotos(Map<String, Object> jsonGetPhotos) {
+		this.jsonGetPhotos = jsonGetPhotos;
 	}
 
 	public Map<String, Object> getJsonGetPhotoComments() {

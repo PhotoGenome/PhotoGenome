@@ -55,6 +55,42 @@ public class ViewInformationActionTest extends StrutsTestCase {
 	}
 	
 	/**
+	 * Test getting list of photos for a given user id
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetPhotosByUserId() throws Exception {
+		request.setParameter("userId", "1000");
+		ActionProxy proxy= getActionProxy("/getPhotosByUserId");
+		ViewInformationAction viewInfoAction = (ViewInformationAction) proxy.getAction();
+		String result = proxy.execute();
+		Map<String, Object> jsonData = viewInfoAction.getJsonGetPhotos();
+		assertNotNull(jsonData);
+		List<Photo> list = (List<Photo>) jsonData.get("items");
+		assertEquals(2, list.size());
+		for(Photo p : list)
+			assertEquals(1000, p.getUserId());
+		assertEquals("success", result);
+	}
+	
+	/**
+	 * Test getting empty list of photos
+	 * @throws Exception
+	 */
+	@Test
+	public void testGetPhotosByUserIdEmpty() throws Exception {
+		request.setParameter("userId", "-1");
+		ActionProxy proxy= getActionProxy("/getPhotosByUserId");
+		ViewInformationAction viewInfoAction = (ViewInformationAction) proxy.getAction();
+		String result = proxy.execute();
+		Map<String, Object> jsonData = viewInfoAction.getJsonGetPhotos();
+		assertNotNull(jsonData);
+		List<Photo> list = (List<Photo>) jsonData.get("items");
+		assertEquals(0, list.size());
+		assertEquals("success", result);
+	}
+	
+	/**
 	 * Test getting list of photo comments
 	 * @throws Exception
 	 */
