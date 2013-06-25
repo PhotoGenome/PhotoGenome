@@ -190,7 +190,7 @@
 			<result name="none">jsp/PhotoLayout.jsp</result>
 		</action>  -->
 		
-		<action name="doMultipleUploadUsingArray" class="edu.cmu.photogenome.actions.FileUploadAction" method="fileUpload">
+		<action name="resultAction" class="edu.cmu.photogenome.actions.UploadPhotoAction" method="uploadPhoto">
 
 			<interceptor-ref name="exception"/>
             <interceptor-ref name="i18n"/>
