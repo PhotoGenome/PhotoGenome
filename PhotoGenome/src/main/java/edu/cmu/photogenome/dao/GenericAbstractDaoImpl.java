@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.StaleStateException;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +24,9 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
     
+    /**
+     * Delete a persistent entity
+     */
     public boolean delete(T entity) {
     	boolean result = false;
     	
@@ -41,6 +45,9 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
     	return result;
     }
     
+    /**
+     * Find an entity using a unique ID
+     */
 	@SuppressWarnings("unchecked")
 	public T findById(ID id) {
 		T entity = null;
@@ -55,6 +62,9 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		return entity;
 	}
 	
+	/**
+	 * Find all entities
+	 */
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		List<T> list = null;
@@ -69,6 +79,30 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		return list;
 	}
 	
+	/**
+	 * Find all entities where the given property matches the given value
+	 * 
+	 * @param propertyName
+	 * @param value
+	 * @return List of matching entities, empty list if none match
+	 */
+	@SuppressWarnings("unchecked")
+	public List<T> findAllByCriteria(String propertyName, Object value) {
+		List<T> list = null;
+		
+		try {
+			list = (List<T>) session.createCriteria(type).add(Restrictions.eq(propertyName, value)).list();
+		}
+		catch(Exception e) {
+			log.warn(e.getMessage(), e);
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * Save the persistent entity
+	 */
 	public boolean save(T entity) {
 		boolean result = false;
 		
@@ -83,6 +117,9 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		return result;
 	}
 	
+	/**
+	 * Update the persistent entity
+	 */
 	public boolean update(T entity) {
 		boolean result = false;
 		
