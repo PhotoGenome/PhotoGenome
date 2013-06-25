@@ -30,9 +30,7 @@ public class ViewInformationActionTest extends StrutsTestCase {
 		String result = proxy.execute();
 		Map<String, Object> jsonData = viewInfoAction.getJsonGetPhoto();
 		assertNotNull(jsonData);
-		List<Photo> list = (List<Photo>) jsonData.get("items");
-		assertEquals(1, list.size());
-		Photo photo = list.get(0);
+		Photo photo = (Photo) jsonData.get("items");
 		assertEquals(1, photo.getPhotoId().intValue());
 		assertEquals("success", result);
 	}
@@ -49,9 +47,8 @@ public class ViewInformationActionTest extends StrutsTestCase {
 		String result = proxy.execute();
 		Map<String, Object> jsonData = viewInfoAction.getJsonGetPhoto();
 		assertNotNull(jsonData);
-		List list = (List) jsonData.get("items");
-		assertEquals(0, list.size());
-		assertEquals("success", result);
+		assertEquals(0, jsonData.size());
+		assertEquals("error", result);
 	}
 	
 	/**
