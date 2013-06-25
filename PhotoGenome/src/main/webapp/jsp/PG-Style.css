@@ -38,6 +38,7 @@
     padding:0px;
     margin:2px;
   }
+  
   .Pclose_box{
       background-image:url('Close.png');
      background-size: contain;
@@ -92,6 +93,31 @@
     width:400px;
     font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
   }
+  .PCFilterSelect_box{
+      background-image:url('NotSelected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
+  }
+  
+  .PCFilterSelected_box{
+      background-image:url('Selected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
+  }
    .PCatclose_box{
      background-image:url('Close.png');
      background-size: contain;
@@ -132,6 +158,32 @@
   .PCatcomment_box{
     width:400px;
     font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
+  }
+  
+  .PCatFilterSelect_box{
+      background-image:url('NotSelected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
+  }
+  
+  .PCatFilterSelected_box{
+      background-image:url('Selected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
   }
   
    .RCclose_box{
@@ -176,6 +228,31 @@
     font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
   }
   
+  .RCFilterSelect_box{
+      background-image:url('NotSelected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
+  }
+  
+  .RCFilterSelected_box{
+      background-image:url('Selected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
+  }
    .RCatclose_box{  background-image:url('Close.png');
      background-size: contain;
     height:10px;
@@ -217,6 +294,31 @@
     font: normal 12px/1.2em Arial, Helvetica, sans-serif;color:#444;
   }
   
+  .RCatFilterSelect_box{
+      background-image:url('NotSelected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
+  }
+  
+  .RCatFilterSelected_box{
+      background-image:url('Selected.png');
+     background-size: contain;
+    height:10px;
+    width:10px;
+    padding:2px;
+    display:inline;
+    position:absolute;
+    right:50px;
+    cursor:pointer;
+    z-index:100;
+  }
    .Rclose_box{
     background-image:url('Close.png');
      background-size: contain;

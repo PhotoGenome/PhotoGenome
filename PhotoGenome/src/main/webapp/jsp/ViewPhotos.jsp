@@ -18,7 +18,6 @@
         $(document).on('click','.Photo',function(){
         	 var photoParent= $(this).parent();
              var photo= photoParent.find('.Photo');
-             alert(photo.attr("photoId"));
         	window.location = "EmbedInformationUI.jsp";
         	sessionStorage.setItem("photoId", photo.attr("photoId"));
 			  });

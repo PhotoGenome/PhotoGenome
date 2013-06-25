@@ -55,6 +55,44 @@
                   
             });
         });
+        $(document).on('click','.PCatFilterSelect_box',function(){
+            $(this).addClass('PCatFilterSelected_box').removeClass('PCatFilterSelect_box');
+         
+        });
+       
+        $(document).on('click','.PCatFilterSelected_box',function(){
+            $(this).addClass('PCatFilterSelect_box').removeClass('PCatFilterSelected_box');
+         
+        });
+        $(document).on('click','.RCatFilterSelect_box',function(){
+            $(this).addClass('RCatFilterSelected_box').removeClass('RCatFilterSelect_box');
+         
+        });
+       
+        $(document).on('click','.RCatFilterSelected_box',function(){
+            $(this).addClass('RCatFilterSelect_box').removeClass('RCatFilterSelected_box');
+         
+        });
+        $(document).on('click','.PCFilterSelect_box',function(){
+            $(this).addClass('PCFilterSelected_box').removeClass('PCFilterSelect_box');
+         
+        });
+       
+        $(document).on('click','.PCFilterSelected_box',function(){
+            $(this).addClass('PCFilterSelect_box').removeClass('PCFilterSelected_box');
+         
+        });
+        $(document).on('click','.RCFilterSelect_box',function(){
+            $(this).addClass('RCFilterSelected_box').removeClass('RCFilterSelect_box');
+         
+        });
+       
+        $(document).on('click','.RCFilterSelected_box',function(){
+            $(this).addClass('RCFilterSelect_box').removeClass('RCFilterSelected_box');
+         
+        });
+       
+        
         $(document).on('click','.RCedit_box',function(){
             var commentParent= $(this).parent();
             var comment= commentParent.find('.RCcomment_box');
@@ -115,7 +153,38 @@
         });
        
             $(document).ready(function() {                        
-                $('#submitRCat').click(function(event) {  
+              
+            	  $('#viewAssociatedPhotos').click(function(event) {  
+            		  
+            		  var allSelectedPC = $('.PCFilterSelected_box').map(function(){
+            			  alert(this.photoCommentId);
+            			    return this.photoCommentId;
+            			}).get();
+            		  alert(allSelectedPC);
+            		  var allSelectedPCat = $('.PCatFilterSelected_box').map(function(){
+            			  alert(this.photoCategorytId);
+              			
+            			  return this.photoCategorytId;
+          			}).get();
+            		  alert(allSelectedPCat);
+            		  
+            		  var allSelectedRC = $('.RCFilterSelected_box').map(function(){
+            			  alert(this.regionCommentId);
+              			
+            			  return this.regionCommentId;
+          			}).get();
+            		  alert(allSelectedRC);
+            		  
+            		  var allSelectedRCat = $('.RCatFilterSelected_box').map(function(){
+            			  alert(this.regionCategoryId);
+              			
+            			  return this.regionCategoryId;
+          			}).get();
+            		  alert(allSelectedRCat);
+            		  
+            	  });
+            	  
+            	$('#submitRCat').click(function(event) {  
                 	if($('input[name=RCategoryType]:checked', '#form1').val()==='Custom')
                 	{
                 		var regionCategories=$('#txtRegionCategories').val();
@@ -267,8 +336,10 @@ Enter Comments Here.
 </table>
 </td>
 </tr>
-<tr><td><input type="button" id="stop" value="Stop!" />
-<input type="button" id="start" value="Start!" /></td></tr>
+<tr><td><input type="button" id="stop" value="Stop Marking" />
+<input type="button" id="start" value="Start Marking" />
+<input type="button" id="viewAssociatedPhotos" value="View Associated Photos" />
+
 <tr><td>Photo Categories</td></tr>
 <tr><td><div id="photoCategories"></div> </td></tr>
 <tr>
@@ -343,6 +414,8 @@ function getPhotoCategories(){
          		 	for (category in jsonPhotoCategories.items) {
          		 		$('#photoCategories').append('<div class="box"> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+
+         		 				'" class="PCatFilterSelect_box"></div> <div photoCategoryId="'
+         		 				+jsonPhotoCategories.items[category].photoCategoryId+
          		 				'" class="PCatedit_box"></div> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+
          		 				'"class="PCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div  photoCategoryId="'
@@ -363,6 +436,8 @@ function getRegionCategories(regionId){
          	  function(jsonRegionCategories) {
     		for (category in jsonRegionCategories.items) {
     		 	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'
+   		 				+jsonRegionCategories.items[category].regionCategoryId+
+ 		 				'" class="RCatFilterSelect_box"></div> <div regionCategoryId="'
 	         			  +jsonRegionCategories.items[category].regionCategoryId+
 	         			  '" class="RCatedit_box"></div> <div regionCategoryId="'
 	         			  +jsonRegionCategories.items[category].regionCategoryId+
@@ -384,6 +459,8 @@ function getPhotoComments(){
          	  function(jsonPhotoComments) {
         	  for (comment in jsonPhotoComments.items) {
         		  $('#photoComments').append('<div class="box"> <div photoCommentId="'
+   		 				+jsonPhotoComments.items[comment].photoCommentId+
+ 		 				'" class="PCFilterSelect_box"></div> <div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
         				  '" class="PCedit_box"></div> <div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
@@ -405,6 +482,8 @@ function getPhotoComments(){
          	  function(jsonRegionComments) {
         	 for (comment in jsonRegionComments.items) {
 	         	  $('#regionComments').append('<div class="box"> <div regionCommentId="'
+	   		 				+jsonRegionComments.items[comment].regionCommentId+
+	 		 				'" class="RCFilterSelect_box"></div> <div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
 	         			  '" class="RCedit_box"></div><div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
