@@ -7,6 +7,7 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<constant name="struts.multipart.saveDir" value="C:\\Users\\hemant\\git\\PhotoGenome\\PhotoGenome\\images\\"></constant>
 
 	<package name="default" extends="json-default">
 		<action name="add" method="addUser"
@@ -179,17 +180,17 @@
 		
 		</action>
 		
-		<action name="fileUploadAction" class="edu.cmu.photogenome.actions.FileUploadAction" method="display">
+		<!-- <action name="fileUploadAction" class="edu.cmu.photogenome.actions.FileUploadAction" method="display">
 			<result name="none">jsp/PhotoLayout.jsp</result>
-		</action>
+		</action>  -->
 		
-		<action name="resultAction" class="edu.cmu.photogenome.actions.FileUploadAction">
+		<action name="doMultipleUploadUsingArray" class="edu.cmu.photogenome.actions.FileUploadAction" method="fileUpload">
 
 			<interceptor-ref name="exception"/>
             <interceptor-ref name="i18n"/>
             <interceptor-ref name="fileUpload">
        			<param name="allowedTypes">image/png,image/gif,image/jpeg,image/pjpeg</param>
-       			<param name="maximumSize">1024000</param>
+       			<param name="maximumSize">102400000</param>
   			</interceptor-ref> 
             <interceptor-ref name="params">
                 <param name="excludeParams">dojo\..*,^struts\..*</param>
@@ -204,6 +205,8 @@
 			<result name="success">jsp/UploadResult.jsp</result>
 			<result name="input">jsp/PhotoLayout.jsp</result>
 			
+		</action>
+		<action name="resultAction2">
 		</action>
 		
 		<!-- End adding actions for connecting UI with business logic   -->
