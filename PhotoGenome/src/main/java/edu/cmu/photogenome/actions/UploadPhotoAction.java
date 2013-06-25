@@ -111,7 +111,7 @@ public class UploadPhotoAction extends ActionSupport {
 		HibernateUtil.beginTransaction(session);
 
 		try{
-			if(!(upload.deletePhoto(userId, photoId))) {
+			if(!(upload.deletePhoto(photoId))) {
 					HibernateUtil.rollbackTransaction(session);
 					return ERROR;
 			}
@@ -122,7 +122,5 @@ public class UploadPhotoAction extends ActionSupport {
 		}catch(Exception ex) {
 			return ERROR;
 		}
-		
-		return ERROR;
 	}
 }
