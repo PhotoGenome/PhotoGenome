@@ -1,9 +1,11 @@
 package edu.cmu.photogenome.actions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -78,8 +80,22 @@ public class ViewInformationAction extends ActionSupport{
 		HibernateUtil.beginTransaction(session);
 		try {
 			if((list = viewInformation.getPhotos("userId", userId)) != null){
+				
+				Properties config = new Properties();
+				try {
+					config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
+				}
+				catch(IOException ioe) {
+					log.error(ioe.getMessage(), ioe);
+				}
+				
+				for(Photo photo : list) {
+					photo.setPhotoLink(config.getProperty("photoLinkPath") + photo.getPhotoLink());
+					System.out.println(photo.getPhotoLink());
+				}
+				
 				jsonGetPhotos.put(jsonKey, list);
-				HibernateUtil.commitTransaction(session);
+				HibernateUtil.rollbackTransaction(session);
 				return SUCCESS;
 			}else {
 				HibernateUtil.rollbackTransaction(session);
