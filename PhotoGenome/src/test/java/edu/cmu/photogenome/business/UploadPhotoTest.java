@@ -8,6 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import edu.cmu.photogenome.dao.PhotoDao;
+import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
 
@@ -47,5 +49,30 @@ public class UploadPhotoTest extends HibernateDbUnitTestCase {
 		}
 	}
 	
+	/**
+	 * Test deleting a photo entity and its associated photo and metadata files
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testDeletePhoto() throws Exception {
+		UploadPhoto upload = new UploadPhoto(session);
+		PhotoDao photoDao = new PhotoDaoImpl();
+		photoDao.setSession(session);
+		Photo photo = photoDao.findById(1);
+		
+		assertTrue(upload.deletePhoto(1));
+		assertNull(photoDao.findById(1));
+	}
 	
+	/**
+	 * Test deleting a photo entity that does not exist
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	public void testDeletePhotoNullPhoto() throws Exception {
+		UploadPhoto upload = new UploadPhoto(session);
+		assertTrue(upload.deletePhoto(-1));
+	}
 }

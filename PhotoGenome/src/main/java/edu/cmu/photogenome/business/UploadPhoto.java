@@ -2,7 +2,6 @@ package edu.cmu.photogenome.business;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,8 +18,12 @@ import org.slf4j.LoggerFactory;
 import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
-import edu.cmu.photogenome.domain.PhotoRegion;
 
+/**
+ * Class that provides functionality to upload multiple photos and to delete photos.
+ * Uploading a photo saves the image file, creates a category metadata file for the photo, and
+ * persists a photo entity in the database.
+ */
 public class UploadPhoto {
 
 	final Logger log = LoggerFactory.getLogger(UploadPhoto.class);
@@ -45,13 +48,19 @@ public class UploadPhoto {
 		photoDao.setSession(session);
 	}
 	
+	/**
+	 * Delete a photo entity and the associated photo and metadata files
+	 * 
+	 * @param photoId
+	 * @return
+	 */
 	public boolean deletePhoto(int photoId){
 		Photo photo;
 		if((photo = photoDao.findById(photoId)) != null) {
 			if(!deletePhotoFile(photo.getPhotoLink())) // try to delete the photo file
 				log.error("Failed to delete file with name {}", photo.getPhotoLink());
 			
-			if(!deleteMetadataFile(photo.getPhotoMetadatalink()));
+			if(!deleteMetadataFile(photo.getPhotoMetadatalink())); // try to delete the metadata file
 				log.error("Failed to delete file with name {}", photo.getPhotoMetadatalink());
 				
 			log.debug("Deleting photo with ID = {}", photoId);
@@ -64,6 +73,12 @@ public class UploadPhoto {
 		return true;
 	}
 	
+	/**
+	 * Delete a photo file
+	 * 
+	 * @param name	file name
+	 * @return true if deleted, else false
+	 */
 	private boolean deletePhotoFile(String name) {
 		Properties config = getApplicationProperties(); // try to load config properties
 		if(config == null)
@@ -75,8 +90,21 @@ public class UploadPhoto {
 		return file.delete();
 	}
 	
+	/**
+	 * Delete a metadata file
+	 * 
+	 * @param name file name
+	 * @return true if deleted, else false
+	 */
 	private boolean deleteMetadataFile(String name) {
-		return true;
+		Properties config = getApplicationProperties();
+		if(config == null)
+			return false;
+		
+		String path = config.getProperty("metadataLinkPath");
+		File file = new File(path, name);
+		
+		return file.delete();
 	}
 	
 	/**
@@ -178,16 +206,6 @@ public class UploadPhoto {
 	}
 	
 	/**
-	 * Get a unique name for saving the photo file. Uses timestamp with photo id appended as the key.
-	 * 
-	 * @param photo the photo to save
-	 * @return string representing a unique key
-	 */
-	private String getPhotoLinkUniqueName(Photo photo) {
-		return String.valueOf(photo.getPhotoTimestamp().getTime()) + String.valueOf(photo.getPhotoId());
-	}
-	
-	/**
 	 * Save the metadata file containing the category information for a photo
 	 * 
 	 * @param photoId
@@ -212,6 +230,16 @@ public class UploadPhoto {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Get a unique name for saving the photo file. Uses timestamp with photo id appended as the key.
+	 * 
+	 * @param photo the photo to save
+	 * @return string representing a unique key
+	 */
+	private String getPhotoLinkUniqueName(Photo photo) {
+		return String.valueOf(photo.getPhotoTimestamp().getTime()) + String.valueOf(photo.getPhotoId());
 	}
 	
 	/**
