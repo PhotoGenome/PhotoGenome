@@ -81,6 +81,8 @@ public class UploadPhotoAction extends ActionSupport {
 		upload.setSession(session);
 		HibernateUtil.beginTransaction(session);
 
+		//userId = 1000; // TODO remove this
+		
 		try{
 			photoList = upload.savePhoto(userId, fileList);
 			
