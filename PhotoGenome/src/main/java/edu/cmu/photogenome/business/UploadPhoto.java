@@ -164,7 +164,8 @@ public class UploadPhoto {
 		if(config == null)
 			return false;
 
-		String path = config.getProperty("photoLinkPath"); // path is stored in config file
+		//String path = config.getProperty("photoLinkPath"); // path is stored in config file
+		String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\jsp\\";
 		String name = getPhotoLinkUniqueName(photo) + config.getProperty("photoFileExtension");
 		photo.setPhotoLink(name); // photo link name is unique name appended by file extension set in app properties
 
@@ -173,6 +174,7 @@ public class UploadPhoto {
 		
 		try {
 			File outFile = new File(path, name);
+			System.out.println(outFile.getAbsolutePath());
 			if(!outFile.exists()) // create the file
 				outFile.createNewFile();
 			
@@ -215,7 +217,7 @@ public class UploadPhoto {
 		if(config == null)
 			return false;
 
-		String path = config.getProperty("photoLinkPath"); // path is stored in config file
+		String path = config.getProperty("metadataLinkPath"); // path is stored in config file
 		String name = getPhotoLinkUniqueName(photo) + config.getProperty("metadataFileExtension");
 		photo.setPhotoMetadatalink(name); // metadata link name is unique name appended by file extension
 		
