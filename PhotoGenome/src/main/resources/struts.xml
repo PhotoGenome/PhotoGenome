@@ -208,11 +208,13 @@
                 <param name="excludeMethods">input,back,cancel,browse</param>
             </interceptor-ref>
     
-			<result name="success">jsp/UploadResult.jsp</result>
+			<result name="success">jsp/ViewPhotos.jsp</result>
 			<result name="input">jsp/PhotoLayout.jsp</result>
 			
 		</action>
-		<action name="resultAction2">
+		<action name="deletePhoto" method="deletePhoto"
+			class="edu.cmu.photogenome.actions.UploadPhotoAction">
+		
 		</action>
 		
 		<!-- End adding actions for connecting UI with business logic   -->
