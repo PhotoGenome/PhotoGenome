@@ -138,7 +138,6 @@ public class UploadPhoto {
 	 */
 	private Photo savePhoto(int userId, String photoName, File photoFile) {
 		Photo photo = new Photo(userId, new Date());
-		photo.setPhotoName(photoName);
 
 		log.debug("Saving photo with userId={}, photoName={}", userId, photoName);
 		if(photoDao.save(photo)) {
@@ -166,8 +165,8 @@ public class UploadPhoto {
 			return false;
 
 		String path = config.getProperty("photoLinkPath"); // path is stored in config file
-		String name = getPhotoLinkUniqueName(photo) + "." + FilenameUtils.getExtension(file.getName());
-		photo.setPhotoLink(name); // photo link name is unique name appended by file extension
+		String name = getPhotoLinkUniqueName(photo) + config.getProperty("photoFileExtension");
+		photo.setPhotoLink(name); // photo link name is unique name appended by file extension set in app properties
 
 		FileInputStream in = null;
 		FileOutputStream out = null;

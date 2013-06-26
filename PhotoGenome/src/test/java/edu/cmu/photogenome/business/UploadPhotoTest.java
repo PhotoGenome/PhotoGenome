@@ -27,11 +27,11 @@ public class UploadPhotoTest extends HibernateDbUnitTestCase {
 	public void testSavePhoto() throws Exception {
 		int userId = 1000;
 		ArrayList<String> nameList = new ArrayList<String>();
-		nameList.add("test image 1");
-		nameList.add("test image 2");
+		nameList.add("test image 1.jpg");
+		nameList.add("test image 2.png");
 		List<File> inList = new ArrayList<File>();
 		for(String name : nameList)
-			inList.add(new File(this.getClass().getClassLoader().getResource("images/" + name + ".jpg").toURI()));
+			inList.add(new File(this.getClass().getClassLoader().getResource("images/" + name).toURI()));
 		
 		UploadPhoto upload = new UploadPhoto(session);
 		List<Photo> outList = null;
@@ -40,7 +40,6 @@ public class UploadPhotoTest extends HibernateDbUnitTestCase {
 		for(int i = 0; i < outList.size(); i++) {
 			Photo photo = outList.get(i);
 			assertEquals(userId, photo.getUserId());
-			assertEquals(nameList.get(i), photo.getPhotoName());
 			String uniqueName = String.valueOf(photo.getPhotoTimestamp().getTime()) + String.valueOf(photo.getPhotoId());
 			String photoLink = uniqueName + ".jpg";
 			assertEquals(photoLink, photo.getPhotoLink());
