@@ -21,6 +21,9 @@ import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
 
+/**
+ * Class for adding, editing, and deleting categories and comments on photo regions
+ */
 public class EmbedRegion {
 
 	final Logger log = LoggerFactory.getLogger(EmbedRegion.class);
