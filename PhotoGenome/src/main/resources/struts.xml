@@ -187,11 +187,10 @@
 		</action>
 		
 		<action name="fileUploadAction" class="edu.cmu.photogenome.actions.UploadPhotoAction" method="display">
-			<result name="none">jsp/PhotoLayout.jsp</result>
+			<result name="success">jsp/PhotoLayout.jsp</result>
 		</action>
 		
 		<action name="resultAction" class="edu.cmu.photogenome.actions.UploadPhotoAction" method="uploadPhoto">
-		<!-- <action name="resultAction" class="edu.cmu.photogenome.actions.FileUploadAction">  -->
 
 			<interceptor-ref name="exception"/>
             <interceptor-ref name="i18n"/>
@@ -209,7 +208,7 @@
                 <param name="excludeMethods">input,back,cancel,browse</param>
             </interceptor-ref>
     
-			<result name="success">jsp/ViewPhotos.jsp</result>
+			<result name="success">jsp/PhotoLayout.jsp</result>
 			<result name="input">jsp/PhotoLayout.jsp</result>
 			
 		</action>

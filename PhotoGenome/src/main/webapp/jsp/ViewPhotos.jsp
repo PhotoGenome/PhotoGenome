@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-    <%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>AJAX calls using Jquery in Servlet</title>
+<title>PhotoGenome - View Photos</title>
 
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
       <script src="jsonUtil.js"></script>
@@ -51,22 +50,6 @@
 </head>
 <body designMode="on">
 
-<s:form action="resultAction" namespace="/" method="POST" enctype="multipart/form-data">
-
-<table>
-<tr>
-<td>
-<s:file name="fileList" label="Select photo(s) to upload" multiple="multiple"/>
-<s:hidden name="userId" value="1000"></s:hidden>
-</td>
-<td>
-<s:submit value="Upload" name="submit" />
-</td>
-</tr>
-</table>	
-</s:form>
-
-
 <form id="form1">
 <table width="100%" bordercolor="black">
 <tr><td width="70%" bordercolor="black" valign="top">
@@ -106,7 +89,7 @@ function getPhotosByUserId(userId){
            				  +jsonPhotos.items[photo].photoId+
            				  '"class="Pclose_box"></div> <img photoId="'
            				  +jsonPhotos.items[photo].photoId+
-           				  '" class="Photo"  src="'+jsonPhotos.items[photo].photoLink +'" </img></div>');
+           				  '" class="Photo"  src="'+jsonPhotos.items[photo].photoLink +'"> </img></div>');
         			 rowLength++;
         	 } else {
         		 
