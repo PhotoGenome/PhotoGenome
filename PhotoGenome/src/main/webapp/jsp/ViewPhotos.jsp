@@ -49,7 +49,7 @@
 </style>
 </head>
 <body designMode="on">
-
+<a href="http://localhost:8080/photogenome/jsp/PhotoLayout.jsp">Upload Photos</a>
 <form id="form1">
 <table width="100%" bordercolor="black">
 <tr><td width="70%" bordercolor="black" valign="top">
