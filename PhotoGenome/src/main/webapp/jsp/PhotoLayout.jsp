@@ -21,7 +21,7 @@
 		</table>
 	</s:form>
 
-	<a href="http://localhost:8080/PhotoGenome/jsp/ViewPhotos.jsp">View
+	<a href="http://localhost:8080/photogenome/jsp/ViewPhotos.jsp">View
 		Uploaded Photos</a>
 </body>
 </html>
