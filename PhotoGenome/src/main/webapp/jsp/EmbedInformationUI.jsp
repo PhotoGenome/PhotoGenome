@@ -157,30 +157,30 @@
             	  $('#viewAssociatedPhotos').click(function(event) {  
             		  
             		  var allSelectedPC = $('.PCFilterSelected_box').map(function(){
-            			  alert(this.photoCommentId);
+
             			    return this.photoCommentId;
             			}).get();
-            		  alert(allSelectedPC);
+
             		  var allSelectedPCat = $('.PCatFilterSelected_box').map(function(){
-            			  alert(this.photoCategorytId);
+
               			
             			  return this.photoCategorytId;
           			}).get();
-            		  alert(allSelectedPCat);
+
             		  
             		  var allSelectedRC = $('.RCFilterSelected_box').map(function(){
-            			  alert(this.regionCommentId);
+
               			
             			  return this.regionCommentId;
           			}).get();
-            		  alert(allSelectedRC);
+
             		  
             		  var allSelectedRCat = $('.RCatFilterSelected_box').map(function(){
-            			  alert(this.regionCategoryId);
+
               			
             			  return this.regionCategoryId;
           			}).get();
-            		  alert(allSelectedRCat);
+
             		  
             	  });
             	  
@@ -270,7 +270,7 @@
             });
                  
             $(function getUserName() {
-                alert(Session["UserName"]);
+
             });
       
         </script>
@@ -648,7 +648,6 @@ function getPhotoComments(){
 			  };
 	  
 			  function deletePhotoRegion(regionId){
-				  alert(regionId);
 					$.getJSON(
 				    	'deletePhotoRegion.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionId:parseInt(regionId)},
 				         	  function(jsonPhotoRegion) {
@@ -670,7 +669,7 @@ function getPhotoComments(){
 					       return false;
 					  };
 	function parseJSON(){
-		  alert('hie1');
+
 		  jsonRegionComments={"items":[{"photoDesc":"my description","photoId":10,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0},{"photoDesc":"my description 2","photoId":20,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0}]};
 	         	  for (comment in jsonRegionComments.items) {
 	         		  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].photoDesc+'"class="close_box">X</div> <h6>Apoorvi</h6><p>'+jsonRegionComments.items[comment].photoDesc+'</p></div>');

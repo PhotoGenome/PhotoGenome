@@ -84,18 +84,12 @@ function getPhotosByUserId(userId){
          	  function(jsonPhotos) {
         	 var rowLength=0; 
         	 for (photo in jsonPhotos.items) {
-        		   if(rowLength<4){
         			 $('#canvas').append('<div class="P_box"> <div photoId="'
            				  +jsonPhotos.items[photo].photoId+
            				  '"class="Pclose_box"></div> <img photoId="'
            				  +jsonPhotos.items[photo].photoId+
            				  '" class="Photo"  src="'+jsonPhotos.items[photo].photoLink +'"> </img></div>');
         			 rowLength++;
-        	 } else {
-        		 
-        		 $('#canvas').append('<br>');
-        		 rowLength=0;
-        	 }
         	}
          });
       return false;
