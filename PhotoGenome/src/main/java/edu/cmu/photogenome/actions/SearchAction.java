@@ -1,14 +1,20 @@
 package edu.cmu.photogenome.actions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.Search;
+import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.util.HibernateUtil;
 
 public class SearchAction extends ActionSupport {
 
@@ -18,7 +24,7 @@ public class SearchAction extends ActionSupport {
 	
 	private Search search = new Search();
 	
-	private String photoId;
+	private Integer photoId;
 	private String keywordList; // list of search keywords
 	private String photoCategoryIdList; // list of selected photo category ids
 	private String photoCommentIdList; // list of selected photo comment ids
@@ -30,23 +36,122 @@ public class SearchAction extends ActionSupport {
 	private Map<String, Object> jsonGetFilteredAssociatedPhotos = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotosByKeywords = new LinkedHashMap<String, Object>();
 	
+	/**
+	 * Get a set of photos based on all of the photo categories, photo comments, region categories, 
+	 * and region comments on a photo
+	 * 
+	 * @return
+	 */
 	public String getAssociatedPhotos() {
-		search.getAssociatedPhotos(photoId);
-	}
-	
-	public String getFilteredAssociatedPhotos() {
-
-	}
-	
-	public String getPhotosByKeywords() {
+		List<Photo> list = null;
 		
+		// start transaction
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		search.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if((list = search.getAssociatedPhotos(photoId)) != null) {
+			jsonGetAssociatedPhotos.put(jsonKey, list);
+			HibernateUtil.commitTransaction(session);
+			return SUCCESS;
+		}
+		else {
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+	}
+	
+	/**
+	 * Get a set of photos based on filtered photo categories, photo comments, region categories, 
+	 * and region comments on a photo
+	 * 
+	 * @return
+	 */
+	public String getFilteredAssociatedPhotos() {
+		List<Photo> list = null;
+		List<Integer> photoCategoryIds;
+		List<Integer> photoCommentIds;
+		List<Integer> regionCategoryIds;
+		List<Integer> regionCommentIds;
+		
+		try {
+			// parse request parameter strings into lists of integers
+			photoCategoryIds = parseStringToInteger(photoCategoryIdList, ",");
+			photoCommentIds = parseStringToInteger(photoCommentIdList, ",");
+			regionCategoryIds = parseStringToInteger(regionCategoryIdList, ",");
+			regionCommentIds = parseStringToInteger(regionCommentIdList, ",");
+		}
+		catch(NumberFormatException nfe) {
+			log.error(nfe.getMessage(), nfe);
+			return null;
+		}
+		
+		// start transaction
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		search.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if((list = search.getFilteredAssociatedPhotos(photoCategoryIds, photoCommentIds, 
+				regionCategoryIds, regionCommentIds)) != null) {
+			jsonGetFilteredAssociatedPhotos.put(jsonKey, list);
+			HibernateUtil.commitTransaction(session);
+			return SUCCESS;
+		}
+		else {
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+	}
+	
+	/**
+	 * Get a set of photos based on a keyword search
+	 * 
+	 * @return
+	 */
+	public String getPhotosByKeywords() {
+		List<Photo> list = null;
+		List<String> keywords;
+		
+		// parse request parameter strings into list
+		keywords = Arrays.asList(keywordList.split(" "));
+		
+		// start transaction
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		search.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if((list = search.getPhotosByKeyword(keywords)) != null) {
+			jsonGetPhotosByKeywords.put(jsonKey, list);
+			HibernateUtil.commitTransaction(session);
+			return SUCCESS;
+		}
+		else {
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
 	}
 
-	public String getPhotoId() {
+	/**
+	 * Parse a string into a list of integers
+	 * 
+	 * @param string	string to parse
+	 * @param delimiter	delimiter to use
+	 * @return	list of integers
+	 * @throws NumberFormatException
+	 */
+	private List<Integer> parseStringToInteger(String string, String delimiter) throws NumberFormatException {
+		List<Integer> list = new ArrayList<Integer>();
+		String[] strArray = string.split(delimiter);
+		for(String s : strArray)
+			list.add(Integer.parseInt(s));
+		return list;
+	}
+	
+	public Integer getPhotoId() {
 		return photoId;
 	}
 
-	public void setPhotoId(String photoId) {
+	public void setPhotoId(Integer photoId) {
 		this.photoId = photoId;
 	}
 
