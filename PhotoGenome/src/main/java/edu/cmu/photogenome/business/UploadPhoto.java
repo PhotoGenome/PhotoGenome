@@ -84,7 +84,8 @@ public class UploadPhoto {
 		if(config == null)
 			return false;
 		
-		String path = config.getProperty("photoLinkPath");
+		//String path = config.getProperty("photoLinkPath");
+		String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\jsp\\";
 		File file = new File(path, name);
 
 		return file.delete();
