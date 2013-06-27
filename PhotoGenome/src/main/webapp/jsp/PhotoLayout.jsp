@@ -8,7 +8,6 @@
 <title>PhotoGenome - Upload Photos</title>
 </head>
 <body>
-	<h1>Struts 2 &lt;s:file&gt; file upload example</h1>
 	<s:form action="resultAction" namespace="/" method="POST"
 		enctype="multipart/form-data">
 
