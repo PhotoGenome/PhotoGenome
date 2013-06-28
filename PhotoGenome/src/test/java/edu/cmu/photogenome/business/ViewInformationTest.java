@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.util.StopWatch;
 
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
@@ -18,7 +19,9 @@ import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
  *	JUnit test case for View Information business logic
  */
 public class ViewInformationTest extends HibernateDbUnitTestCase {
-
+	
+	private int testTimeSeconds = 5;
+	
 	@Test
 	public void testGetPhoto() {
 		ViewInformation vi = new ViewInformation(session);
@@ -27,13 +30,24 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		assertNotNull(photo);
 		assertEquals(1, photo.getPhotoId().intValue());
 	}
-
+	
 	@Test
 	public void testGetPhotoNull() {
 		ViewInformation vi = new ViewInformation(session);
 		Photo photo = null;
 		photo = vi.getPhoto(-1);
 		assertNull(photo);
+	}
+	
+	@Test
+	public void testGetPhotoPerformance() {
+		ViewInformation vi = new ViewInformation(session);
+		Photo photo = null;
+		StopWatch timer = new StopWatch();
+		timer.start();
+		photo = vi.getPhoto(1);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() < testTimeSeconds);
 	}
 	
 	@Test
@@ -73,6 +87,17 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	}
 	
 	@Test
+	public void testGetPhotoCommentsPerformance() {
+		ViewInformation vi = new ViewInformation(session);
+		List<PhotoComment> list = null;
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = (ArrayList<PhotoComment>) vi.getPhotoComments(1);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() < testTimeSeconds);
+	}
+	
+	@Test
 	public void testGetPhotoCategory() {
 		ViewInformation vi = new ViewInformation(session);
 		PhotoCategory photoCategory = null;
@@ -106,6 +131,17 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		list = (ArrayList<PhotoCategory>) vi.getPhotoCategories(-1);
 		assertNotNull(list);
 		assertEquals(0, list.size());
+	}
+	
+	@Test
+	public void testGetPhotoCategoriesPerformance() {
+		ViewInformation vi = new ViewInformation(session);
+		List<PhotoCategory> list = null;
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = (ArrayList<PhotoCategory>) vi.getPhotoCategories(1);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() < testTimeSeconds);
 	}
 	
 	@Test
@@ -145,6 +181,17 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	}
 	
 	@Test
+	public void testGetPhotoRegionsPerformance() {
+		ViewInformation vi = new ViewInformation(session);
+		List<PhotoRegion> list = null;
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = (ArrayList<PhotoRegion>) vi.getPhotoRegions(1);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() < testTimeSeconds);
+	}
+	
+	@Test
 	public void testGetRegionComment() {
 		ViewInformation vi = new ViewInformation(session);
 		RegionComment regionComment = null;
@@ -180,6 +227,17 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		assertEquals(0, list.size());
 	}
 
+	@Test
+	public void testGetRegionCommentsPerformance() {
+		ViewInformation vi = new ViewInformation(session);
+		List<RegionComment> list = null;
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = (ArrayList<RegionComment>) vi.getRegionComments(1);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() < testTimeSeconds);
+	}
+	
 	@Test
 	public void testGetRegionCategory() {
 		ViewInformation vi = new ViewInformation(session);
@@ -217,6 +275,17 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	}
 
 	@Test
+	public void testGetRegionCategoriesPerformance() {
+		ViewInformation vi = new ViewInformation(session);
+		List<RegionCategory> list = null;
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = (ArrayList<RegionCategory>) vi.getRegionCategories(1);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() < testTimeSeconds);
+	}
+	
+	@Test
 	public void testGetRegionCoordinate() {
 		ViewInformation vi = new ViewInformation(session);
 		RegionCoordinate regionCoordinate = null;
@@ -252,4 +321,14 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 		assertEquals(0, list.size());
 	}
 	
+	@Test
+	public void testGetRegionCoordinatesPerformance() {
+		ViewInformation vi = new ViewInformation(session);
+		List<RegionCoordinate> list = null;
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = (ArrayList<RegionCoordinate>) vi.getRegionCoordinates(1);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() < testTimeSeconds);
+	}
 }
