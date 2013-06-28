@@ -15,6 +15,14 @@ import edu.cmu.photogenome.business.UploadPhoto;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.util.HibernateUtil;
 
+/**
+ * The <code>UploadPhotoAction</code> class passes information to 
+ * <code>UploadPhoto</code> class to upload and delete photos.
+ * 
+ * @author PhotoGenome
+ *
+ */
+
 public class UploadPhotoAction extends ActionSupport {
 
 	final Logger log = LoggerFactory.getLogger(UploadPhotoAction.class);

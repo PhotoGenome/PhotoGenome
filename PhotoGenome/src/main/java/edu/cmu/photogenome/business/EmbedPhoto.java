@@ -3,7 +3,6 @@ package edu.cmu.photogenome.business;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Date;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -18,6 +17,14 @@ import edu.cmu.photogenome.dao.RegionCategoryDaoImpl;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.RegionCategory;
+
+/**
+ * The <code>EmbedPhoto</code> class embeds information in photos 
+ * including adding, editing and deleting photo comments and categories.
+ * 
+ * @author PhotoGenome
+ *
+ */
 
 public class EmbedPhoto {
 

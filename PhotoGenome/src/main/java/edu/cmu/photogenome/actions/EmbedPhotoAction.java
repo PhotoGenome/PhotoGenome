@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.EmbedPhoto;
-import edu.cmu.photogenome.business.ViewInformation;
 import edu.cmu.photogenome.dao.PhotoCategoryDao;
 import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
 import edu.cmu.photogenome.dao.PhotoCommentDao;
@@ -29,6 +27,15 @@ import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.util.HibernateUtil;
+
+/**
+ * The <code>EmbedPhotoAction</code> class passes information to 
+ * <code>EmbedPhoto</code> class to embed information in photos 
+ * including adding, editing and deleting photo comments and categories.
+ * 
+ * @author PhotoGenome
+ *
+ */
 
 public class EmbedPhotoAction extends ActionSupport {
 
@@ -138,6 +145,8 @@ public class EmbedPhotoAction extends ActionSupport {
 
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonAddPhotoComments = new LinkedHashMap<String, Object>();
+	private Map<String, Object> jsonAddPhotoCategories = new LinkedHashMap<String, Object>();
+	
 	public Map<String, Object> getJsonAddPhotoComments() {
 		return jsonAddPhotoComments;
 	}
@@ -154,13 +163,10 @@ public class EmbedPhotoAction extends ActionSupport {
 		this.jsonAddPhotoCategories = jsonAddPhotoCategories;
 	}
 
-
-	private Map<String, Object> jsonAddPhotoCategories = new LinkedHashMap<String, Object>();
-
 	/**
 	 * Add comments to a photo
 	 * 
-	 * @return
+	 * @return	success if photo comment is added, otherwise error
 	 */
 
 	public String addPhotoComment(){
@@ -197,7 +203,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	/**
 	 * Add category to a photo
 	 * 
-	 * @return true if category is added, otherwise false
+	 * @return	success if photo category is added, otherwise error
 	 */
 
 	public String addPhotoCategory(){
@@ -238,9 +244,9 @@ public class EmbedPhotoAction extends ActionSupport {
 	}
 
 	/**
-	 * Update photo comments
+	 * Update photo comment
 	 * 
-	 * @return true if comment is updated, otherwise false
+	 * @return	success if photo comment is updated, otherwise error
 	 */
 
 	public String editPhotoComment(){
@@ -273,7 +279,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	/**
 	 * Update photo category
 	 * 
-	 * @return true if category is updated, otherwise false
+	 * @return	success if photo category is updated, otherwise error
 	 */
 
 	public String editPhotoCategory(){
@@ -304,7 +310,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	/**
 	 * Update region category
 	 * 
-	 * @return true if region category is updated, otherwise false
+	 * @return	success if region category is updated, otherwise error
 	 */
 
 	public String editRegionCategory(){
@@ -338,7 +344,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	/**
 	 * Delete a photo comment
 	 * 
-	 * @return true if comment is deleted, otherwise false
+	 * @return	success if photo comment is deleted, otherwise error
 	 */
 
 	public String deletePhotoComment(){
@@ -361,7 +367,7 @@ public class EmbedPhotoAction extends ActionSupport {
 	/**
 	 * Delete a photo category
 	 * 
-	 * @return true if photo category is deleted, otherwise false
+	 * @return	success if photo category is deleted, otherwise error
 	 */
 
 	public String deletePhotoCategory(){

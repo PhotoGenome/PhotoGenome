@@ -20,6 +20,16 @@ import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
 import edu.cmu.photogenome.util.HibernateUtil;
  
+/**
+ * The <code>EmbedRegionAction</code> class passes information to 
+ * <code>EmbedRegion</code> class to embed region information for 
+ * photos including adding, editing and deleting region categories 
+ * and comments.
+ *  
+ * @author PhotoGenome
+ *
+ */
+
 public class EmbedRegionAction extends ActionSupport {
 
 	final Logger log = LoggerFactory.getLogger(EmbedRegionAction.class);

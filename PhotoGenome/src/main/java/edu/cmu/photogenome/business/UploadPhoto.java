@@ -19,11 +19,17 @@ import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
 
+
 /**
- * Class that provides functionality to upload multiple photos and to delete photos.
- * Uploading a photo saves the image file, creates a category metadata file for the photo, and
- * persists a photo entity in the database.
+ * The <code>UploadPhoto</code> class provides functionality to upload multiple 
+ * photos and to delete photos. Uploading a photo saves the image file, creates 
+ * a category metadata file for the photo, and persists a photo entity in the 
+ * database.
+ * 
+ * @author PhotoGenome
+ *
  */
+
 public class UploadPhoto {
 
 	final Logger log = LoggerFactory.getLogger(UploadPhoto.class);

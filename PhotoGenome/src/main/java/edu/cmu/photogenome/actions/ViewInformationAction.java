@@ -1,7 +1,6 @@
 package edu.cmu.photogenome.actions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,15 @@ import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
 import edu.cmu.photogenome.util.HibernateUtil;
 
+/**
+ * The <code>ViewInformationAction</code> class passes information 
+ * to <code>ViewInformation</code> class to get all the relevant
+ * data which needs to be displayed for a photo.
+ * 
+ * @author PhotoGenome
+ *
+ */
+
 public class ViewInformationAction extends ActionSupport{
 
 	final Logger log = LoggerFactory.getLogger(ViewInformationAction.class);
@@ -33,7 +41,6 @@ public class ViewInformationAction extends ActionSupport{
 	private Integer regionId;
 	private Integer userId;
 
-	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonGetPhoto = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotos = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotoComments = new LinkedHashMap<String, Object>();
@@ -43,6 +50,97 @@ public class ViewInformationAction extends ActionSupport{
 	private Map<String, Object> jsonGetRegionCategories = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetRegionCoordinates = new LinkedHashMap<String, Object>();
 
+	public Integer getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(Integer regionId) {
+		this.regionId = regionId;
+	}
+
+	public Integer getPhotoId() {
+		return photoId;
+	}
+
+	public void setPhotoId(Integer photoId) {
+		this.photoId = photoId;
+	}
+	
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public Map<String, Object> getJsonGetPhoto() {
+		return jsonGetPhoto;
+	}
+
+	public void setJsonGetPhoto(Map<String, Object> jsonGetPhoto) {
+		this.jsonGetPhoto = jsonGetPhoto;
+	}
+
+	public Map<String, Object> getJsonGetPhotos() {
+		return jsonGetPhotos;
+	}
+
+	public void setJsonGetPhotos(Map<String, Object> jsonGetPhotos) {
+		this.jsonGetPhotos = jsonGetPhotos;
+	}
+
+	public Map<String, Object> getJsonGetPhotoComments() {
+		return jsonGetPhotoComments;
+	}
+
+	public void setJsonGetPhotoComments(Map<String, Object> jsonGetPhotoComments) {
+		this.jsonGetPhotoComments = jsonGetPhotoComments;
+	}
+
+	public Map<String, Object> getJsonGetPhotoCategories() {
+		return jsonGetPhotoCategories;
+	}
+
+	public void setJsonGetPhotoCategories(Map<String, Object> jsonGetPhotoCategories) {
+		this.jsonGetPhotoCategories = jsonGetPhotoCategories;
+	}
+
+	public Map<String, Object> getJsonGetPhotoRegions() {
+		return jsonGetPhotoRegions;
+	}
+
+	public void setJsonGetPhotoRegions(Map<String, Object> jsonGetPhotoRegions) {
+		this.jsonGetPhotoRegions = jsonGetPhotoRegions;
+	}
+
+	public Map<String, Object> getJsonGetRegionComments() {
+		return jsonGetRegionComments;
+	}
+
+	public void setJsonGetRegionComments(Map<String, Object> jsonGetRegionComments) {
+		this.jsonGetRegionComments = jsonGetRegionComments;
+	}
+
+	public Map<String, Object> getJsonGetRegionCategories() {
+		return jsonGetRegionCategories;
+	}
+
+	public void setJsonGetRegionCategories(
+			Map<String, Object> jsonGetRegionCategories) {
+		this.jsonGetRegionCategories = jsonGetRegionCategories;
+	}
+
+	public Map<String, Object> getJsonGetRegionCoordinates() {
+		return jsonGetRegionCoordinates;
+	}
+
+	public void setJsonGetRegionCoordinates(
+			Map<String, Object> jsonGetRegionCoordinates) {
+		this.jsonGetRegionCoordinates = jsonGetRegionCoordinates;
+	}
+
+	
 	private ViewInformation viewInformation = new ViewInformation();
 
 	/**
@@ -270,93 +368,4 @@ public class ViewInformationAction extends ActionSupport{
 		}
 	}
 
-	public Integer getRegionId() {
-		return regionId;
-	}
-
-	public void setRegionId(Integer regionId) {
-		this.regionId = regionId;
-	}
-
-	public Integer getPhotoId() {
-		return photoId;
-	}
-
-	public void setPhotoId(Integer photoId) {
-		this.photoId = photoId;
-	}
-	
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public Map<String, Object> getJsonGetPhoto() {
-		return jsonGetPhoto;
-	}
-
-	public void setJsonGetPhoto(Map<String, Object> jsonGetPhoto) {
-		this.jsonGetPhoto = jsonGetPhoto;
-	}
-
-	public Map<String, Object> getJsonGetPhotos() {
-		return jsonGetPhotos;
-	}
-
-	public void setJsonGetPhotos(Map<String, Object> jsonGetPhotos) {
-		this.jsonGetPhotos = jsonGetPhotos;
-	}
-
-	public Map<String, Object> getJsonGetPhotoComments() {
-		return jsonGetPhotoComments;
-	}
-
-	public void setJsonGetPhotoComments(Map<String, Object> jsonGetPhotoComments) {
-		this.jsonGetPhotoComments = jsonGetPhotoComments;
-	}
-
-	public Map<String, Object> getJsonGetPhotoCategories() {
-		return jsonGetPhotoCategories;
-	}
-
-	public void setJsonGetPhotoCategories(Map<String, Object> jsonGetPhotoCategories) {
-		this.jsonGetPhotoCategories = jsonGetPhotoCategories;
-	}
-
-	public Map<String, Object> getJsonGetPhotoRegions() {
-		return jsonGetPhotoRegions;
-	}
-
-	public void setJsonGetPhotoRegions(Map<String, Object> jsonGetPhotoRegions) {
-		this.jsonGetPhotoRegions = jsonGetPhotoRegions;
-	}
-
-	public Map<String, Object> getJsonGetRegionComments() {
-		return jsonGetRegionComments;
-	}
-
-	public void setJsonGetRegionComments(Map<String, Object> jsonGetRegionComments) {
-		this.jsonGetRegionComments = jsonGetRegionComments;
-	}
-
-	public Map<String, Object> getJsonGetRegionCategories() {
-		return jsonGetRegionCategories;
-	}
-
-	public void setJsonGetRegionCategories(
-			Map<String, Object> jsonGetRegionCategories) {
-		this.jsonGetRegionCategories = jsonGetRegionCategories;
-	}
-
-	public Map<String, Object> getJsonGetRegionCoordinates() {
-		return jsonGetRegionCoordinates;
-	}
-
-	public void setJsonGetRegionCoordinates(
-			Map<String, Object> jsonGetRegionCoordinates) {
-		this.jsonGetRegionCoordinates = jsonGetRegionCoordinates;
-	}
 }

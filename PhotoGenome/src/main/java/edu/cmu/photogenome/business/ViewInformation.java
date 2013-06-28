@@ -28,6 +28,14 @@ import edu.cmu.photogenome.domain.RegionCategory;
 import edu.cmu.photogenome.domain.RegionComment;
 import edu.cmu.photogenome.domain.RegionCoordinate;
 
+/**
+ * The <code>ViewInformation</code> class gets all the relevant
+ * data which needs to be displayed for a photo.
+ * 
+ * @author PhotoGenome
+ *
+ * */
+
 public class ViewInformation {
 	
 	final Logger log = LoggerFactory.getLogger(ViewInformation.class);
