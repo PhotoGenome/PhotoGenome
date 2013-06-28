@@ -155,35 +155,38 @@
             $(document).ready(function() {                        
               
             	  $('#viewAssociatedPhotos').click(function(event) {  
-            		  
-            		  var allSelectedPC = $('.PCFilterSelected_box').map(function(){
-
-            			    return this.photoCommentId;
-            			}).get();
-
-            		  var allSelectedPCat = $('.PCatFilterSelected_box').map(function(){
-
-              			
-            			  return this.photoCategorytId;
-          			}).get();
-
-            		  
-            		  var allSelectedRC = $('.RCFilterSelected_box').map(function(){
-
-              			
-            			  return this.regionCommentId;
-          			}).get();
-
-            		  
-            		  var allSelectedRCat = $('.RCatFilterSelected_box').map(function(){
-
-              			
-            			  return this.regionCategoryId;
-          			}).get();
-
-            		  
+            		  var allselectedPCat='';
+            		    $('.PCatFilterSelected_box').each(function(){
+            			  // alert($( this ).attr('photoCategoryId'));
+            			   allselectedPCat=allselectedPCat + $( this ).attr('photoCategoryId')+',';
+            		      });
+            		    alert('PCat:'+allselectedPCat);
+            		    
+            		    var allselectedPC='';
+            		    $('.PCFilterSelected_box').each(function(){
+            			  // alert($( this ).attr('photoCommentId'));
+            			   allselectedPC=allselectedPC + $( this ).attr('photoCommentId')+',';
+            		      });
+            		    alert('PC:'+allselectedPC);
+            		    var allselectedRCat='';
+            		    $('.RCatFilterSelected_box').each(function(){
+            			   //alert($( this ).attr('regionCategoryId'));
+            			   allselectedRCat=allselectedRCat + $( this ).attr('regionCategoryId')+',';
+            		      });
+            		    alert('RCat:'+allselectedRCat);
+            		    var allselectedRC='';
+            		    $('.RCFilterSelected_box').each(function(){
+            			  // alert($( this ).attr('regionCommentId'));
+            			   allselectedRC=allselectedRC + $( this ).attr('regionCommentId')+',';
+            		      });
+            		    alert('RC:'+allselectedRC);
+            		    if(allselectedPCat==='' && allselectedPC==='' && allselectedRCat==='' && allselectedRC===''){
+            		    	getAssociatedPhotos();
+            		    } else 
+            		    { 
+            		    	getFilteredAssociatedPhotos(allselectedPCat,allselectedPC,allselectedRCat,allselectedRC);
+            		    }
             	  });
-            	  
             	$('#submitRCat').click(function(event) {  
                 	if($('input[name=RCategoryType]:checked', '#form1').val()==='Custom')
                 	{
@@ -270,7 +273,7 @@
             });
                  
             $(function getUserName() {
-
+                alert(Session["UserName"]);
             });
       
         </script>
@@ -291,6 +294,7 @@
 </head>
 <body designMode="on">
 <form id="form1">
+<div id="mainDiv">
 <table width="100%" bordercolor="black">
 <tr><td width="70%" bordercolor="black" valign="top">
 <div id="canvas"  style="border:solid black;"><img  height="500px" width="780px" id="canvasImg"></div>
@@ -380,7 +384,7 @@ Enter Comments Here.
 </td></tr>
 </table>
 
-
+</div>
 <script>
 
 $(window).load(function () {
@@ -396,17 +400,33 @@ function getPhotoIdFromQS(){
 	
 }
 
+function getAssociatedPhotos(){
+	window.location = "ViewAssociatedPhotos.jsp";
+	sessionStorage.setItem("associationMode", "NotFiltered");
+    return false;
+    };
+
+ function getFilteredAssociatedPhotos(allselectedPCat,allselectedPC,allselectedRCat,allselectedRC){
+  window.location = "ViewAssociatedPhotos.jsp";
+  sessionStorage.setItem("photoCategoryIdList", allselectedPCat);
+        	              	sessionStorage.setItem("photoCommentIdList", allselectedPC);
+        	              	sessionStorage.setItem("regionCategoryIdList", allselectedRCat);
+        	              	sessionStorage.setItem("regionCommentIdList", allselectedRC);
+        	              	sessionStorage.setItem("associationMode", "Filtered");
+                	      	
+        	        	 return false;
+        	        	};        	
+
 function getPhotoLink(photoId){
-	 $.getJSON(
+       $.getJSON(
         	  'getPhoto.action' , {photoId:photoId},
-        	  function(jsonPhoto) {
-        		  $('#canvasImg').attr("src",jsonPhoto.items.photoLink);  
-        		  $('#canvas').attr("photoId",jsonPhoto.items.photoId);  
-        	  });
-        	 return false;
-        	};
-        	
-function getPhotoCategories(){
+        function(jsonPhoto) {
+         $('#canvasImg').attr("src",jsonPhoto.items.photoLink);  
+        $('#canvas').attr("photoId",jsonPhoto.items.photoId);  
+        	});
+        return false;
+   };       	        	
+ function getPhotoCategories(){
 	
 	 $.getJSON(
          	  'getPhotoCategories.action' , {photoId:sessionStorage.getItem("photoId")},
@@ -648,6 +668,7 @@ function getPhotoComments(){
 			  };
 	  
 			  function deletePhotoRegion(regionId){
+				  alert(regionId);
 					$.getJSON(
 				    	'deletePhotoRegion.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionId:parseInt(regionId)},
 				         	  function(jsonPhotoRegion) {
@@ -669,7 +690,7 @@ function getPhotoComments(){
 					       return false;
 					  };
 	function parseJSON(){
-
+		  alert('hie1');
 		  jsonRegionComments={"items":[{"photoDesc":"my description","photoId":10,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0},{"photoDesc":"my description 2","photoId":20,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0}]};
 	         	  for (comment in jsonRegionComments.items) {
 	         		  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].photoDesc+'"class="close_box">X</div> <h6>Apoorvi</h6><p>'+jsonRegionComments.items[comment].photoDesc+'</p></div>');
