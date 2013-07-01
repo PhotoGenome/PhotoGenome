@@ -10,14 +10,6 @@ public class PhotoRegionDaoImpl extends GenericAbstractDaoImpl<PhotoRegion, Inte
 
 	@SuppressWarnings("unchecked")
 	public List<PhotoRegion> findByPhotoId(int photoId) {
-		List<PhotoRegion> list = null;
-		try {
-			list = (List<PhotoRegion>) session.createCriteria(type).add(Restrictions.eq("photoId", photoId)).list();
-		}
-		catch(Exception e) {
-			log.warn(e.getMessage(), e);
-		}
-		
-		return list;
+		return findAllByCriteria("photoId", photoId);
 	}
 }

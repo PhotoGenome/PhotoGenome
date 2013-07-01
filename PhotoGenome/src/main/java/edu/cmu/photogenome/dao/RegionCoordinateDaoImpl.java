@@ -10,27 +10,11 @@ public class RegionCoordinateDaoImpl extends GenericAbstractDaoImpl<RegionCoordi
 
 	@SuppressWarnings("unchecked")
 	public List<RegionCoordinate> findByPhotoId(int photoId) {
-		List<RegionCoordinate> list = null;
-		try {
-			list = (List<RegionCoordinate>) session.createCriteria(type).add(Restrictions.eq("photoId", photoId)).list();
-		}
-		catch(Exception e) {
-			log.warn(e.getMessage(), e);
-		}
-		
-		return list;
+		return findAllByCriteria("photoId", photoId);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<RegionCoordinate> findByRegionId(int regionId) {
-		List<RegionCoordinate> list = null;
-		try {
-			list = (List<RegionCoordinate>) session.createCriteria(type).add(Restrictions.eq("regionId", regionId)).list();
-		}
-		catch(Exception e) {
-			log.warn(e.getMessage(), e);
-		}
-		
-		return list;
+		return findAllByCriteria("regionId", regionId);
 	}
 }

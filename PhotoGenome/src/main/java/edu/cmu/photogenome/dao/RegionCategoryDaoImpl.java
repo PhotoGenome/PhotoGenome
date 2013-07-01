@@ -10,15 +10,7 @@ public class RegionCategoryDaoImpl extends GenericAbstractDaoImpl<RegionCategory
 
 	@SuppressWarnings("unchecked")
 	public List<RegionCategory> findByRegionId(int regionId) {
-		List<RegionCategory> list = null;
-		try {
-			list = (List<RegionCategory>) session.createCriteria(type).add(Restrictions.eq("regionId", regionId)).list();
-		}
-		catch(Exception e) {
-			log.warn(e.getMessage(), e);
-		}
-		
-		return list;
+		return findAllByCriteria("regionId", regionId);
 	}
 
 }

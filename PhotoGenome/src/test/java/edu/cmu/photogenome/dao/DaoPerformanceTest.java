@@ -50,6 +50,23 @@ public class DaoPerformanceTest extends HibernateDbUnitTestCase {
 	}
 	
 	@Test
+	public void testFindByIds() {
+		PhotoDao photoDao = new PhotoDaoImpl();
+		photoDao.setSession(session);
+		List<Photo> list = null;
+		List<Integer> ids = new ArrayList<Integer>();
+		ids.add(1);
+		ids.add(2);
+		
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = photoDao.findByIds(ids);
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() <= findTimeSeconds);
+		System.out.println(timer.getTotalTimeSeconds());
+	}
+	
+	@Test
 	public void testFindAll() {
 		PhotoDao photoDao = new PhotoDaoImpl();
 		photoDao.setSession(session);
@@ -58,6 +75,20 @@ public class DaoPerformanceTest extends HibernateDbUnitTestCase {
 		StopWatch timer = new StopWatch();
 		timer.start();
 		list = (ArrayList<Photo>) photoDao.findAll();
+		timer.stop();
+		assertTrue(timer.getTotalTimeSeconds() <= findTimeSeconds);
+		System.out.println(timer.getTotalTimeSeconds());
+	}
+	
+	@Test
+	public void testFindAllByCriteria() {
+		PhotoDao photoDao = new PhotoDaoImpl();
+		photoDao.setSession(session);
+		List<Photo> list = null;
+		
+		StopWatch timer = new StopWatch();
+		timer.start();
+		list = photoDao.findAllByCriteria("userId", 1000);
 		timer.stop();
 		assertTrue(timer.getTotalTimeSeconds() <= findTimeSeconds);
 		System.out.println(timer.getTotalTimeSeconds());

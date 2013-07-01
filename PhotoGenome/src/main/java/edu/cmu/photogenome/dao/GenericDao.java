@@ -11,6 +11,8 @@ public interface GenericDao<T, ID extends Serializable> {
 	
 	public T findById(ID id);
 	
+	public List<T> findByIds(List<ID> ids);
+	
 	public List<T> findAll();
 	
 	public List<T> findAllByCriteria(String propertyName, Object value);

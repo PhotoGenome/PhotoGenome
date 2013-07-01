@@ -7,6 +7,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.StaleStateException;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.metadata.ClassMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +61,24 @@ public abstract class GenericAbstractDaoImpl <T, ID extends Serializable> implem
 		}
 		
 		return entity;
+	}
+	
+	/**
+	 * Find a list of entities matching the list of unique IDs
+	 */
+	@SuppressWarnings("unchecked")
+	public List<T> findByIds(List<ID> ids) {
+		List<T> list = null;
+		
+		ClassMetadata meta = session.getSessionFactory().getClassMetadata(type); // get the primary key for the current entity
+		try {
+			list = (List<T>) session.createCriteria(type).add(Restrictions.in(meta.getIdentifierPropertyName(), ids)).list();
+		}
+		catch(Exception e) {
+			log.warn(e.getMessage(), e);
+		}
+		
+		return list;
 	}
 	
 	/**

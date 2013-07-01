@@ -10,14 +10,6 @@ public class PhotoCategoryDaoImpl extends GenericAbstractDaoImpl<PhotoCategory, 
 
 	@SuppressWarnings("unchecked")
 	public List<PhotoCategory> findByPhotoId(int photoId) {
-		List<PhotoCategory> list = null;
-		try {
-			list = (List<PhotoCategory>) session.createCriteria(type).add(Restrictions.eq("photoId", photoId)).list();
-		}
-		catch(Exception e) {
-			log.warn(e.getMessage(), e);
-		}
-		
-		return list;
+		return findAllByCriteria("photoId", photoId);
 	}
 }

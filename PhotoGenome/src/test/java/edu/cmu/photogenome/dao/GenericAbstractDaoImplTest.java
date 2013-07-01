@@ -7,7 +7,6 @@ import java.util.List;
 import org.junit.Test;
 
 import edu.cmu.photogenome.domain.Photo;
-import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
 
 /**
@@ -44,13 +43,62 @@ public class GenericAbstractDaoImplTest extends HibernateDbUnitTestCase {
 	}
 
 	@Test
+	public void testFindByIds() {
+		PhotoDao photoDao = new PhotoDaoImpl();
+		photoDao.setSession(session);
+		List<Integer> idList = new ArrayList<Integer>();
+		idList.add(1);
+		idList.add(3);
+		List<Photo> photoList = null;
+		photoList = photoDao.findByIds(idList);
+		assertNotNull(photoList);
+		assertEquals(2, photoList.size());
+		assertEquals(1, photoList.get(0).getPhotoId().intValue());
+		assertEquals(3, photoList.get(1).getPhotoId().intValue());
+	}
+	
+	@Test
+	public void testFindByIdsEmpty() {
+		PhotoDao photoDao = new PhotoDaoImpl();
+		photoDao.setSession(session);
+		List<Integer> idList = new ArrayList<Integer>();
+		idList.add(-1);
+		List<Photo> photoList = null;
+		photoList = photoDao.findByIds(idList);
+		assertNotNull(photoList);
+		assertEquals(0, photoList.size());
+	}
+	
+	@Test
 	public void testFindAll() {
 		PhotoDao photoDao = new PhotoDaoImpl();
 		photoDao.setSession(session);
 		List<Photo> list = null;
-		list = (ArrayList<Photo>) photoDao.findAll();
+		list = photoDao.findAll();
 		assertNotNull(list);
 		assertEquals(2, list.size());
+	}
+	
+	@Test
+	public void testFindAllByCriteria() {
+		PhotoDao photoDao = new PhotoDaoImpl();
+		photoDao.setSession(session);
+		List<Photo> list = null;
+		list = photoDao.findAllByCriteria("userId", 1000);
+		assertNotNull(list);
+		assertEquals(2, list.size());
+		for(Photo p : list)
+			assertEquals(1000, p.getUserId());
+	}
+	
+	@Test
+	public void testFindAllByCriteriaEmpty() {
+		PhotoDao photoDao = new PhotoDaoImpl();
+		photoDao.setSession(session);
+		List<Photo> list = null;
+		list = photoDao.findAllByCriteria("userId", -1);
+		assertNotNull(list);
+		assertEquals(0, list.size());
 	}
 	
 	@Test
