@@ -25,11 +25,11 @@ public class SearchAction extends ActionSupport {
 	private Search search = new Search();
 	
 	private Integer photoId;
-	private String keywordList; // list of search keywords
+	private String keywords; // list of search keywords
+	private String photoCategoryList; // list of photo category data
 	private String photoCategoryIdList; // list of selected photo category ids
-	private String photoCommentIdList; // list of selected photo comment ids
+	private String regionCategoryList; // list of region category data
 	private String regionCategoryIdList; // list of selected region category ids
-	private String regionCommentIdList; // list of region comment ids
 	
 	/** Variables to store/pass JSON data **/
 	private Map<String, Object> jsonGetAssociatedPhotos = new LinkedHashMap<String, Object>();
@@ -70,16 +70,12 @@ public class SearchAction extends ActionSupport {
 	public String getFilteredAssociatedPhotos() {
 		List<Photo> list = null;
 		List<Integer> photoCategoryIds;
-		List<Integer> photoCommentIds;
 		List<Integer> regionCategoryIds;
-		List<Integer> regionCommentIds;
 		
 		try {
 			// parse request parameter strings into lists of integers
-			photoCategoryIds = parseStringToInteger(photoCategoryIdList, ",");
-			photoCommentIds = parseStringToInteger(photoCommentIdList, ",");
-			regionCategoryIds = parseStringToInteger(regionCategoryIdList, ",");
-			regionCommentIds = parseStringToInteger(regionCommentIdList, ",");
+			photoCategoryIds = parseStringToInteger(photoCategoryIdList, "|");
+			regionCategoryIds = parseStringToInteger(regionCategoryIdList, "|");
 		}
 		catch(NumberFormatException nfe) {
 			log.error(nfe.getMessage(), nfe);
@@ -91,8 +87,7 @@ public class SearchAction extends ActionSupport {
 		search.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		
-		if((list = search.getFilteredAssociatedPhotos(photoCategoryIds, photoCommentIds, 
-				regionCategoryIds, regionCommentIds)) != null) {
+		if((list = search.getFilteredAssociatedPhotos(photoCategoryIds, regionCategoryIds)) != null) {
 			jsonGetFilteredAssociatedPhotos.put(jsonKey, list);
 			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
@@ -110,17 +105,17 @@ public class SearchAction extends ActionSupport {
 	 */
 	public String getPhotosByKeywords() {
 		List<Photo> list = null;
-		List<String> keywords;
+		List<String> keywordList;
 		
 		// parse request parameter strings into list
-		keywords = Arrays.asList(keywordList.split(" "));
+		keywordList = Arrays.asList(keywords.split(" "));
 		
 		// start transaction
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		search.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		
-		if((list = search.getPhotosByKeyword(keywords)) != null) {
+		if((list = search.getPhotosByKeyword(keywordList)) != null) {
 			jsonGetPhotosByKeywords.put(jsonKey, list);
 			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
@@ -156,11 +151,19 @@ public class SearchAction extends ActionSupport {
 	}
 
 	public String getKeywordList() {
-		return keywordList;
+		return keywords;
 	}
 
 	public void setKeywordList(String keywordList) {
-		this.keywordList = keywordList;
+		this.keywords = keywordList;
+	}
+
+	public String getPhotoCategoryList() {
+		return photoCategoryList;
+	}
+
+	public void setPhotoCategoryList(String photoCategoryList) {
+		this.photoCategoryList = photoCategoryList;
 	}
 
 	public String getPhotoCategoryIdList() {
@@ -171,28 +174,20 @@ public class SearchAction extends ActionSupport {
 		this.photoCategoryIdList = photoCategoryIdList;
 	}
 
-	public String getPhotoCommentIdList() {
-		return photoCommentIdList;
+	public String getRegionCategoryList() {
+		return regionCategoryList;
 	}
 
-	public void setPhotoCommentIdList(String photoCommentIdList) {
-		this.photoCommentIdList = photoCommentIdList;
+	public void setRegionCategoryList(String regionCategoryList) {
+		this.regionCategoryList = regionCategoryList;
 	}
-
+	
 	public String getRegionCategoryIdList() {
 		return regionCategoryIdList;
 	}
 
 	public void setRegionCategoryIdList(String regionCategoryIdList) {
 		this.regionCategoryIdList = regionCategoryIdList;
-	}
-
-	public String getRegionCommentIdList() {
-		return regionCommentIdList;
-	}
-
-	public void setRegionCommentIdList(String regionCommentIdList) {
-		this.regionCommentIdList = regionCommentIdList;
 	}
 
 	public Map<String, Object> getJsonGetAssociatedPhotos() {
