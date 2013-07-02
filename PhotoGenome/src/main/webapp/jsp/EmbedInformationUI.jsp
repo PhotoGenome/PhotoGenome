@@ -155,36 +155,62 @@
             $(document).ready(function() {                        
               
             	  $('#viewAssociatedPhotos').click(function(event) {  
+            		  
             		  var allselectedPCat='';
+            		  var allselectedPCatT='';
             		    $('.PCatFilterSelected_box').each(function(){
             			  // alert($( this ).attr('photoCategoryId'));
-            			   allselectedPCat=allselectedPCat + $( this ).attr('photoCategoryId')+',';
+            			  var categoryParent= $(this).parent();
+           				 var category= categoryParent.find('.PCatcomment_box');
+            			var photoCategoryText=category.text().split(':');
+            			allselectedPCatT= allselectedPCatT + photoCategoryText[0].replace(/ /g,'')+photoCategoryText[1].replace(/ /g,'')+' ';
+                    	allselectedPCat=allselectedPCat + $( this ).attr('photoCategoryId')+' ';
             		      });
             		    alert('PCat:'+allselectedPCat);
+            		    alert('PCatT:'+allselectedPCatT);
             		    
-            		    var allselectedPC='';
+            		    /*var allselectedPC='';
             		    $('.PCFilterSelected_box').each(function(){
             			  // alert($( this ).attr('photoCommentId'));
-            			   allselectedPC=allselectedPC + $( this ).attr('photoCommentId')+',';
+            			   allselectedPC=allselectedPC + $( this ).attr('photoCommentId')+'|';
             		      });
             		    alert('PC:'+allselectedPC);
+            		    */
+            		    
             		    var allselectedRCat='';
-            		    $('.RCatFilterSelected_box').each(function(){
-            			   //alert($( this ).attr('regionCategoryId'));
-            			   allselectedRCat=allselectedRCat + $( this ).attr('regionCategoryId')+',';
+            		    var allselectedRCatT='';
+                		    $('.RCatFilterSelected_box').each(function(){
+                		    	var categoryParent= $(this).parent().parent();
+                	            var category= categoryParent.find('.RCatcomment_box');
+                	           var regionCategoryText=category.text().split(':');
+                	           allselectedRCatT= allselectedRCatT + regionCategoryText[0].replace(/ /g,'')+regionCategoryText[1].replace(/ /g,'')+' ';
+                	            allselectedRCat=allselectedRCat + $( this ).attr('regionCategoryId')+' ';
             		      });
             		    alert('RCat:'+allselectedRCat);
-            		    var allselectedRC='';
+            		    alert('RCatT:'+allselectedRCatT.trim());
+               		 	
+            		    /*var allselectedRC='';
             		    $('.RCFilterSelected_box').each(function(){
             			  // alert($( this ).attr('regionCommentId'));
-            			   allselectedRC=allselectedRC + $( this ).attr('regionCommentId')+',';
+            			   allselectedRC=allselectedRC + $( this ).attr('regionCommentId')+'|';
             		      });
             		    alert('RC:'+allselectedRC);
-            		    if(allselectedPCat==='' && allselectedPC==='' && allselectedRCat==='' && allselectedRC===''){
+            		    */
+            		    
+            		    //based on Ids
+            		    if(allselectedPCat==='' && allselectedRCat===''){
             		    	getAssociatedPhotos();
             		    } else 
             		    { 
-            		    	getFilteredAssociatedPhotos(allselectedPCat,allselectedPC,allselectedRCat,allselectedRC);
+            		    	getFilteredAssociatedPhotos(allselectedPCat.trim(),allselectedRCat.trim());
+            		    }
+            		    
+            		  	//based on Texts
+            		    if(allselectedPCatT==='' && allselectedRCatT===''){
+            		    	getAssociatedPhotos();
+            		    } else 
+            		    { 
+            		    	getFilteredAssociatedPhotosT(allselectedPCatT.trim(),allselectedRCatT.trim());
             		    }
             	  });
             	$('#submitRCat').click(function(event) {  
@@ -409,13 +435,20 @@ function getAssociatedPhotos(){
  function getFilteredAssociatedPhotos(allselectedPCat,allselectedPC,allselectedRCat,allselectedRC){
   window.location = "ViewAssociatedPhotos.jsp";
   sessionStorage.setItem("photoCategoryIdList", allselectedPCat);
-        	              	sessionStorage.setItem("photoCommentIdList", allselectedPC);
-        	              	sessionStorage.setItem("regionCategoryIdList", allselectedRCat);
-        	              	sessionStorage.setItem("regionCommentIdList", allselectedRC);
-        	              	sessionStorage.setItem("associationMode", "Filtered");
-                	      	
+  sessionStorage.setItem("regionCategoryIdList", allselectedRCat);
+  sessionStorage.setItem("associationMode", "Filtered");
         	        	 return false;
         	        	};        	
+
+function getFilteredAssociatedPhotos(allselectedPCat,allselectedRCat){
+        window.location = "ViewAssociatedPhotos.jsp";
+        sessionStorage.setItem("photoCategoryList", allselectedPCat);
+        sessionStorage.setItem("regionCategoryList", allselectedRCat);
+        sessionStorage.setItem("associationMode", "TextFiltered");
+        	        		                	      	
+        return false;
+        };        	
+
 
 function getPhotoLink(photoId){
        $.getJSON(
