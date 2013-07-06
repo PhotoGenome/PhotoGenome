@@ -70,7 +70,20 @@ public class Search {
 	 * @return a list of matching photo entities
 	 */
 	public List<Photo> getAssociatedPhotos(int photoId) {
+		// get all photo and region categories for the photo
+		List<PhotoCategory> photoCategories = photoCategoryDao.findAllByCriteria("photoId", photoId);
+		List<RegionCategory> regionCategories = regionCategoryDao.findAllByCriteria("photoId", photoId);
 		
+		List<Integer> photoCategoryIds = new ArrayList<Integer>();
+		List<Integer> regionCategoryIds = new ArrayList<Integer>();
+		
+		// get lists of category ids
+		for(PhotoCategory p : photoCategories)
+			photoCategoryIds.add(p.getPhotoCategoryId());
+		for(RegionCategory r : regionCategories)
+			regionCategoryIds.add(r.getRegionCategoryId());
+		
+		return getFilteredAssociatedPhotos(photoCategoryIds, regionCategoryIds);
 	}
 	
 	/**
@@ -116,11 +129,11 @@ public class Search {
 	 * @param text	category text
 	 * @return	string concatenation of category name and text
 	 */
-	private String mergeCategoryData(String name, String text) {
+	private String mergeCategoryData(final String name, final String text) {
 		// remove all whitespace
-		name = name.replaceAll("\\s", "");
-		text = text.replaceAll("\\s", "");
+		String newName = name.replaceAll("\\s", "");
+		String newText = text.replaceAll("\\s", "");
 		
-		return name + text;
+		return newName + newText;
 	}
 }
