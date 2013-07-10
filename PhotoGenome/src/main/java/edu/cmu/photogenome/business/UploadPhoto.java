@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.util.ConfigUtil;
 
 
 /**
@@ -86,7 +87,7 @@ public class UploadPhoto {
 	 * @return true if deleted, else false
 	 */
 	private boolean deletePhotoFile(String name) {
-		Properties config = getApplicationProperties(); // try to load config properties
+		Properties config = ConfigUtil.getApplicationProperties(); // try to load config properties
 		if(config == null)
 			return false;
 		
@@ -104,7 +105,7 @@ public class UploadPhoto {
 	 * @return true if deleted, else false
 	 */
 	private boolean deleteMetadataFile(String name) {
-		Properties config = getApplicationProperties();
+		Properties config = ConfigUtil.getApplicationProperties();
 		if(config == null)
 			return false;
 		
@@ -167,7 +168,7 @@ public class UploadPhoto {
 	 * @return	true if successful, else false
 	 */
 	private boolean savePhotoLink(File file, Photo photo) {
-		Properties config = getApplicationProperties(); // try to load config properties
+		Properties config = ConfigUtil.getApplicationProperties(); // try to load config properties
 		if(config == null)
 			return false;
 
@@ -220,7 +221,7 @@ public class UploadPhoto {
 	 * @return true if successful, else false
 	 */
 	private boolean savePhotoMetadata(Photo photo) {
-		Properties config = getApplicationProperties(); // try to load config properties
+		Properties config = ConfigUtil.getApplicationProperties(); // try to load config properties
 		if(config == null)
 			return false;
 
@@ -250,20 +251,4 @@ public class UploadPhoto {
 		return String.valueOf(photo.getPhotoTimestamp().getTime()) + String.valueOf(photo.getPhotoId());
 	}
 	
-	/**
-	 * Helper method to return properties object with access to ApplicationResources.properties
-	 * 
-	 * @return properties object
-	 */
-	private Properties getApplicationProperties() {
-		Properties config = new Properties();
-		try {
-			config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
-			return config;
-		}
-		catch(IOException ioe) {
-			log.error(ioe.getMessage(), ioe);
-			return null;
-		}
-	}
 }
