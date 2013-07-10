@@ -1,8 +1,12 @@
 package edu.cmu.photogenome.business;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,7 @@ import edu.cmu.photogenome.dao.RegionCommentDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.RegionCategory;
+import edu.cmu.photogenome.util.ConfigUtil;
 
 /**
  * Class for searching for photos which are similar to:
@@ -37,12 +42,16 @@ public class Search {
 	private RegionCategoryDao regionCategoryDao;
 	private RegionCommentDao regionCommentDao;
 	
+	private SearchDao searchDao;
+	
 	public Search() {
 		photoDao = new PhotoDaoImpl();
 		photoCategoryDao = new PhotoCategoryDaoImpl();
 		photoCommentDao = new PhotoCommentDaoImpl();
 		regionCategoryDao = new RegionCategoryDaoImpl();
 		regionCommentDao = new RegionCommentDaoImpl();
+		
+		searchDao = new SearchDao();
 	}
 	
 	public Search(Session session) {
@@ -61,6 +70,8 @@ public class Search {
 		photoCommentDao.setSession(session);
 		regionCategoryDao.setSession(session);
 		regionCommentDao.setSession(session);
+		
+		searchDao.setSession(session);
 	}
 	
 	/**
@@ -83,20 +94,23 @@ public class Search {
 		for(RegionCategory r : regionCategories)
 			regionCategoryIds.add(r.getRegionCategoryId());
 		
-		return getFilteredAssociatedPhotos(photoCategoryIds, regionCategoryIds);
+		return getFilteredAssociatedPhotosByCategoryId(photoId, photoCategoryIds, regionCategoryIds);
 	}
 	
 	/**
-	 * Return a list of photos whose categories or comments are similar to the given categories and comments
+	 * Return a list of photos whose categories or comments are similar to the given categories and comments 
+	 * for the given photo
 	 * 
+	 * @param photoId				source photo to match against
 	 * @param photoCategoryIdList	list of photo categories to be matched against
 	 * @param photoCommentIdList	list of photo comments to be matched against
 	 * @param regionCategoryIdList	list of region categories to be matched against
 	 * @param regionCommentIdList	list of region comments to be matched against
 	 * @return a list of matching photo entities
 	 */
-	public List<Photo> getFilteredAssociatedPhotos(List<Integer> photoCategoryIdList, List<Integer> regionCategoryIdList) {
-		List<String> keywords = new ArrayList<String>();
+	public List<Photo> getFilteredAssociatedPhotosByCategoryId(int photoId, List<Integer> photoCategoryIdList, List<Integer> regionCategoryIdList) {
+		List<String> photoKeywords = new ArrayList<String>();
+		List<String> regionKeywords = new ArrayList<String>();
 		
 		// retrieve the categories
 		List<PhotoCategory> photoCategoryList = photoCategoryDao.findByIds(photoCategoryIdList);
@@ -104,12 +118,39 @@ public class Search {
 		
 		// add the category names and text to the list of keywords
 		for(PhotoCategory p : photoCategoryList)
-			keywords.add(mergeCategoryData(p.getPhotoCategoryName(), p.getPhotoCategoryText()));
+			photoKeywords.add(mergeCategoryData(p.getPhotoCategoryName(), p.getPhotoCategoryText()));
 		for(RegionCategory r : regionCategoryList)
-			keywords.add(mergeCategoryData(r.getCategoryName(), r.getRegionCategoryText()));
+			regionKeywords.add(mergeCategoryData(r.getCategoryName(), r.getRegionCategoryText()));
 		
 		// search for photos using the category keyword list
-		return getPhotosByKeyword(keywords);
+		return getFilteredAssociatedPhotosByCategoryValue(photoId, photoKeywords, regionKeywords);
+	}
+	
+	/**
+	 * Return a list of photos whose categories or comments are similar to the given categories and comments for the
+	 * given photo
+	 * 
+	 * @param photoId				source photo to match against
+	 * @param photoCategoryList		list of photo category data
+	 * @param regionCategoryList	list of region category data
+	 * @return a list of matching photo entities
+	 */
+	public List<Photo> getFilteredAssociatedPhotosByCategoryValue(int photoId, List<String> photoCategoryList, List<String> regionCategoryList) {
+		List<String> categories = new ArrayList<String>();
+		
+		//combine photo and region categories into single list
+		categories.addAll(photoCategoryList);
+		categories.addAll(regionCategoryList);
+		
+		Properties config = ConfigUtil.getApplicationProperties();
+		if(config == null)
+			return null;
+		
+		// get maximum number of matches
+		int maxMatches = Integer.parseInt(config.getProperty("search.maxMatches"));
+		
+		// perform actual search for associated photos
+		return searchDao.searchFilteredAssociatedPhotos(photoId, categories, maxMatches);
 	}
 	
 	/**
@@ -119,7 +160,7 @@ public class Search {
 	 * @return a list of matching photo entities
 	 */
 	public List<Photo> getPhotosByKeyword(List<String> keywords) {
-		
+		return null;
 	}
 	
 	/**
