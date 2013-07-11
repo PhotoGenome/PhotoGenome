@@ -56,7 +56,7 @@
 <form id="form1">
 <table width="100%" bordercolor="black">
 <tr><td>Keyword-Based Search</td></tr>
-<tr><td><textarea id="txtSearchKeywords" disabled=true  rows="1" cols="50">
+<tr><td><textarea id="txtSearchKeywords"  rows="1" cols="50">
 Space separated keywords 
 </textarea>
 <input type="button" id="submitSK" value="Comments Submit"/>

@@ -166,8 +166,6 @@
             			allselectedPCatT= allselectedPCatT + photoCategoryText[0].replace(/ /g,'')+photoCategoryText[1].replace(/ /g,'')+' ';
                     	allselectedPCat=allselectedPCat + $( this ).attr('photoCategoryId')+' ';
             		      });
-            		    alert('PCat:'+allselectedPCat);
-            		    alert('PCatT:'+allselectedPCatT);
             		    
             		    /*var allselectedPC='';
             		    $('.PCFilterSelected_box').each(function(){
@@ -186,10 +184,7 @@
                 	           allselectedRCatT= allselectedRCatT + regionCategoryText[0].replace(/ /g,'')+regionCategoryText[1].replace(/ /g,'')+' ';
                 	            allselectedRCat=allselectedRCat + $( this ).attr('regionCategoryId')+' ';
             		      });
-            		    alert('RCat:'+allselectedRCat);
-            		    alert('RCatT:'+allselectedRCatT.trim());
-               		 	
-            		    /*var allselectedRC='';
+            		   /*var allselectedRC='';
             		    $('.RCFilterSelected_box').each(function(){
             			  // alert($( this ).attr('regionCommentId'));
             			   allselectedRC=allselectedRC + $( this ).attr('regionCommentId')+'|';
@@ -430,13 +425,16 @@ function getPhotoIdFromQS(){
 function getAssociatedPhotos(){
 	window.location = "ViewAssociatedPhotos.jsp";
 	sessionStorage.setItem("associationMode", "NotFiltered");
-    return false;
+	sessionStorage.setItem("SearchPhotoId", sessionStorage.getItem("photoId"));
+    
+	return false;
     };
 
  function getFilteredAssociatedPhotoIds(allselectedPCat,allselectedRCat){
   window.location = "ViewAssociatedPhotos.jsp";
   sessionStorage.setItem("photoCategoryIdList", allselectedPCat);
   sessionStorage.setItem("regionCategoryIdList", allselectedRCat);
+  sessionStorage.setItem("SearchPhotoId", sessionStorage.getItem("photoId"));
   sessionStorage.setItem("associationMode", "Filtered");
         	        	 return false;
         	        	};        	
@@ -445,6 +443,7 @@ function getFilteredAssociatedPhotos(allselectedPCat,allselectedRCat){
         window.location = "ViewAssociatedPhotos.jsp";
         sessionStorage.setItem("photoCategoryList", allselectedPCat);
         sessionStorage.setItem("regionCategoryList", allselectedRCat);
+        sessionStorage.setItem("SearchPhotoId", sessionStorage.getItem("photoId"));
         sessionStorage.setItem("associationMode", "TextFiltered");
         	        		                	      	
         return false;
@@ -710,8 +709,7 @@ function getPhotoComments(){
 			  };
 	  
 			  function deletePhotoRegion(regionId){
-				  alert(regionId);
-					$.getJSON(
+				 	$.getJSON(
 				    	'deletePhotoRegion.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionId:parseInt(regionId)},
 				         	  function(jsonPhotoRegion) {
 				       	 });

@@ -72,9 +72,9 @@ $(window).load(function () {
 
 function getAssociatedPhotos(){
         		 $.getJSON(
-        	        	  'getAssociatedPhotos.action' , {photoId:sessionStorage.getItem("photoId")},
+        	        	  'getAssociatedPhotos.action' , {photoId:sessionStorage.getItem("SearchPhotoId")},
         	        	  function(jsonAssociatedPhotos) {
-        	        		  alert(jsonAssociatedPhotos);
+        	        		  
         	             	 for (photo in jsonAssociatedPhotos.items) {
         	             			 $('#canvas').append('<div class="P_box"> <div photoId="'
         	                				  +jsonAssociatedPhotos.items[photo].photoId+
@@ -90,9 +90,9 @@ function getAssociatedPhotos(){
 
 function getFilteredAssociatedPhotos(){
         	        		 $.getJSON(
-        	        	        	  'getFilteredAssociatedPhotos.action' , {photoId:sessionStorage.getItem("photoId"),photoCategoryIdList:sessionStorage.getItem("photoCategoryIdList"),regionCategoryIdList:sessionStorage.getItem("regionCategoryIdList")},
+        	        	        	  'getFilteredAssociatedPhotos.action' , {photoId:sessionStorage.getItem("SearchPhotoId"),photoCategoryIdList:sessionStorage.getItem("photoCategoryIdList"),regionCategoryIdList:sessionStorage.getItem("regionCategoryIdList")},
         	        	        	  function(jsonFilteredAssociatedPhotos) {
-        	        	        		  alert(jsonFilteredAssociatedPhotos);
+        	        	        		  
         	        	             	 for (photo in jsonFilteredAssociatedPhotos.items) {
         	        	             			 $('#canvas').append('<div class="P_box"> <div photoId="'
         	        	                				  +jsonFilteredAssociatedPhotos.items[photo].photoId+
@@ -108,9 +108,9 @@ function getFilteredAssociatedPhotos(){
 
 function getTextFilteredAssociatedPhotos(){
 		 $.getJSON(
-	        	  'getTextFilteredAssociatedPhotos.action' , {photoId:sessionStorage.getItem("photoId"),photoCategoryList:sessionStorage.getItem("photoCategoryList"),regionCategoryList:sessionStorage.getItem("regionCategoryList")},
+	        	  'getTextFilteredAssociatedPhotos.action' , {photoId:sessionStorage.getItem("SearchPhotoId"),photoCategoryList:sessionStorage.getItem("photoCategoryList"),regionCategoryList:sessionStorage.getItem("regionCategoryList")},
 	        	  function(jsonFilteredAssociatedPhotos) {
-	        		  alert(jsonFilteredAssociatedPhotos);
+	        		  
 	             	 for (photo in jsonFilteredAssociatedPhotos.items) {
 	             			 $('#canvas').append('<div class="P_box"> <div photoId="'
 	                				  +jsonFilteredAssociatedPhotos.items[photo].photoId+
