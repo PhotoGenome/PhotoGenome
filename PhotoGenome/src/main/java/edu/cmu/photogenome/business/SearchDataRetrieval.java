@@ -28,6 +28,32 @@ public class SearchDataRetrieval {
 	}
 	
 	/**
+	 * Search for associated photos
+	 * 
+	 * @param photoId		the source photo
+	 * @param maxMatches	the max number of matching photos to return
+	 * @return a list of matching photos up to the specified maximum number
+	 */
+	public List<Photo> searchAssociatedPhotos(int photoId, int maxMatches) {
+		// load application properties
+		Properties config = ConfigUtil.getApplicationProperties();
+		if(config == null)
+			return null;
+		
+		// use photo associations query
+		String queryString = config.getProperty("search.sql.query.associations");
+		
+		Query query = session.createSQLQuery(queryString)
+				.addEntity(Photo.class) // set return type of objects to photo entity
+				.setParameter("photoId", photoId) // set photo id
+				.setParameter("maxMatches", maxMatches); // set maximum number of matches
+		
+		// execute query and retrieve list of ordered photos
+		List<Photo> result = query.list();
+		return result;
+	}
+	
+	/**
 	 * Search for the photos which match the list of categories
 	 * 
 	 * @param photoId		the source photo

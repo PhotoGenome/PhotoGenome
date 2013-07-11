@@ -218,6 +218,36 @@
 		</action>
 		
 		<!-- End adding actions for connecting UI with business logic   -->
+		
+		<!--  Search Actions -->
+		<action name="getAssociatedPhotos" class="edu.cmu.photogenome.actions.SearchAction" 
+		method="getAssociatedPhotos">
+			<result type="json">
+				<param name="root">jsonGetAssociatedPhotos</param>
+			</result>
+		</action>
+		
+		<action name="getTextFilteredAssociatedPhotos" class="edu.cmu.photogenome.actions.SearchAction" 
+		method="getFilteredAssociatedPhotosByCategoryValue">
+			<result type="json">
+				<param name="root">jsonGetFilteredAssociatedPhotos</param>
+			</result>
+		</action>
+		
+		<action name="getFilteredAssociatedPhotos" class="edu.cmu.photogenome.actions.SearchAction" 
+		method="getFilteredAssociatedPhotosByCategoryId">
+			<result type="json">
+				<param name="root">jsonGetFilteredAssociatedPhotos</param>
+			</result>
+		</action>
+		
+		<action name="getPhotosByKeywords" class="edu.cmu.photogenome.actions.SearchAction" 
+		method="getPhotosByKeywords">
+			<result type="json">
+				<param name="root">jsonGetPhotosByKeywords</param>
+			</result>
+		</action>
+		
 	</package>
 
 	<package name=""></package>

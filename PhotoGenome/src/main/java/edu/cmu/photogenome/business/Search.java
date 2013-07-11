@@ -81,20 +81,14 @@ public class Search {
 	 * @return a list of matching photo entities
 	 */
 	public List<Photo> getAssociatedPhotos(int photoId) {
-		// get all photo and region categories for the photo
-		List<PhotoCategory> photoCategories = photoCategoryDao.findAllByCriteria("photoId", photoId);
-		List<RegionCategory> regionCategories = regionCategoryDao.findAllByCriteria("photoId", photoId);
+		Properties config = ConfigUtil.getApplicationProperties();
+		if(config == null)
+			return null;
 		
-		List<Integer> photoCategoryIds = new ArrayList<Integer>();
-		List<Integer> regionCategoryIds = new ArrayList<Integer>();
+		// get maximum number of matches
+		int maxMatches = Integer.parseInt(config.getProperty("search.maxMatches"));
 		
-		// get lists of category ids
-		for(PhotoCategory p : photoCategories)
-			photoCategoryIds.add(p.getPhotoCategoryId());
-		for(RegionCategory r : regionCategories)
-			regionCategoryIds.add(r.getRegionCategoryId());
-		
-		return getFilteredAssociatedPhotosByCategoryId(photoId, photoCategoryIds, regionCategoryIds);
+		return searchDataRetrieval.searchAssociatedPhotos(photoId, maxMatches);
 	}
 	
 	/**
