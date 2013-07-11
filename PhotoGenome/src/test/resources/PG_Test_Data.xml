@@ -22,4 +22,7 @@
   <regioncomment regionComment_id="2" regionComment_text="And it is located in CMU campus" photo_id="1" region_id="2" user_id="1000" RegionComment_timestamp="2013-06-12 18:15:32.0"/>
   <regioncoordinate regionCoordinate_id="1" region_id="1" photo_id="1" user_id="1000" region_x="46" region_y="54" height="10" width="10" RegionCoordinate_timestamp="2013-06-12 18:15:33.0"/>
   <regioncoordinate regionCoordinate_id="2" region_id="2" photo_id="1" user_id="1000" region_x="22" region_y="30" height="10" width="10" RegionCoordinate_timestamp="2013-06-12 18:15:33.0"/>
+  <photometadata photometadata_id="1" photo_id="1" photo_metadata="personTyler"/>
+  <photometadata photometadata_id="2" photo_id="2" photo_metadata="personTyler buildingWeanHall"/>
+  <photometadata photometadata_id="3" photo_id="3" photo_metadata="personTyler buildingHamerschlagHall"/>
 </dataset>

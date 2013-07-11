@@ -67,15 +67,15 @@ public class SearchAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	public String getFilteredAssociatedPhotos() {
+	public String getFilteredAssociatedPhotosByCategoryId() {
 		List<Photo> list = null;
 		List<Integer> photoCategoryIds;
 		List<Integer> regionCategoryIds;
 		
 		try {
 			// parse request parameter strings into lists of integers
-			photoCategoryIds = parseStringToInteger(photoCategoryIdList, "|");
-			regionCategoryIds = parseStringToInteger(regionCategoryIdList, "|");
+			photoCategoryIds = parseStringToIntegerList(photoCategoryIdList, " ");
+			regionCategoryIds = parseStringToIntegerList(regionCategoryIdList, " ");
 		}
 		catch(NumberFormatException nfe) {
 			log.error(nfe.getMessage(), nfe);
@@ -87,7 +87,37 @@ public class SearchAction extends ActionSupport {
 		search.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		
-		if((list = search.getFilteredAssociatedPhotos(photoCategoryIds, regionCategoryIds)) != null) {
+		if((list = search.getFilteredAssociatedPhotosByCategoryId(photoId, photoCategoryIds, regionCategoryIds)) != null) {
+			jsonGetFilteredAssociatedPhotos.put(jsonKey, list);
+			HibernateUtil.commitTransaction(session);
+			return SUCCESS;
+		}
+		else {
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+	}
+	
+	/**
+	 * Get a set of photos based on filtered photo categories, photo comments, region categories, 
+	 * and region comments on a photo
+	 * 
+	 * @return
+	 */
+	public String getFilteredAssociatedPhotosByCategoryValue() {
+		List<Photo> list = null;
+		List<String> photoCategories;
+		List<String> regionCategories;
+		
+		photoCategories = parseStringToList(photoCategoryList, " ");
+		regionCategories = parseStringToList(regionCategoryList, " ");
+		
+		// start transaction
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		search.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		
+		if((list = search.getFilteredAssociatedPhotosByCategoryValue(photoId, photoCategories, regionCategories)) != null) {
 			jsonGetFilteredAssociatedPhotos.put(jsonKey, list);
 			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
@@ -134,11 +164,26 @@ public class SearchAction extends ActionSupport {
 	 * @return	list of integers
 	 * @throws NumberFormatException
 	 */
-	private List<Integer> parseStringToInteger(String string, String delimiter) throws NumberFormatException {
+	private List<Integer> parseStringToIntegerList(String string, String delimiter) throws NumberFormatException {
 		List<Integer> list = new ArrayList<Integer>();
 		String[] strArray = string.split(delimiter);
 		for(String s : strArray)
 			list.add(Integer.parseInt(s));
+		return list;
+	}
+	
+	/**
+	 * Parse a string into a list of strings
+	 * 
+	 * @param string	string to parse
+	 * @param delimiter	delimiter to use
+	 * @return list of strings
+	 */
+	private List<String> parseStringToList(String string, String delimiter) {
+		List<String> list = new ArrayList<String>();
+		String[] strArray = string.split(delimiter);
+		for(String s: strArray)
+			list.add(s);
 		return list;
 	}
 	

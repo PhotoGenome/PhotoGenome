@@ -42,7 +42,7 @@ public class Search {
 	private RegionCategoryDao regionCategoryDao;
 	private RegionCommentDao regionCommentDao;
 	
-	private SearchDao searchDao;
+	private SearchDataRetrieval searchDataRetrieval;
 	
 	public Search() {
 		photoDao = new PhotoDaoImpl();
@@ -51,7 +51,7 @@ public class Search {
 		regionCategoryDao = new RegionCategoryDaoImpl();
 		regionCommentDao = new RegionCommentDaoImpl();
 		
-		searchDao = new SearchDao();
+		searchDataRetrieval = new SearchDataRetrieval();
 	}
 	
 	public Search(Session session) {
@@ -71,7 +71,7 @@ public class Search {
 		regionCategoryDao.setSession(session);
 		regionCommentDao.setSession(session);
 		
-		searchDao.setSession(session);
+		searchDataRetrieval.setSession(session);
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class Search {
 		int maxMatches = Integer.parseInt(config.getProperty("search.maxMatches"));
 		
 		// perform actual search for associated photos
-		return searchDao.searchFilteredAssociatedPhotos(photoId, categories, maxMatches);
+		return searchDataRetrieval.searchFilteredAssociatedPhotos(photoId, categories, maxMatches);
 	}
 	
 	/**
@@ -160,7 +160,14 @@ public class Search {
 	 * @return a list of matching photo entities
 	 */
 	public List<Photo> getPhotosByKeyword(List<String> keywords) {
-		return null;
+		Properties config = ConfigUtil.getApplicationProperties();
+		if(config == null)
+			return null;
+		
+		// get maximum number of matches
+		int maxMatches = Integer.parseInt(config.getProperty("search.maxMatches"));
+		
+		return searchDataRetrieval.searchPhotosByKeyword(keywords, maxMatches);
 	}
 	
 	/**
