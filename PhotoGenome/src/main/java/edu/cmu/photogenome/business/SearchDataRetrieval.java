@@ -67,6 +67,13 @@ public class SearchDataRetrieval {
 		if(config == null)
 			return null;
 		
+		// parse list of categories
+		StringBuilder categoriesString = new StringBuilder();
+		for(String category : categories) {
+			categoriesString.append(category);
+			categoriesString.append(" ");
+		}
+		System.out.println("CATEGORIES: " + categoriesString.toString());
 		// use filtered photo associations query
 		String queryString = config.getProperty("search.sql.query.filteredAssociations");
 		
@@ -74,7 +81,7 @@ public class SearchDataRetrieval {
 				.addEntity(Photo.class) // set return type of objects to photo entity
 				.setParameter("photoId", photoId) // set photo id
 				.setParameter("maxMatches", maxMatches) // set maximum number of matches
-				.setParameter("categories", categories); // set categories to match against
+				.setParameter("categories", categoriesString.toString()); // set categories to match against
 		
 		// execute query and retrieve list of ordered photos
 		List<Photo> result = query.list();
@@ -94,6 +101,7 @@ public class SearchDataRetrieval {
 		if(config == null)
 			return null;
 		
+		// parse keywords list
 		StringBuilder keywordString = new StringBuilder();
 		for(String keyword : keywords) {
 			keywordString.append(keyword);
