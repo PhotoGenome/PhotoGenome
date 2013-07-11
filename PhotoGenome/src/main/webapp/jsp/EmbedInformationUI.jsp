@@ -197,20 +197,21 @@
             		    alert('RC:'+allselectedRC);
             		    */
             		    
-            		    //based on Ids
+            		   /* //based on Ids
             		    if(allselectedPCat==='' && allselectedRCat===''){
             		    	getAssociatedPhotos();
             		    } else 
             		    { 
             		    	getFilteredAssociatedPhotos(allselectedPCat.trim(),allselectedRCat.trim());
             		    }
+            		    */
             		    
             		  	//based on Texts
             		    if(allselectedPCatT==='' && allselectedRCatT===''){
             		    	getAssociatedPhotos();
             		    } else 
             		    { 
-            		    	getFilteredAssociatedPhotosT(allselectedPCatT.trim(),allselectedRCatT.trim());
+            		    	getFilteredAssociatedPhotos(allselectedPCatT.trim(),allselectedRCatT.trim());
             		    }
             	  });
             	$('#submitRCat').click(function(event) {  
@@ -432,7 +433,7 @@ function getAssociatedPhotos(){
     return false;
     };
 
- function getFilteredAssociatedPhotos(allselectedPCat,allselectedPC,allselectedRCat,allselectedRC){
+ function getFilteredAssociatedPhotoIds(allselectedPCat,allselectedRCat){
   window.location = "ViewAssociatedPhotos.jsp";
   sessionStorage.setItem("photoCategoryIdList", allselectedPCat);
   sessionStorage.setItem("regionCategoryIdList", allselectedRCat);

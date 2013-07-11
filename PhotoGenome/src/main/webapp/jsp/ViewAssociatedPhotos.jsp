@@ -108,7 +108,7 @@ function getFilteredAssociatedPhotos(){
 
 function getTextFilteredAssociatedPhotos(){
 		 $.getJSON(
-	        	  'getTextFilteredAssociatedPhotos.action' , {photoId:sessionStorage.getItem("photoId"),photoCategoryList:sessionStorage.getItem("photoCategoryList"),regionCategoryList:sessionStorage.getItem("regionCategoryIdList")},
+	        	  'getTextFilteredAssociatedPhotos.action' , {photoId:sessionStorage.getItem("photoId"),photoCategoryList:sessionStorage.getItem("photoCategoryList"),regionCategoryList:sessionStorage.getItem("regionCategoryList")},
 	        	  function(jsonFilteredAssociatedPhotos) {
 	        		  alert(jsonFilteredAssociatedPhotos);
 	             	 for (photo in jsonFilteredAssociatedPhotos.items) {
