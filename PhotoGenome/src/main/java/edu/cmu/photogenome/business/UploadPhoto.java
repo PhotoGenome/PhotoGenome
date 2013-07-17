@@ -144,7 +144,7 @@ public class UploadPhoto {
 	 * @param photoFile photo file to be saved
 	 * @return Photo entity if successful, else null
 	 */
-	private Photo savePhoto(int userId, String photoName, File photoFile) {
+	public Photo savePhoto(int userId, String photoName, File photoFile) {
 		Photo photo = new Photo(userId, new Date());
 
 		log.debug("Saving photo with userId={}, photoName={}", userId, photoName);
