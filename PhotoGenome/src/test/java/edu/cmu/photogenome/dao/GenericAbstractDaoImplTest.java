@@ -76,7 +76,7 @@ public class GenericAbstractDaoImplTest extends HibernateDbUnitTestCase {
 		List<Photo> list = null;
 		list = photoDao.findAll();
 		assertNotNull(list);
-		assertEquals(2, list.size());
+		assertEquals(4, list.size());
 	}
 	
 	@Test

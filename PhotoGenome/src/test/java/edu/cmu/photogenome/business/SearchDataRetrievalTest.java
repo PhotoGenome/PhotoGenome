@@ -23,7 +23,7 @@ public class SearchDataRetrievalTest extends HibernateDbUnitTestCase {
 
 	@Test
 	public void testSearchAssociatedPhotosEmptyResults() {
-		int photoId = 1;
+		int photoId = -1;
 		int maxMatches = 3;
 		
 		SearchDataRetrieval search = new SearchDataRetrieval(session);

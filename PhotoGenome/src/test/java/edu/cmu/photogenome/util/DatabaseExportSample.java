@@ -8,7 +8,10 @@ import org.dbunit.database.*;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.*;
 
-
+/**
+ * This class is only used as a utility to export data from a database into
+ * an XML file that can be read by the DBUnit test cases
+ */
 public class DatabaseExportSample
 {
     public static void main(String[] args) throws Exception
@@ -21,6 +24,6 @@ public class DatabaseExportSample
 
         // full database export
         IDataSet fullDataSet = connection.createDataSet();
-        FlatXmlDataSet.write(fullDataSet, new FileOutputStream("C:\\users\\tyler\\desktop\\PG_Test_Data.xml"));
+        FlatXmlDataSet.write(fullDataSet, new FileOutputStream("C:\\PG_Test_Data.xml"));
     }
 }

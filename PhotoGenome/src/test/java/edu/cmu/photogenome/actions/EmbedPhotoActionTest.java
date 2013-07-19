@@ -81,7 +81,7 @@ public class EmbedPhotoActionTest extends StrutsTestCase {
 
 	@Test
 	public void testEditPhotoCategories() throws Exception {
-		request.setParameter("photoId", "1");
+		request.setParameter("photoCategoryId", "1");
 		request.setParameter("photoCategoryName", "test category name");
 		request.setParameter("photoCategoryText", "test category text");
 

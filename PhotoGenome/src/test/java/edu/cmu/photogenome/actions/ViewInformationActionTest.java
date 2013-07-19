@@ -48,7 +48,6 @@ public class ViewInformationActionTest extends StrutsTestCase {
 		Map<String, Object> jsonData = viewInfoAction.getJsonGetPhoto();
 		assertNotNull(jsonData);
 		assertEquals(0, jsonData.size());
-		assertEquals("error", result);
 	}
 	
 	/**
