@@ -42,7 +42,7 @@ public class PhotoMetadata implements java.io.Serializable {
 		return this.photoId;
 	}
 
-	public void setPhoto(int photoId) {
+	public void setPhotoId(int photoId) {
 		this.photoId = photoId;
 	}
 
@@ -51,7 +51,7 @@ public class PhotoMetadata implements java.io.Serializable {
 		return this.photoMetadata;
 	}
 
-	public void setPhotoMetaData(String photoMetadata) {
+	public void setPhotoMetadata(String photoMetadata) {
 		this.photoMetadata = photoMetadata;
 	}
 

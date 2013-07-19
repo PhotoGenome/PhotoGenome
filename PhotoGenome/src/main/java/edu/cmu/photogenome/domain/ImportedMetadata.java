@@ -16,14 +16,14 @@ public class ImportedMetadata implements java.io.Serializable {
 
 	private Integer importedmetadataId;
 	private int photoId;
-	private String importedMetaData;
+	private String importedMetadata;
 
 	public ImportedMetadata() {
 	}
 
-	public ImportedMetadata(int photoId, String importedMetaData) {
+	public ImportedMetadata(int photoId, String importedMetadata) {
 		this.photoId = photoId;
-		this.importedMetaData = importedMetaData;
+		this.importedMetadata = importedMetadata;
 	}
 
 	@Id
@@ -42,17 +42,17 @@ public class ImportedMetadata implements java.io.Serializable {
 		return this.photoId;
 	}
 
-	public void setPhoto(int photoId) {
+	public void setPhotoId(int photoId) {
 		this.photoId = photoId;
 	}
 
 	@Column(name = "imported_MetaData", length = 65535)
-	public String getImportedMetaData() {
-		return this.importedMetaData;
+	public String getImportedMetadata() {
+		return this.importedMetadata;
 	}
 
-	public void setImportedMetaData(String importedMetaData) {
-		this.importedMetaData = importedMetaData;
+	public void setImportedMetadata(String importedMetadata) {
+		this.importedMetadata = importedMetadata;
 	}
 
 }
