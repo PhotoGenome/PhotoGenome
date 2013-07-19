@@ -23,12 +23,9 @@ import edu.cmu.photogenome.util.ConfigUtil;
 
 /**
  * The <code>UploadPhoto</code> class provides functionality to upload multiple 
- * photos and to delete photos. Uploading a photo saves the image file, creates 
- * a category metadata file for the photo, and persists a photo entity in the 
- * database.
+ * photos and to delete photos. Uploading a photo saves the image file and persists 
+ * a photo entity in the database.
  * 
- * @author PhotoGenome
- *
  */
 
 public class UploadPhoto {
@@ -56,7 +53,7 @@ public class UploadPhoto {
 	}
 	
 	/**
-	 * Delete a photo entity and the associated photo and metadata files
+	 * Delete a photo entity and the associated photo file
 	 * 
 	 * @param photoId
 	 * @return
@@ -67,9 +64,6 @@ public class UploadPhoto {
 			if(!deletePhotoFile(photo.getPhotoLink())) // try to delete the photo file
 				log.error("Failed to delete file with name {}", photo.getPhotoLink());
 			
-			if(!deleteMetadataFile(photo.getPhotoMetadatalink())); // try to delete the metadata file
-				log.error("Failed to delete file with name {}", photo.getPhotoMetadatalink());
-				
 			log.debug("Deleting photo with ID = {}", photoId);
 			if(!photoDao.delete(photo))
 				return false;
@@ -95,23 +89,6 @@ public class UploadPhoto {
 		String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\jsp\\";
 		File file = new File(path, name);
 
-		return file.delete();
-	}
-	
-	/**
-	 * Delete a metadata file
-	 * 
-	 * @param name file name
-	 * @return true if deleted, else false
-	 */
-	private boolean deleteMetadataFile(String name) {
-		Properties config = ConfigUtil.getApplicationProperties();
-		if(config == null)
-			return false;
-		
-		String path = config.getProperty("metadataLinkPath");
-		File file = new File(path, name);
-		
 		return file.delete();
 	}
 	
@@ -149,8 +126,7 @@ public class UploadPhoto {
 
 		log.debug("Saving photo with userId={}, photoName={}", userId, photoName);
 		if(photoDao.save(photo)) {
-			if(savePhotoLink(photoFile, photo)// Save the photo file to some location
-					&& savePhotoMetadata(photo)) // Save category data for the photo to a file
+			if(savePhotoLink(photoFile, photo))// Save the photo file to some location
 				return photo;
 			else
 				return null;
@@ -209,33 +185,6 @@ public class UploadPhoto {
 			catch (IOException ioe) {
 				log.warn(ioe.getMessage(), ioe);
 			}
-		}
-		
-		return true;
-	}
-	
-	/**
-	 * Save the metadata file containing the category information for a photo
-	 * 
-	 * @param photoId
-	 * @return true if successful, else false
-	 */
-	private boolean savePhotoMetadata(Photo photo) {
-		Properties config = ConfigUtil.getApplicationProperties(); // try to load config properties
-		if(config == null)
-			return false;
-
-		String path = config.getProperty("metadataLinkPath"); // path is stored in config file
-		String name = getPhotoLinkUniqueName(photo) + config.getProperty("metadataFileExtension");
-		photo.setPhotoMetadatalink(name); // metadata link name is unique name appended by file extension
-		
-		try {
-			File metadataFile = new File(path, name);
-			metadataFile.createNewFile();
-			log.debug("Saved metadata file with name = {} to path = {}", name, path);
-		} catch (IOException ioe) {
-			log.error(ioe.getMessage(), ioe);
-			return false;
 		}
 		
 		return true;
