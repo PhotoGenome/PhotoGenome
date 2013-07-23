@@ -16,6 +16,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://pg-db.c41slebym6tm.us-east-1.rds.amazonaws.com:3306/pg_db</property>
         <property name="hibernate.connection.username">root</property>
         
+        <property name="hibernate.default_catalog">PG_DB_TEST</property>
         <property name="hibernate.current_session_context_class">org.hibernate.context.ManagedSessionContext</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         

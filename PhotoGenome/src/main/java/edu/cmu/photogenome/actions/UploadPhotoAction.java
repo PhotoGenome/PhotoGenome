@@ -30,54 +30,14 @@ public class UploadPhotoAction extends ActionSupport {
 
 	private int userId;
 	private int photoId;
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public Map<String, Object> getJsonUploadPhoto() {
-		return jsonUploadPhoto;
-	}
-
-	public void setJsonUploadPhoto(Map<String, Object> jsonUploadPhoto) {
-		this.jsonUploadPhoto = jsonUploadPhoto;
-	}
-
-	public int getPhotoId() {
-		return photoId;
-	}
-
-	public void setPhotoId(int photoId) {
-		this.photoId = photoId;
-	}
-
+	
 	private List<File> fileList;
-	public List<File> getFileList() {
-		return fileList;
-	}
-
-	public void setFileList(List<File> fileList) {
-		this.fileList = fileList;
-	}
-
-	public List<Photo> getPhotoList() {
-		return photoList;
-	}
-
-	public void setPhotoList(List<Photo> photoList) {
-		this.photoList = photoList;
-	}
-
 	private List<Photo> photoList;
 
-	UploadPhoto upload = new UploadPhoto();
+	private UploadPhoto upload = new UploadPhoto();
 
 	private Map<String, Object> jsonUploadPhoto = new LinkedHashMap<String, Object>();
-
+	
 	/**
 	 * Upload single/multiple photos for a particular user id
 	 * 
@@ -88,8 +48,13 @@ public class UploadPhotoAction extends ActionSupport {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		upload.setSession(session);
 		HibernateUtil.beginTransaction(session);
-
-		//userId = 1000; // TODO remove this
+		
+		log.error("UPLOAD PHOTO");
+		log.error(String.valueOf(fileList == null));
+		if(fileList != null)
+			log.error(String.valueOf(fileList.size()));
+		log.error("USER ID " + userId);
+		
 		
 		try{
 			photoList = upload.savePhoto(userId, fileList);
@@ -132,5 +97,45 @@ public class UploadPhotoAction extends ActionSupport {
 		}catch(Exception ex) {
 			return ERROR;
 		}
+	}
+	
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public Map<String, Object> getJsonUploadPhoto() {
+		return jsonUploadPhoto;
+	}
+
+	public void setJsonUploadPhoto(Map<String, Object> jsonUploadPhoto) {
+		this.jsonUploadPhoto = jsonUploadPhoto;
+	}
+
+	public int getPhotoId() {
+		return photoId;
+	}
+
+	public void setPhotoId(int photoId) {
+		this.photoId = photoId;
+	}
+
+	public List<File> getFileList() {
+		return fileList;
+	}
+
+	public void setFileList(List<File> fileList) {
+		this.fileList = fileList;
+	}
+
+	public List<Photo> getPhotoList() {
+		return photoList;
+	}
+
+	public void setPhotoList(List<Photo> photoList) {
+		this.photoList = photoList;
 	}
 }

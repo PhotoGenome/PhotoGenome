@@ -23,7 +23,7 @@ public abstract class HibernateDbUnitTestCase extends DBTestCase {
     
     public HibernateDbUnitTestCase() {
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.mysql.jdbc.Driver");  
-        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://pg-db.c41slebym6tm.us-east-1.rds.amazonaws.com:3306/pg_db");  
+        System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:mysql://pg-db.c41slebym6tm.us-east-1.rds.amazonaws.com:3306/pg_db_test");  
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "root");
         System.setProperty(PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "msit2013");
     }
