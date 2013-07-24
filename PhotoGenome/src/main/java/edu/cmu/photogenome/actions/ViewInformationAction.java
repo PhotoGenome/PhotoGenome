@@ -155,8 +155,19 @@ public class ViewInformationAction extends ActionSupport{
 		HibernateUtil.beginTransaction(session);
 		try {
 			if((photo = viewInformation.getPhoto(photoId)) != null) {
+				
+				// replace photo link path
+				try {
+					Properties config = new Properties();
+					config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
+					photo.setPhotoLink(config.getProperty("photoLinkPath") + photo.getPhotoLink());
+				}
+				catch(IOException ioe) {
+					log.error(ioe.getMessage(), ioe);
+				}
+				
 				jsonGetPhoto.put(jsonKey, photo);
-				HibernateUtil.commitTransaction(session);
+				HibernateUtil.rollbackTransaction(session); // only retrieving data, don't save changes
 				return SUCCESS;
 			}
 			else {
@@ -179,21 +190,20 @@ public class ViewInformationAction extends ActionSupport{
 		try {
 			if((list = viewInformation.getPhotos("userId", userId)) != null){
 				
-				Properties config = new Properties();
+				// replace photo link path
 				try {
+					Properties config = new Properties();
 					config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
+					for(Photo photo : list) {
+						photo.setPhotoLink(config.getProperty("photoLinkPath") + photo.getPhotoLink());
+					}
 				}
 				catch(IOException ioe) {
 					log.error(ioe.getMessage(), ioe);
 				}
 				
-				for(Photo photo : list) {
-					photo.setPhotoLink(config.getProperty("photoLinkPath") + photo.getPhotoLink());
-					System.out.println(photo.getPhotoLink());
-				}
-				
 				jsonGetPhotos.put(jsonKey, list);
-				HibernateUtil.rollbackTransaction(session);
+				HibernateUtil.rollbackTransaction(session); // only retrieving data, don't save changes
 				return SUCCESS;
 			}else {
 				HibernateUtil.rollbackTransaction(session);
