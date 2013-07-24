@@ -7,7 +7,7 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
- 	<constant name="struts.multipart.saveDir" value="C:\\Users\\hemant\\git\\PhotoGenome\\PhotoGenome\\images\\"></constant>  
+ 	<constant name="struts.multipart.saveDir" value="C:\\Temp\\"></constant>  
 
 	<package name="default" extends="json-default">
 		<action name="add" method="addUser"
@@ -31,6 +31,13 @@
 				<param name="root">jsonData</param>
 			</result>
 		</action>
+		<action name="login" method="verifyUserPassword"
+			class="edu.cmu.photogenome.actions.LoginAction">
+			<result type="json">
+				<param name="root">jsonData</param>
+			</result>
+	
+		</action>
 
 		<action name="getPhotoComments" method="getPhotoComments"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
@@ -39,6 +46,13 @@
 			</result>
 		</action>
 
+		<action name="getImportedMetadataByPhotoId" method="getImportedMetadataByPhotoId"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetImportedMetadata</param>
+			</result>
+		</action>
+		
 		<action name="getPhoto" method="getPhoto"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
 			<result type="json">
@@ -246,6 +260,36 @@
 			<result type="json">
 				<param name="root">jsonGetPhotosByKeywords</param>
 			</result>
+		</action>
+	<action name="SendEmailInvitation" 
+         class="edu.cmu.photogenome.actions.SendEmailInvitation"
+         method="execute">
+         <result name="success">/SendInvitationSuccess.jsp</result>
+         <result name="error">/SendInvitationError.jsp</result>
+      </action>
+		<action name="doSendEmail" class="edu.cmu.photogenome.actions.SendEmailAction"
+			method="sendEmail">
+
+			<!-- SMTP configuration -->
+			<param name="host">smtp.gmail.com</param>
+			<param name="port">587</param>
+			<param name="userName">rewyndr.photogenome</param>
+			<param name="password">msit2013</param>
+			<!-- End of SMTP configuration -->
+
+            <interceptor-ref name="fileUpload">
+       			<param name="allowedTypes">*/*</param> <!-- all file types -->
+				<param name="maximumSize">41943040000</param> <!-- 4 MB -->
+  	    	</interceptor-ref>
+  	    	
+  	    	<interceptor-ref name="staticParams"/>
+  	    	<interceptor-ref name="params"/>
+			<interceptor-ref name="validation" />
+			<interceptor-ref name="workflow" />
+			<interceptor-ref name="exception"/>
+			              	    		
+			<result name="success" type="redirect">jsp/Result.jsp</result>
+			<result name="input">/EmailForm.jsp</result>
 		</action>
 		
 	</package>

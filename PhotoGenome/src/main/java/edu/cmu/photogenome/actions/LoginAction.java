@@ -49,6 +49,7 @@ public class LoginAction extends ActionSupport {
 						return SUCCESS;
 					}
 					else {
+						jsonData.put(jsonKey, "NotAUser");
 						addActionError(getText("error.login"));
 				    	HibernateUtil.rollbackTransaction(session);
 						return ERROR;
