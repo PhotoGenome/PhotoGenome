@@ -148,8 +148,8 @@ public class UploadPhoto {
 		if(config == null)
 			return false;
 
-		//String path = config.getProperty("photoLinkPath"); // path is stored in config file
-		String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\jsp\\";
+		String path = config.getProperty("photoFilePath"); // path is stored in config file
+		//String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\jsp\\";
 		String name = getPhotoLinkUniqueName(photo) + config.getProperty("photoFileExtension");
 		photo.setPhotoLink(name); // photo link name is unique name appended by file extension set in app properties
 

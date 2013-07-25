@@ -1,10 +1,12 @@
 package edu.cmu.photogenome.actions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -51,8 +53,13 @@ public class SearchAction extends ActionSupport {
 		HibernateUtil.beginTransaction(session);
 		
 		if((list = search.getAssociatedPhotos(photoId)) != null) {
+			
+			// replace photo link path
+			for(Photo photo : list)
+				photo.setPhotoLink(getFullPhotoLinkPath(photo.getPhotoLink()));
+			
 			jsonGetAssociatedPhotos.put(jsonKey, list);
-			HibernateUtil.commitTransaction(session);
+			HibernateUtil.rollbackTransaction(session); // don't save the photo link path
 			return SUCCESS;
 		}
 		else {
@@ -88,8 +95,12 @@ public class SearchAction extends ActionSupport {
 		HibernateUtil.beginTransaction(session);
 		
 		if((list = search.getFilteredAssociatedPhotosByCategoryId(photoId, photoCategoryIds, regionCategoryIds)) != null) {
+			// replace photo link path
+			for(Photo photo : list)
+				photo.setPhotoLink(getFullPhotoLinkPath(photo.getPhotoLink()));
+			
 			jsonGetFilteredAssociatedPhotos.put(jsonKey, list);
-			HibernateUtil.commitTransaction(session);
+			HibernateUtil.rollbackTransaction(session); // don't save the photo link path
 			return SUCCESS;
 		}
 		else {
@@ -118,8 +129,12 @@ public class SearchAction extends ActionSupport {
 		HibernateUtil.beginTransaction(session);
 		
 		if((list = search.getFilteredAssociatedPhotosByCategoryValue(photoId, photoCategories, regionCategories)) != null) {
+			// replace photo link path
+			for(Photo photo : list)
+				photo.setPhotoLink(getFullPhotoLinkPath(photo.getPhotoLink()));
+			
 			jsonGetFilteredAssociatedPhotos.put(jsonKey, list);
-			HibernateUtil.commitTransaction(session);
+			HibernateUtil.rollbackTransaction(session); // don't save the photo link path
 			return SUCCESS;
 		}
 		else {
@@ -146,8 +161,12 @@ public class SearchAction extends ActionSupport {
 		HibernateUtil.beginTransaction(session);
 		
 		if((list = search.getPhotosByKeyword(keywordList)) != null) {
+			// replace photo link path
+			for(Photo photo : list)
+				photo.setPhotoLink(getFullPhotoLinkPath(photo.getPhotoLink()));
+			
 			jsonGetPhotosByKeywords.put(jsonKey, list);
-			HibernateUtil.commitTransaction(session);
+			HibernateUtil.rollbackTransaction(session); // don't save the photo link path
 			return SUCCESS;
 		}
 		else {
@@ -187,6 +206,27 @@ public class SearchAction extends ActionSupport {
 		return list;
 	}
 	
+	/**
+	 * Get the full path for photo link
+	 * 
+	 * @param photoName	name of the photo
+	 * @return full path for the photo link
+	 */
+	private String getFullPhotoLinkPath(String photoName) {
+		String fullPath = null;
+		
+		try {
+			Properties config = new Properties();
+			config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
+			fullPath = config.getProperty("photoLinkPath") + photoName;
+		}
+		catch(IOException ioe) {
+			log.error(ioe.getMessage(), ioe);
+		}
+		
+		return fullPath;
+	}
+		
 	public Integer getPhotoId() {
 		return photoId;
 	}
