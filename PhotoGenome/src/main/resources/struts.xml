@@ -36,7 +36,6 @@
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>
-	<result name="success" type="redirect">jsp/Result.jsp</result>
 			
 		</action>
 
@@ -223,7 +222,7 @@
                 <param name="excludeMethods">input,back,cancel,browse</param>
             </interceptor-ref>
     
-			<result name="success">jsp/PhotoLayout.jsp</result>
+			<result name="success" type="redirect">jsp/PhotoLayout.jsp</result>
 			<result name="input">jsp/PhotoLayout.jsp</result>
 			
 		</action>
@@ -284,6 +283,7 @@
 			<interceptor-ref name="exception"/>
 			              	    		
 			<result name="success" type="redirect">jsp/Result.jsp</result>
+			<result name="error" type="redirect">jsp/Result.jsp</result>
 			<result name="input">/EmailForm.jsp</result>
 		</action>
 		

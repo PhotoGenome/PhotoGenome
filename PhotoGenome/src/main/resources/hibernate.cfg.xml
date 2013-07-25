@@ -5,16 +5,17 @@
 <hibernate-configuration>
     <session-factory>
     	<!--  local MySQL database properties -->
-        <!-- <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/PG_DB</property>
-        <property name="hibernate.connection.username">root</property> -->
-        
+        <property name="hibernate.connection.username">root</property> 
+                
         <!--  AWS RDS properties -->
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <!-- <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">msit2013</property>
         <property name="hibernate.connection.url">jdbc:mysql://pg-db.c41slebym6tm.us-east-1.rds.amazonaws.com:3306/pg_db</property>
-        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.username">root</property>-->
+        
         
         <property name="hibernate.default_catalog">PG_DB</property>
         <property name="hibernate.current_session_context_class">org.hibernate.context.ManagedSessionContext</property>

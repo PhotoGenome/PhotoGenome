@@ -6,13 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Send Email Error</title>
+<title>Login Email Error</title>
 </head>
 <body>
 	<center>
-		<h2>There were a problem while sending an e-mail to: <s:property value="recipient"/></h2>
-		<h3>Error details:</h3>
-		<h4><s:property value="exception" /></h4>
+		<h2>There were a problem while logging in</h2>
+		<h3>Please Login again</h3>
+		
 	</center>
 </body>
 </html>
