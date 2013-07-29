@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.ViewInformation;
+import edu.cmu.photogenome.domain.ImportedMetadata;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
@@ -40,7 +41,7 @@ public class ViewInformationAction extends ActionSupport{
 	private Integer photoId;
 	private Integer regionId;
 	private Integer userId;
-
+	private Map<String, Object> jsonGetImportedMetadata = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhoto = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotos = new LinkedHashMap<String, Object>();
 	private Map<String, Object> jsonGetPhotoComments = new LinkedHashMap<String, Object>();
@@ -72,6 +73,13 @@ public class ViewInformationAction extends ActionSupport{
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	public Map<String, Object> getJsonGetImportedMetadata() {
+		return jsonGetImportedMetadata;
+	}
+
+	public void setJsonGetImportedMetadata(Map<String, Object> jsonGetImportedMetadata) {
+		this.jsonGetImportedMetadata = jsonGetImportedMetadata;
 	}
 
 	public Map<String, Object> getJsonGetPhoto() {
@@ -215,6 +223,42 @@ public class ViewInformationAction extends ActionSupport{
 			return ERROR;
 		}
 	}
+	
+	
+	public String getImportedMetadataByPhotoId() {
+		List<ImportedMetadata> list = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		viewInformation.setSession(session);
+		HibernateUtil.beginTransaction(session);
+		System.out.println("photoId"+photoId);			
+		
+		try {
+			if((list = viewInformation.getImportedMetadata("photoId", photoId)) != null){
+				
+				Properties config = new Properties();
+				try {
+					config.load(this.getClass().getClassLoader().getResourceAsStream("ApplicationResources.properties"));
+				}
+				catch(IOException ioe) {
+					log.error(ioe.getMessage(), ioe);
+				}
+				jsonGetImportedMetadata.put(jsonKey, list);
+				System.out.println("metadata"+list.get(0).getImportedMetadata().toString());			
+				System.out.println("metadata"+jsonGetImportedMetadata.toString());			
+				
+				HibernateUtil.rollbackTransaction(session);
+				return SUCCESS;
+			}else {
+				HibernateUtil.rollbackTransaction(session);
+				return ERROR;
+			}
+		} catch(Exception e){
+			log.warn(e.getMessage(), e);
+			HibernateUtil.rollbackTransaction(session);
+			return ERROR;
+		}
+	}
+	
 	
 	/**
 	 * Get photo comments from photoId

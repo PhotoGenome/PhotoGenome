@@ -36,7 +36,7 @@
 			<result type="json">
 				<param name="root">jsonData</param>
 			</result>
-			
+				
 		</action>
 
 		<action name="getPhotoComments" method="getPhotoComments"
@@ -283,7 +283,6 @@
 			<interceptor-ref name="exception"/>
 			              	    		
 			<result name="success" type="redirect">jsp/Result.jsp</result>
-			<result name="error" type="redirect">jsp/Result.jsp</result>
 			<result name="input">/EmailForm.jsp</result>
 		</action>
 		

@@ -52,14 +52,14 @@ public class LoginAction extends ActionSupport {
 						jsonData.put(jsonKey, "NotAUser");
 						addActionError(getText("error.login"));
 				    	HibernateUtil.rollbackTransaction(session);
-						return ERROR;
+						return SUCCESS;
 					}
 				
 	    	}
 				catch(Exception e) {
 					log.warn(e.getMessage(), e);
 					HibernateUtil.rollbackTransaction(session);
-					return ERROR;
+					return SUCCESS;
 				}
 	    	
 	    }

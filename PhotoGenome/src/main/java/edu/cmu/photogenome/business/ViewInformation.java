@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.cmu.photogenome.dao.ImportedMetadataDao;
+import edu.cmu.photogenome.dao.ImportedMetadataDaoImpl;
 import edu.cmu.photogenome.dao.PhotoCategoryDao;
 import edu.cmu.photogenome.dao.PhotoCategoryDaoImpl;
 import edu.cmu.photogenome.dao.PhotoCommentDao;
@@ -20,6 +22,7 @@ import edu.cmu.photogenome.dao.RegionCommentDao;
 import edu.cmu.photogenome.dao.RegionCommentDaoImpl;
 import edu.cmu.photogenome.dao.RegionCoordinateDao;
 import edu.cmu.photogenome.dao.RegionCoordinateDaoImpl;
+import edu.cmu.photogenome.domain.ImportedMetadata;
 import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.PhotoCategory;
 import edu.cmu.photogenome.domain.PhotoComment;
@@ -47,6 +50,8 @@ public class ViewInformation {
 	private RegionCommentDao regionCommentDao;
 	private RegionCategoryDao regionCategoryDao;
 	private RegionCoordinateDao regionCoordinateDao;
+	private ImportedMetadataDao importedMetadataDao;
+
 	
 	public ViewInformation() {
 		photoDao = new PhotoDaoImpl();
@@ -56,6 +61,8 @@ public class ViewInformation {
 		regionCommentDao = new RegionCommentDaoImpl();
 		regionCategoryDao =new RegionCategoryDaoImpl();
 		regionCoordinateDao = new RegionCoordinateDaoImpl();
+		importedMetadataDao = new ImportedMetadataDaoImpl();
+		
 	}
 	
 	/**
@@ -81,7 +88,8 @@ public class ViewInformation {
 		regionCommentDao.setSession(session);
 		regionCategoryDao.setSession(session);
 		regionCoordinateDao.setSession(session);
-	}
+		importedMetadataDao.setSession(session);
+		}
 	
 	/**
 	 * Get the photo for the given photo id
@@ -97,7 +105,10 @@ public class ViewInformation {
 		return photoDao.findAllByCriteria(property, value);
 	}
 	
-	/**
+	public List<ImportedMetadata> getImportedMetadata(String property, Object value) {
+		return importedMetadataDao.findAllByCriteria(property, value);
+	}
+/**
 	 * Get the photo comment for the given id
 	 * 
 	 * @param photoCommentId

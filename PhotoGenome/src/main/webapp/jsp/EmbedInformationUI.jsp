@@ -318,7 +318,7 @@
 <form id="form1">
 <div id="mainDiv">
 <table width="100%" bordercolor="black">
-<tr><td width="70%" bordercolor="black" valign="top">
+<tr><td width="780px" bordercolor="black" valign="top">
 <div id="canvas"  style="border:solid black;"><img  height="500px" width="780px" id="canvasImg"></div>
 </td><td valign="top">
 <table >
@@ -365,7 +365,7 @@ Enter Comments Here.
 <tr><td><input type="button" id="stop" value="Stop Marking" />
 <input type="button" id="start" value="Start Marking" />
 <input type="button" id="viewAssociatedPhotos" value="View Associated Photos" />
-
+</td><td rowspan="10"><div id="importedMetadata"></div></td></tr>
 <tr><td>Photo Categories</td></tr>
 <tr><td><div id="photoCategories"></div> </td></tr>
 <tr>
@@ -413,8 +413,10 @@ $(window).load(function () {
 	getPhotoIdFromQS();
 	getRegionCoordinates();
 	getPhotoComments(); 
-	getPhotoCategories();
+	getPhotoCategories();	
+	getImportedMetadataByPhotoId();
 });
+
 
 function getPhotoIdFromQS(){
 	getPhotoLink(sessionStorage.getItem("photoId"));
@@ -567,7 +569,21 @@ function getPhotoComments(){
 	       return false;
 	  };	
 	  
-	 
+	  	function getImportedMetadataByPhotoId(){
+     		
+    		 $.getJSON(
+    	         	  'getImportedMetadataByPhotoId.action' , {photoId:sessionStorage.getItem("photoId")},
+    	         	  function(jsonImportedMetadata) {
+    	         		  	for (data in jsonImportedMetadata.items) {
+    	         		 		$('#importedMetadata').append('<div class="box"> <h6>Imported Metadata</h6><table><tr><td valign="top" width="90%">'
+    	         		 				+'<div importedMetadataId='+jsonImportedMetadata.items[data].importedMetadataId+
+    	         		 				'" class="PCatcomment_box">'+jsonImportedMetadata.items[data].importedMetadata+
+    	         		 				'</div></td><td valign="top" width="10%"></td></tr></table></div>');
+    	    	                 }
+    	    	            	  });
+    	         	 return false;
+    	         	};	
+   
   function addPhotoCategory(photoCategoryName,photoCategortyText){
 	 	
 		 $.getJSON(

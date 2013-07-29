@@ -151,7 +151,7 @@ public class SearchAction extends ActionSupport {
 	public String getPhotosByKeywords() {
 		List<Photo> list = null;
 		List<String> keywordList;
-		
+		System.out.println(keywords);
 		// parse request parameter strings into list
 		keywordList = Arrays.asList(keywords.split(" "));
 		
@@ -235,12 +235,12 @@ public class SearchAction extends ActionSupport {
 		this.photoId = photoId;
 	}
 
-	public String getKeywordList() {
+	public String getKeywords() {
 		return keywords;
 	}
 
-	public void setKeywordList(String keywordList) {
-		this.keywords = keywordList;
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
 	public String getPhotoCategoryList() {

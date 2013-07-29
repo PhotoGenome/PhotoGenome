@@ -60,14 +60,14 @@ public class Login {
 					return user;
 				}
 				else {
-					return user;
+					return null;
 				}
 			} else {
-	    		return user;
+	    		return null;
 	    	}
     	}
 			catch(Exception e) {
-				return user;
+				return null;
 			}
     	
     }

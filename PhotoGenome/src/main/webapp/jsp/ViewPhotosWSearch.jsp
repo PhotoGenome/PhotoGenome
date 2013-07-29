@@ -33,9 +33,12 @@
             
       	  $('#submitSK').click(function(event) {  
       		var keywords=$('#txtSearchKeywords').val();
-          getPhotosByKeywords(keywords);  
+      		jQuery('#canvas').html('');
+      		getPhotosByKeywords(keywords);  
       	  });
-           
+      	  
+		  
+    });    
         </script>
         
         <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
@@ -68,23 +71,9 @@ Space separated keywords
 </tr>
 </table>
 <script>
-
-$(window).load(function () {
-	
-});
-
-function getPhotoLink(){
-	 $.getJSON(
-        	  'getPhoto.action' , {photoId:$('#canvas').attr('photoId')},
-        	  function(jsonPhoto) {
-        		for (photo in jsonPhoto) {
-        			$('#canvas').css('background-image', 'url('+photo.photolink+')');  
-        			}
-        	  });
-        	 return false;
-        	};
-        	
 function getPhotosByKeywords(keywords){
+	alert('Hi');
+	alert(keywords);
 	  $.getJSON(
          'getPhotosByKeywords.action' , {keywords:keywords},
          	  function(jsonPhotos) {
@@ -106,8 +95,8 @@ function getPhotosByKeywords(keywords){
 					         	  function(jsonPhoto) {
 					       	 });
 					       return false;
-					  }
-		});
+		}
+        
 </script>
 </form>
 
