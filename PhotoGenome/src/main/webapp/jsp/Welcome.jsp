@@ -3,7 +3,7 @@
 <html>
  
 <head>
-<title>Welcome Page - Struts 2 - Login Application</title>
+<title>Welcome Page PhotoGenome</title>
 </head>
  
 <body>
