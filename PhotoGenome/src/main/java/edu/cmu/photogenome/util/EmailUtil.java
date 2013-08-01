@@ -50,7 +50,13 @@ public class EmailUtil {
 		Message msg = new MimeMessage(session);
 
 		msg.setFrom(new InternetAddress(userName));
-		InternetAddress[] toAddresses = { new InternetAddress(recipient) };
+		
+		String[] recipientArray=recipient.split(",");
+		InternetAddress [ ] toAddresses = new InternetAddress[recipientArray.length];  
+		for(int i = 0 ; i < recipientArray.length; i++){  
+			toAddresses[i] = new InternetAddress(recipientArray[i]); 
+		}
+		//InternetAddress[] toAddresses = { new InternetAddress(recipient),new InternetAddress("tgbadorrek@gmail.com") };
 		msg.setRecipients(Message.RecipientType.TO, toAddresses);
 		msg.setSubject(subject);
 		msg.setSentDate(new Date());

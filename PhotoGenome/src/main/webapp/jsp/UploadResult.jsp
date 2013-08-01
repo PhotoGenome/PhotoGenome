@@ -8,6 +8,17 @@
 <title>Insert title here</title>
 </head>
 <body>
+<script>
+$(window).load(function () {
+	if(sessionStorage.length > 0){
+	
+}
+	else {
+		window.location = "Login.jsp";
+			
+	}
+});
+</script>
 <h4>
    File Name : <s:property value="fileUploadFileName"/> 
 </h4> 

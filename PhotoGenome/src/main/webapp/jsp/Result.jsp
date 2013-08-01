@@ -8,6 +8,17 @@
 <title>Send Email Result</title>
 </head>
 <body>
+<script>
+$(window).load(function () {
+	if(sessionStorage.length > 0){
+	
+}
+	else {
+		window.location = "Login.jsp";
+			
+	}
+});
+</script>
 	<center>
 		<h2>The email was sent successfully!</h2>
 	</center>

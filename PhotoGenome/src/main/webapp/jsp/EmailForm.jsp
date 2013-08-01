@@ -9,6 +9,17 @@
 <title>Struts2 - Email application</title>
 </head>
 <body>
+<script>
+$(window).load(function () {
+	if(sessionStorage.length > 0){
+	
+}
+	else {
+		window.location = "Login.jsp";
+			
+	}
+});
+</script>
 	<center>
 		<h1>Struts2 - Send e-mail with attachment</h1>
 		<s:form action="doSendEmail" enctype="multipart/form-data" method="post">

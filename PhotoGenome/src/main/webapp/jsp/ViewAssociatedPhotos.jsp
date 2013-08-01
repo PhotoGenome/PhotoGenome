@@ -59,7 +59,7 @@
 <script>
 
 $(window).load(function () {
-	
+	if(sessionStorage.length > 0){
 	if(sessionStorage.getItem("associationMode")=== "Filtered"){
 		getFilteredAssociatedPhotos();
 	} else if(sessionStorage.getItem("associationMode")=== "TextFiltered"){
@@ -67,6 +67,11 @@ $(window).load(function () {
 	}
 	else{
 		getAssociatedPhotos();	
+	}
+}
+	else {
+		window.location = "Login.jsp";
+			
 	}
 });
 
@@ -126,7 +131,7 @@ function getTextFilteredAssociatedPhotos(){
 
 		function deletePhoto(photoId){
 						$.getJSON(
-					    	'deletePhoto.action' , {userId:1000,photoId:parseInt(photoId)},
+					    	'deletePhoto.action' , {userId:sessionStorage.getItem(userId),photoId:parseInt(photoId)},
 					         	  function(jsonPhoto) {
 					       	 });
 					       return false;

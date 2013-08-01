@@ -71,6 +71,16 @@ Space separated keywords
 </tr>
 </table>
 <script>
+$(window).load(function () {
+	if(sessionStorage.length > 0){
+	
+}
+	else {
+		window.location = "Login.jsp";
+			
+	}
+});
+
 function getPhotosByKeywords(keywords){
 	alert('Hi');
 	alert(keywords);

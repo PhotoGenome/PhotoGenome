@@ -32,7 +32,7 @@
                  		  if(jsonLogin.items==="NotAUser"){
                  			  $('#error').text('Invalid user and password');  
                  		  } else{
-                 			window.location = "ViewPhotos.jsp";
+                 			window.location = "Home.jsp";
                  			sessionStorage.setItem("userId", jsonLogin.items.userId);
                  				  
                  		  }

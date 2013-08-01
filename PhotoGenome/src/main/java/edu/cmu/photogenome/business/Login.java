@@ -16,12 +16,14 @@ import edu.cmu.photogenome.business.ViewInformation;
 import edu.cmu.photogenome.dao.UserDao;
 import edu.cmu.photogenome.dao.UserDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.domain.PhotoComment;
 import edu.cmu.photogenome.domain.User;
 import edu.cmu.photogenome.util.HashUtil;
 import edu.cmu.photogenome.util.HibernateUtil;
 
 public class Login {
 	private UserDao userDao;
+	final Logger log = LoggerFactory.getLogger(Login.class);
 	public Login(){
     	userDao = new UserDaoImpl();
     }
@@ -46,7 +48,13 @@ public class Login {
 		}
 	
 	public User getUser(String property, Object value) {
-		return userDao.findAllByCriteria(property, value).get(0);
+		List<User> users= userDao.findAllByCriteria(property, value);
+		if(!users.isEmpty()){
+			return userDao.findAllByCriteria(property, value).get(0);
+			}
+		else{
+		return null;
+		}
 	}
 	public User verifyUserPassword(String username, String password){
     	User user=null;
@@ -55,8 +63,7 @@ public class Login {
 	 	 String hashEnteredPassword;
     	if(user != null) {
     			hashEnteredPassword=HashUtil.getHash(password);
-    			System.out.println(hashEnteredPassword+"--"+user.getUserPassword());
-				if(hashEnteredPassword.equals(user.getUserPassword())){
+    			if(hashEnteredPassword.equals(user.getUserPassword())){
 					return user;
 				}
 				else {
@@ -71,5 +78,43 @@ public class Login {
 			}
     	
     }
-   
+ 
+	public User verifyUserDetailsAndRegister(String firstname,String lastname,String email, String password){
+    	User user=null;
+    	try {
+    		System.out.println("Business");
+   	 	 
+    		user = getUser("userEmailId",email);
+	 	 System.out.println("User"+user);
+	 	 String hashEnteredPassword;
+    	if(user == null) {
+    			hashEnteredPassword=HashUtil.getHash(password);
+    			user = new User();
+
+    			user.setUserFirstName(firstname);
+    			user.setUserLastName(lastname);
+    			user.setUserEmailId(email);
+    			user.setUserPassword(hashEnteredPassword);
+    			user.setUserTimestamp(new Date());
+
+    			if(userDao.save(user)) {
+    				log.debug("User saved. ", user.getUserId());	
+    				return user;
+    			}
+    			else {
+    				log.error("Failed to save user ", user.getUserId());
+    				return null;
+    			}
+    	}
+    			else {
+    				return null;
+    		    				
+    			}
+    	}
+			catch(Exception e) {
+				return null;
+			}
+    	
+    }
+ 
 }

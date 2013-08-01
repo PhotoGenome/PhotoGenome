@@ -10,9 +10,11 @@
  	<constant name="struts.multipart.saveDir" value="C:\\Temp\\"></constant>  
 
 	<package name="default" extends="json-default">
-		<action name="add" method="addUser"
+		<action name="register" method="verifyUserDetailsAndRegister"
 			class="edu.cmu.photogenome.actions.LoginAction">
-			<result name="success">Login.jsp</result>
+			<result type="json">
+				<param name="root">jsonRegisterData</param>
+			</result>
 		</action>
 
 		<action name="remove" method="removeUser"
@@ -34,7 +36,7 @@
 		<action name="login" method="verifyUserPassword"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result type="json">
-				<param name="root">jsonData</param>
+				<param name="root">jsonLoginData</param>
 			</result>
 				
 		</action>

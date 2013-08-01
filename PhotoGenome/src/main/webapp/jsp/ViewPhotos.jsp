@@ -63,7 +63,15 @@
 <script>
 
 $(window).load(function () {
-	getPhotosByUserId(1000); 
+	if(sessionStorage.length > 0){
+		getPhotosByUserId(	sessionStorage.getItem("userId")); 
+		
+	}
+		else {
+			window.location = "Login.jsp";
+				
+		}
+
 	
 });
 
@@ -97,7 +105,7 @@ function getPhotosByUserId(userId){
 
 		function deletePhoto(photoId){
 						$.getJSON(
-					    	'deletePhoto.action' , {userId:1000,photoId:parseInt(photoId)},
+					    	'deletePhoto.action' , {userId:sessionStorage.getItem("userId"),photoId:parseInt(photoId)},
 					         	  function(jsonPhoto) {
 					       	 });
 					       return false;

@@ -410,11 +410,18 @@ Enter Comments Here.
 <script>
 
 $(window).load(function () {
-	getPhotoIdFromQS();
-	getRegionCoordinates();
-	getPhotoComments(); 
-	getPhotoCategories();	
-	getImportedMetadataByPhotoId();
+		if(sessionStorage.length > 0){
+			getPhotoIdFromQS();
+			getRegionCoordinates();
+			getPhotoComments(); 
+			getPhotoCategories();	
+			getImportedMetadataByPhotoId();		
+	}
+		else {
+			window.location = "Login.jsp";
+				
+		}
+
 });
 
 
@@ -587,7 +594,7 @@ function getPhotoComments(){
   function addPhotoCategory(photoCategoryName,photoCategortyText){
 	 	
 		 $.getJSON(
-	         	  'addPhotoCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
+	         	  'addPhotoCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
 	         	  function(jsonPhotoCategories) {
 	         			$('#photoCategories').append('<div class="box"> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items.photoCategoryId+
@@ -609,7 +616,7 @@ function getPhotoComments(){
 	      
 	function addRegionCategory(categoryName,regionCategoryText){
 		$.getJSON(
-	    	'addRegionCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionId:$('#submitRCat').attr('currentRegionId'),categoryName:categoryName,regionCategoryText:regionCategoryText},
+	    	'addRegionCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),regionId:$('#submitRCat').attr('currentRegionId'),categoryName:categoryName,regionCategoryText:regionCategoryText},
 	         	  function(jsonRegionCategories) {
 	         	  	  $('#regionCategories').append('<div class="box"> <div regionCategoryId="'
 	     		 				+jsonRegionCategories.items.regionCategorytId+
@@ -630,7 +637,7 @@ function getPhotoComments(){
 	  };	
 	function addPhotoComment(photoCommentText){
 	      $.getJSON(
-	         'addPhotoComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,photoCommentText:photoCommentText},
+	         'addPhotoComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),photoCommentText:photoCommentText},
 	         	  function(jsonPhotoComments) {
 	        	
 	        		  $('#photoComments').append('<div class="box"> <div photoCommentId="'
@@ -654,7 +661,7 @@ function getPhotoComments(){
 	  function addRegionComment(regionCommentText){
 		  
 	      $.getJSON(
-	         'addRegionComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionId:$('#submitRCom').attr('currentRegionId'),regionCommentText:regionCommentText},
+	         'addRegionComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),regionId:$('#submitRCom').attr('currentRegionId'),regionCommentText:regionCommentText},
 	         	  function(jsonRegionComments) {
 	         	    $('#regionComments').append('<div class="box"> <div regionCommentId="'
 	   		 				+jsonRegionComments.items.regionCommentId+
@@ -676,7 +683,7 @@ function getPhotoComments(){
 
 	  function editPhotoCategory(photoCategoryName,photoCategortyText, photoCategoryId){
 			 $.getJSON(
-		         	  'editPhotoCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,photoCategoryId:photoCategoryId,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
+		         	  'editPhotoCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),photoCategoryId:photoCategoryId,photoCategoryName:photoCategoryName,photoCategoryText:photoCategortyText},
 		         	  function(jsonPhotoCategories) {
 		         	  });
 		         	 return false;
@@ -684,7 +691,7 @@ function getPhotoComments(){
 		      
 		function editRegionCategory(categoryName,regionCategoryText,regionCategoryId){
 			$.getJSON(
-		    	'editRegionCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionCategoryId:regionCategoryId,categoryName:categoryName,regionCategoryText:regionCategoryText},
+		    	'editRegionCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),regionCategoryId:regionCategoryId,categoryName:categoryName,regionCategoryText:regionCategoryText},
 		         	  function(jsonRegionCategories) {
 		         });
 		       return false;
@@ -692,7 +699,7 @@ function getPhotoComments(){
 		function editPhotoComment(photoCommentText,photoCommentId){
 		
 		      $.getJSON(
-		         'editPhotoComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,photoCommentId:photoCommentId,photoCommentText:photoCommentText},
+		         'editPhotoComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),photoCommentId:photoCommentId,photoCommentText:photoCommentText},
 		         	  function(jsonPhotoComments) {
 		        	});
 		      return false;
@@ -700,7 +707,7 @@ function getPhotoComments(){
 
 		  function editRegionComment(regionCommentText,regionCommentId){
 		      $.getJSON(
-		         'editRegionComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionCommentId:regionCommentId,regionCommentText:regionCommentText},
+		         'editRegionComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),regionCommentId:regionCommentId,regionCommentText:regionCommentText},
 		         	  function(jsonRegionComments) {
 		         	  
 		         });
@@ -710,7 +717,7 @@ function getPhotoComments(){
 
 	  function deleteRegionCategory(regionCategoryId){
 			$.getJSON(
-		    	'deleteRegionCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionCategoryId:parseInt(regionCategoryId)},
+		    	'deleteRegionCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),regionCategoryId:parseInt(regionCategoryId)},
 		         	  function(jsonRegionCategories) {
 		       	 });
 		       return false;
@@ -718,7 +725,7 @@ function getPhotoComments(){
 		  
 		 function deleteRegionComment(regionCommentId){
 				$.getJSON(
-			    	'deleteRegionComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionCommentId:parseInt(regionCommentId)},
+			    	'deleteRegionComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),regionCommentId:parseInt(regionCommentId)},
 			         	  function(jsonRegionCategories) {
 			       	 });
 			       return false;
@@ -726,21 +733,21 @@ function getPhotoComments(){
 	  
 			  function deletePhotoRegion(regionId){
 				 	$.getJSON(
-				    	'deletePhotoRegion.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,regionId:parseInt(regionId)},
+				    	'deletePhotoRegion.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),regionId:parseInt(regionId)},
 				         	  function(jsonPhotoRegion) {
 				       	 });
 				       return false;
 				  };
 		  function deletePhotoCategory(photoCategoryId){
 					$.getJSON(
-				    	'deletePhotoCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,photoCategoryId:parseInt(photoCategoryId)},
+				    	'deletePhotoCategory.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),photoCategoryId:parseInt(photoCategoryId)},
 				         	  function(jsonRegionCategories) {
 				       	 });
 				       return false;
 				  };
 		function deletePhotoComment(photoCommentId){
 						$.getJSON(
-					    	'deletePhotoComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,photoCommentId:parseInt(photoCommentId)},
+					    	'deletePhotoComment.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),photoCommentId:parseInt(photoCommentId)},
 					         	  function(jsonRegionCategories) {
 					       	 });
 					       return false;
@@ -909,7 +916,7 @@ $('#canvas').boxer({
 		var offset = ui.box.offset();
 		var regionId;
 		$.getJSON(
-		    	'addPhotoRegion.action' , {photoId:sessionStorage.getItem("photoId"),userId:1000,shapeId:1,regionX:parseInt(offset.left),regionY:parseInt(offset.top),width:parseInt(ui.box.width()),height:parseInt(ui.box.height())},
+		    	'addPhotoRegion.action' , {photoId:sessionStorage.getItem("photoId"),userId:sessionStorage.getItem("userId"),shapeId:1,regionX:parseInt(offset.left),regionY:parseInt(offset.top),width:parseInt(ui.box.width()),height:parseInt(ui.box.height())},
 		         	  function(jsonRegionCoordinates) {
 		    	    regionId=  jsonRegionCoordinates.items.regionId;
 		    		ui.box.append('<div regionId="'+regionId+'" class="Rclose_box"></div> ');

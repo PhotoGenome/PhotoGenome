@@ -1,24 +1,17 @@
 package edu.cmu.photogenome.actions;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 
-import org.apache.struts2.json.JSONWriter;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cedarsoftware.util.io.JsonWriter;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.cmu.photogenome.business.Login;
-import edu.cmu.photogenome.business.ViewInformation;
 import edu.cmu.photogenome.dao.UserDao;
 import edu.cmu.photogenome.dao.UserDaoImpl;
-import edu.cmu.photogenome.domain.Photo;
 import edu.cmu.photogenome.domain.User;
-import edu.cmu.photogenome.util.HashUtil;
 import edu.cmu.photogenome.util.HibernateUtil;
 
 public class LoginAction extends ActionSupport {
@@ -28,12 +21,51 @@ public class LoginAction extends ActionSupport {
     private String password;
     private String id;
     private String jsonFindUser;
-    private LinkedHashMap<String, Object> jsonData = new LinkedHashMap<String, Object>();
+    private LinkedHashMap<String, Object> jsonLoginData = new LinkedHashMap<String, Object>();
+    public LinkedHashMap<String, Object> getJsonLoginData() {
+		return jsonLoginData;
+	}
+	public void setJsonLoginData(LinkedHashMap<String, Object> jsonLoginData) {
+		this.jsonLoginData = jsonLoginData;
+	}
+	public LinkedHashMap<String, Object> getJsonRegisterData() {
+		return jsonRegisterData;
+	}
+	public void setJsonRegisterData(LinkedHashMap<String, Object> jsonRegisterData) {
+		this.jsonRegisterData = jsonRegisterData;
+	}
+
+	private LinkedHashMap<String, Object> jsonRegisterData = new LinkedHashMap<String, Object>();
     private final String jsonKey = getText("json.key");
     private Login login= new Login();
     
     
 	private UserDao userDao = new UserDaoImpl();
+
+	private String firstname;
+
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	private String lastname;
+
+	private String email;
     
 	  public String verifyUserPassword(){
 	    	Session session = HibernateUtil.getSessionFactory().openSession();
@@ -44,12 +76,12 @@ public class LoginAction extends ActionSupport {
 	    	User user = login.verifyUserPassword(username,password);
 	    	
 	    	if(user != null) {
-	    				jsonData.put(jsonKey, user);
+	    		jsonLoginData.put(jsonKey, user);
 						HibernateUtil.commitTransaction(session);
 						return SUCCESS;
 					}
 					else {
-						jsonData.put(jsonKey, "NotAUser");
+						jsonLoginData.put(jsonKey, "NotAUser");
 						addActionError(getText("error.login"));
 				    	HibernateUtil.rollbackTransaction(session);
 						return SUCCESS;
@@ -63,14 +95,39 @@ public class LoginAction extends ActionSupport {
 				}
 	    	
 	    }
-	public LinkedHashMap<String, Object> getJsonData() {
-		return jsonData;
-	}
-
-	public void setJsonData(LinkedHashMap<String, Object> jsonData) {
-		this.jsonData = jsonData;
-	}
-
+	  public String  verifyUserDetailsAndRegister(){
+	    	Session session = HibernateUtil.getSessionFactory().openSession();
+			login.setSession(session);
+			HibernateUtil.beginTransaction(session);
+			try {
+			System.out.println(firstname+","+ lastname+","+ email+","+ password);
+	    	User user = login.verifyUserDetailsAndRegister(firstname, lastname, email, password);
+	    	
+	    	if(user != null) {
+	    		jsonRegisterData.put(jsonKey, user);
+						HibernateUtil.commitTransaction(session);
+						System.out.println(jsonRegisterData);		
+					    
+						return SUCCESS;
+					}
+					else {
+						jsonRegisterData.put(jsonKey, "NotRegistered");
+						addActionError(getText("error.login"));
+				    	HibernateUtil.rollbackTransaction(session);
+				    	System.out.println(jsonRegisterData);		
+					    
+				    	return SUCCESS;
+					}
+			}
+				catch(Exception e) {
+					log.warn(e.getMessage(), e);
+					HibernateUtil.rollbackTransaction(session);
+					return SUCCESS;
+				}
+	    	
+	    }
+	  
+	 	
 	public String getUsername() {
         return username;
     }
