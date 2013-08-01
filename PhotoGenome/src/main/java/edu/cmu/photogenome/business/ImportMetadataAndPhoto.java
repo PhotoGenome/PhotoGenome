@@ -1,19 +1,10 @@
 package edu.cmu.photogenome.business;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,18 +18,11 @@ import edu.cmu.photogenome.dao.PhotoDao;
 import edu.cmu.photogenome.dao.PhotoDaoImpl;
 import edu.cmu.photogenome.domain.ImportedMetadata;
 import edu.cmu.photogenome.domain.Photo;
-import edu.cmu.photogenome.util.ConfigUtil;
 import edu.cmu.photogenome.util.HibernateUtil;
 
-
 /**
- * The <code>UploadPhoto</code> class provides functionality to upload multiple 
- * photos and to delete photos. Uploading a photo saves the image file, creates 
- * a category metadata file for the photo, and persists a photo entity in the 
- * database.
- * 
- * @author PhotoGenome
- *
+ * The <code>ImportMetadataAndPhoto</code> class provides functionality to upload multiple 
+ * photos along with associated XML data.
  */
 
 public class ImportMetadataAndPhoto {
@@ -49,6 +33,10 @@ public class ImportMetadataAndPhoto {
 	private UploadPhoto uploadPhoto;
 	private ImportedMetadata ipmObj;
 	private ImportedMetadataDao  importedMetadataDao;
+	
+	private int xmlFileCount;
+	private int imageFileCount;
+	
 	public ImportMetadataAndPhoto() {
 		photoDao = new PhotoDaoImpl();
 		uploadPhoto= new UploadPhoto();
@@ -71,89 +59,94 @@ public class ImportMetadataAndPhoto {
 		importedMetadataDao.setSession(session);
 	}
 	
-	public  void getPhotoAndMetadata(String directoryPath, int userId){
-		 File[] files = new File(directoryPath).listFiles();
-		    showFiles(files,userId);
+	public void getPhotoAndMetadata(String directoryPath, int userId) {
+		xmlFileCount = 0;
+		imageFileCount = 0;
+		processDir(new File(directoryPath), userId);
+		System.out.println("Total XML: " + xmlFileCount);
+		System.out.println("Total Images: " + imageFileCount);
 	}
-	public  void showFiles(File[] files, int userId) {
-		//Added b hemant
+	
+	private void processDir(File dir, int userId) {
+		String currentPhotoMetadata = null;
+		Photo currentPhoto = null;
+		File[] files = dir.listFiles();
 		
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		ImportMetadataAndPhoto importData = new ImportMetadataAndPhoto(session); 
-//		
-//		importData.setSession(session);
-		//end hemant
-		
-		
-	     int iNoOfFiles=0;
-	        String currentPhotoMetadata="";
-	        Photo currentPhoto=null;
 		for (File file : files) {
-	        if (file.isDirectory()) {
-	            System.out.println("Directory: " + file.getName());
-	       	 File[] innerfiles = file.listFiles();
-	     	 for (File innerfile : innerfiles) {
-	        	 	
-	           if(innerfile.getName().endsWith(".mods.xml"))
-	           {
-	        	   ++iNoOfFiles;
-	        	   System.out.println("XML File: " + innerfile.getName());
-	        	   currentPhotoMetadata=getMetadataFromFile(innerfile.getAbsolutePath());
-	           }
-	           else  if(innerfile.getName().endsWith(".jpg") && !innerfile.getName().endsWith(".thumb.jpg"))
-	 	          {
-	        	   /* upload code */
-	        	   System.out.println("Jpg File: " + innerfile.getName());
-	        	   currentPhoto = uploadPhoto.savePhoto(userId,innerfile.getName(),innerfile);
-	        	   /* insert imported metadata code */
-	        	   System.out.println("XML metadata: " + currentPhotoMetadata);
-		        ipmObj= new ImportedMetadata(currentPhoto.getPhotoId(),currentPhotoMetadata);
-		        importedMetadataDao.save(ipmObj);
-	 	          }
-	           else{
-	        	   System.out.println("Any other File: " + innerfile.getName());
-			        
-	           }
-	        }
-	      }
-	    }
-	  System.out.println("Total XML:"+iNoOfFiles);  
+           if(file.isDirectory())
+        	   processDir(file, userId);
+           else if(file.isFile()) {
+        	   if(file.getName().endsWith(".mods.xml"))
+        		   currentPhotoMetadata = processXmlFile(file);
+        	   if(file.getName().endsWith(".jpg") && !file.getName().endsWith(".thumb.jpg"))
+        		   currentPhoto = processImageFile(file, userId);
+           }
+        }
+		
+	  	// save imported metadata
+    	if(currentPhoto != null && currentPhotoMetadata != null) {
+    		ipmObj= new ImportedMetadata(currentPhoto.getPhotoId(), currentPhotoMetadata);
+    		System.out.println(importedMetadataDao.save(ipmObj));
+    	}
 	}
-	public  String getMetadataFromFile(String xmlFileName ){
+	
+	private String processXmlFile(File file) {
+		String currentPhotoMetadata = null;
+		
+		System.out.println("XML File: " + file.getName());
+		currentPhotoMetadata = getMetadataFromFile(file.getAbsolutePath());
+    	System.out.println("XML metadata: " + currentPhotoMetadata);
+    	xmlFileCount++;
+		
+		return currentPhotoMetadata;
+	}
+	
+	private Photo processImageFile(File file, int userId) {
+        Photo currentPhoto = null;
+        
+        // upload code
+        System.out.println("Jpg File: " + file.getName());
+        currentPhoto = uploadPhoto.savePhoto(userId, file.getName(), file);
+        imageFileCount++;
+     	
+     	return currentPhoto;
+	}
+	
+	private String getMetadataFromFile(String xmlFileName ){
 	    try {
-		File fXmlFile = new File(xmlFileName);
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(fXmlFile);
-		doc.getDocumentElement().normalize();
-		NodeList nList = doc.getElementsByTagName("mods:mods");
-		for (int temp = 0; temp < nList.getLength();) {
-			Node nNode = nList.item(temp);
-		 		System.out.println("--Data--"+nNode.getTextContent().replaceAll("\\s"," "));
-		return 	 nNode.getTextContent().replaceAll("\\s"," ");
-		}
+			File fXmlFile = new File(xmlFileName);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+			doc.getDocumentElement().normalize();
+			NodeList nList = doc.getElementsByTagName("mods:mods");
+			for (int temp = 0; temp < nList.getLength();) {
+				Node nNode = nList.item(temp);
+				System.out.println("--Data--"+nNode.getTextContent().replaceAll("\\s"," "));
+				return nNode.getTextContent().replaceAll("\\s"," ");
+			}
 		} catch (Exception e) {
 	    	e.printStackTrace();
-	        }
-	    return 	 "no data";
-		
+	    }
+	    
+	    return "no data";
 	}
 	
-	 public static void main(String argv[]) {
-			Session session = HibernateUtil.getSessionFactory().openSession();
-		    try {
-		    	ImportMetadataAndPhoto imObj= new ImportMetadataAndPhoto(session);
-		    	HibernateUtil.beginTransaction(session);
-		    	imObj.getPhotoAndMetadata("C:\\Users\\apoorvijain\\Downloads\\rewynder_from_pitt_archives\\rewynder_from_pitt_archives\\",1000);
-		    	HibernateUtil.commitTransaction(session);
-		    } catch (Exception e) {
-		    	HibernateUtil.rollbackTransaction(session);
+	public static void main(String argv[]) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+		   	ImportMetadataAndPhoto imObj= new ImportMetadataAndPhoto(session);
+		   	HibernateUtil.beginTransaction(session);
+		   	
+		   	if(argv.length < 2)
+		   		throw new Exception("Need to enter directory path and user id as input arguments");
+		   	imObj.getPhotoAndMetadata(argv[0], Integer.parseInt(argv[1]));
+		   	
+		   	HibernateUtil.commitTransaction(session);
+		} catch (Exception e) {
+		   	HibernateUtil.rollbackTransaction(session);
 			e.printStackTrace();
-		    }
-		  
-		  }
-
-
-	
-		
+		}
+	}
+	 
 }
