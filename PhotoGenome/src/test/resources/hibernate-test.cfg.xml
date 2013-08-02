@@ -20,9 +20,11 @@
         <property name="hibernate.current_session_context_class">org.hibernate.context.ManagedSessionContext</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         
+        <mapping class="edu.cmu.photogenome.domain.ImportedMetadata"/>
         <mapping class="edu.cmu.photogenome.domain.Photo"/>
         <mapping class="edu.cmu.photogenome.domain.PhotoCategory"/>
         <mapping class="edu.cmu.photogenome.domain.PhotoComment"/>
+        <mapping class="edu.cmu.photogenome.domain.PhotoMetadata"/>
         <mapping class="edu.cmu.photogenome.domain.PhotoRegion"/>
         <mapping class="edu.cmu.photogenome.domain.RegionCategory"/>
         <mapping class="edu.cmu.photogenome.domain.RegionComment"/>

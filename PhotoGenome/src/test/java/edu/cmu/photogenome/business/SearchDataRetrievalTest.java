@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.junit.Test;
 
+import edu.cmu.photogenome.dao.PhotoMetadataDao;
+import edu.cmu.photogenome.dao.PhotoMetadataDaoImpl;
 import edu.cmu.photogenome.domain.Photo;
+import edu.cmu.photogenome.domain.PhotoMetadata;
 import edu.cmu.photogenome.util.HibernateDbUnitTestCase;
 
 public class SearchDataRetrievalTest extends HibernateDbUnitTestCase {
@@ -41,7 +44,14 @@ public class SearchDataRetrievalTest extends HibernateDbUnitTestCase {
 		SearchDataRetrieval search = new SearchDataRetrieval(session);
 		List<Photo> results = null;
 		
-		categories.add("buildingWeanHall");
+		PhotoMetadataDao dao = new PhotoMetadataDaoImpl();
+		dao.setSession(session);
+		List<PhotoMetadata> data = dao.findAll();
+		System.out.println(data.size());
+		for(PhotoMetadata meta : data)
+			System.out.println(meta.getPhotoMetadata());
+		
+		categories.add("buildingWean");
 		results = search.searchFilteredAssociatedPhotos(photoId, categories, maxMatches);
 		assertNotNull(results);
 		assertEquals(1, results.size());

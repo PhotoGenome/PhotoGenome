@@ -97,9 +97,7 @@ public class Search {
 	 * 
 	 * @param photoId				source photo to match against
 	 * @param photoCategoryIdList	list of photo categories to be matched against
-	 * @param photoCommentIdList	list of photo comments to be matched against
 	 * @param regionCategoryIdList	list of region categories to be matched against
-	 * @param regionCommentIdList	list of region comments to be matched against
 	 * @return a list of matching photo entities
 	 */
 	public List<Photo> getFilteredAssociatedPhotosByCategoryId(int photoId, List<Integer> photoCategoryIdList, List<Integer> regionCategoryIdList) {
@@ -111,10 +109,12 @@ public class Search {
 		List<RegionCategory> regionCategoryList = regionCategoryDao.findByIds(regionCategoryIdList);
 		
 		// add the category names and text to the list of keywords
-		for(PhotoCategory p : photoCategoryList)
-			photoKeywords.add(mergeCategoryData(p.getPhotoCategoryName(), p.getPhotoCategoryText()));
-		for(RegionCategory r : regionCategoryList)
-			regionKeywords.add(mergeCategoryData(r.getCategoryName(), r.getRegionCategoryText()));
+		if(photoCategoryList != null)
+			for(PhotoCategory p : photoCategoryList)
+				photoKeywords.add(mergeCategoryData(p.getPhotoCategoryName(), p.getPhotoCategoryText()));
+		if(regionCategoryList != null)
+			for(RegionCategory r : regionCategoryList)
+				regionKeywords.add(mergeCategoryData(r.getCategoryName(), r.getRegionCategoryText()));
 		
 		// search for photos using the category keyword list
 		return getFilteredAssociatedPhotosByCategoryValue(photoId, photoKeywords, regionKeywords);

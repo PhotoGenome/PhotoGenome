@@ -73,7 +73,9 @@ public class SearchDataRetrieval {
 			categoriesString.append(category);
 			categoriesString.append(" ");
 		}
-		System.out.println("CATEGORIES: " + categoriesString.toString());
+		
+		log.info("Search using this category data: {}", categoriesString.toString());
+		
 		// use filtered photo associations query
 		String queryString = config.getProperty("search.sql.query.filteredAssociations");
 		
