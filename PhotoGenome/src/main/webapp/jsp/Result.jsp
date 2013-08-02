@@ -8,6 +8,12 @@
 <title>Send Email Result</title>
 </head>
 <body>
+<form>
+<a href="../jsp/Home.jsp">Home</a>
+<a href="../jsp/Logout.jsp" id="logout" >Logout</a><br>
+<!--  input type="button" id="submitLogout" value="Logout"/><br>-->
+</form>
+
 <script>
 $(window).load(function () {
 	if(sessionStorage.length > 0){

@@ -230,7 +230,6 @@ public class ViewInformationAction extends ActionSupport{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		viewInformation.setSession(session);
 		HibernateUtil.beginTransaction(session);
-		System.out.println("photoId"+photoId);			
 		
 		try {
 			if((list = viewInformation.getImportedMetadata("photoId", photoId)) != null){
@@ -243,8 +242,6 @@ public class ViewInformationAction extends ActionSupport{
 					log.error(ioe.getMessage(), ioe);
 				}
 				jsonGetImportedMetadata.put(jsonKey, list);
-				System.out.println("metadata"+list.get(0).getImportedMetadata().toString());			
-				System.out.println("metadata"+jsonGetImportedMetadata.toString());			
 				
 				HibernateUtil.rollbackTransaction(session);
 				return SUCCESS;

@@ -56,6 +56,12 @@
 </style>
 </head>
 <body designMode="on">
+<form>
+<a href="../jsp/Home.jsp">Home</a>
+<a href="../jsp/Logout.jsp" id="logout" >Logout</a><br>
+<!--  input type="button" id="submitLogout" value="Logout"/><br>-->
+</form>
+
 <form id="form1">
 <table width="100%" bordercolor="black">
 <tr><td>Keyword-Based Search</td></tr>
@@ -82,12 +88,9 @@ $(window).load(function () {
 });
 
 function getPhotosByKeywords(keywords){
-	alert('Hi');
-	alert(keywords);
 	  $.getJSON(
          'getPhotosByKeywords.action' , {keywords:keywords},
          	  function(jsonPhotos) {
-        	 alert(jsonPhotos);
         	 for (photo in jsonPhotos.items) {
         			 $('#canvas').append('<div class="P_box"> <div photoId="'
            				  +jsonPhotos.items[photo].photoId+

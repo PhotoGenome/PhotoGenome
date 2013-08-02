@@ -7,8 +7,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Struts2 - Email application</title>
+     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
+        <link rel="stylesheet" href="PG-Style.css" type="text/css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+ 
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+
+$(document).ready(function() {                        
+    
+	  //$('#submitLogout').click(function(event) {  
+	      	
+		//  alert('hi');
+			//sessionStorage.clear();
+			//window.location="Logout.jsp";
+			//});
+	  
+	//  $('#logout').addEventListener('click', function(e){
+		//  alert('hi');
+			//sessionStorage.clear();
+			//window.location="Logout.jsp";
+	  //},true);
+	
+		//});
+</script> 
 </head>
 <body>
+
+<form>
+<a href="../jsp/Home.jsp">Home</a>
+<a href="../jsp/Logout.jsp" id="logout" >Logout</a><br>
+<!--  input type="button" id="submitLogout" value="Logout"/><br>-->
+</form>
+  
+  
 <script>
 $(window).load(function () {
 	if(sessionStorage.length > 0){
@@ -20,9 +53,14 @@ $(window).load(function () {
 	}
 });
 </script>
+
+
+
+
 	<center>
 		<h1>Struts2 - Send e-mail with attachment</h1>
 		<s:form action="doSendEmail" enctype="multipart/form-data" method="post">
+
 			<table border="0" width="80%" align="center">
 				<tr>
 					<td>

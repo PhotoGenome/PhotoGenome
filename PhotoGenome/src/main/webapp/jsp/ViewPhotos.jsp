@@ -49,7 +49,11 @@
 </style>
 </head>
 <body designMode="on">
-<a href="../jsp/PhotoLayout.jsp">Upload Photos</a>
+<form>
+<a href="../jsp/Home.jsp">Home</a>
+<a href="../jsp/Logout.jsp" id="logout" >Logout</a><br>
+<!--  input type="button" id="submitLogout" value="Logout"/><br>-->
+</form>
 <form id="form1">
 <table width="100%" bordercolor="black">
 <tr><td width="70%" bordercolor="black" valign="top">

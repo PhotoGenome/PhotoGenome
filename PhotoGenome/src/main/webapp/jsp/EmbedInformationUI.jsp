@@ -315,6 +315,11 @@
 </style>
 </head>
 <body designMode="on">
+<form>
+<a href="../jsp/Home.jsp">Home</a>
+<a href="../jsp/Logout.jsp" id="logout" >Logout</a><br>
+<!--  input type="button" id="submitLogout" value="Logout"/><br>-->
+</form>
 <form id="form1">
 <div id="mainDiv">
 <table width="100%" bordercolor="black">

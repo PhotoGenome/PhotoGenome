@@ -19,6 +19,12 @@ $(window).load(function () {
 	}
 });
 </script>
+<form>
+<a href="../jsp/Home.jsp">Home</a>
+<a href="../jsp/Logout.jsp" id="logout" >Logout</a><br>
+<!--  input type="button" id="submitLogout" value="Logout"/><br>-->
+</form>
+
 <h4>
    File Name : <s:property value="fileUploadFileName"/> 
 </h4> 
