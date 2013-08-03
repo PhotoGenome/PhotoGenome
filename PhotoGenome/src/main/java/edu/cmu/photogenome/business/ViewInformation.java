@@ -101,14 +101,31 @@ public class ViewInformation {
 		return photoDao.findById(photoId);
 	}
 	
+	/**
+	 * Get a list of photos whose property matches a certain value
+	 * 
+	 * @param property	the property of the photo record to match
+	 * @param value		the value of the property to be matched
+	 * @return	list of photos matching the given property and value
+	 */
 	public List<Photo> getPhotos(String property, Object value) {
 		return photoDao.findAllByCriteria(property, value);
+	}
+	
+	/**
+	 * Get a list of all the photos
+	 * 
+	 * @return	list of all the photos
+	 */
+	public List<Photo> getAllPhotos() {
+		return photoDao.findAll();
 	}
 	
 	public List<ImportedMetadata> getImportedMetadata(String property, Object value) {
 		return importedMetadataDao.findAllByCriteria(property, value);
 	}
-/**
+	
+	/**
 	 * Get the photo comment for the given id
 	 * 
 	 * @param photoCommentId

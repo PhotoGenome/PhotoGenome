@@ -51,6 +51,27 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	}
 	
 	@Test
+	public void testGetAllPhotos() {
+		ViewInformation vi = new ViewInformation(session);
+		List<Photo> list = null;
+		list = vi.getAllPhotos();
+		assertNotNull(list);
+		assertEquals(4, list.size());
+	}
+	
+	@Test
+	public void testGetPhotos() {
+		ViewInformation vi = new ViewInformation(session);
+		List<Photo> list = null;
+		list = vi.getPhotos("userId", 1000);
+		assertNotNull(list);
+		assertEquals(2, list.size());
+		list = vi.getPhotos("userId", 1002);
+		assertNotNull(list);
+		assertEquals(0, list.size());
+	}
+	
+	@Test
 	public void testGetPhotoComment() {
 		ViewInformation vi = new ViewInformation(session);
 		PhotoComment photoComment = null;
@@ -71,7 +92,7 @@ public class ViewInformationTest extends HibernateDbUnitTestCase {
 	public void testGetPhotoComments() {
 		ViewInformation vi = new ViewInformation(session);
 		List<PhotoComment> list = null;
-		list = (ArrayList<PhotoComment>) vi.getPhotoComments(1);
+		list = vi.getPhotoComments(1);
 		assertNotNull(list);
 		assertEquals(1, list.size());
 		assertEquals(1, list.get(0).getPhotoCommentId().intValue());
