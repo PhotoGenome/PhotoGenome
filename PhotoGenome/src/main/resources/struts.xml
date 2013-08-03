@@ -74,7 +74,7 @@
 			<result type="json">
 				<param name="root">jsonGetPhotos</param>
 			</result>
-		</action>
+			</action>
 
 		<action name="getPhotoCategories" method="getPhotoCategories"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
