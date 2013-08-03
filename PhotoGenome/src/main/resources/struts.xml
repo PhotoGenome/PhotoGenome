@@ -55,6 +55,13 @@
 			</result>
 		</action>
 		
+		<action name="getAllPhotos" method="getAllPhotos"
+			class="edu.cmu.photogenome.actions.ViewInformationAction">
+			<result type="json">
+				<param name="root">jsonGetAllPhotos</param>
+			</result>
+		</action>
+		
 		<action name="getPhoto" method="getPhoto"
 			class="edu.cmu.photogenome.actions.ViewInformationAction">
 			<result type="json">
