@@ -148,9 +148,7 @@ public class LoginAction extends ActionSupport {
 			login.setSession(session);
 			HibernateUtil.beginTransaction(session);
 			try {
-				System.out.println(userId);
 			User user = login.getUserByUserId(userId);
-			System.out.println(user);
 				
 	    	if(user != null) {
 	    		jsonUserData.put(jsonKey, user);

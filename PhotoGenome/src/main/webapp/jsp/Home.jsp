@@ -22,8 +22,8 @@ $(window).load(function () {
 <a href="../jsp/Logout.jsp" id="logout" >Logout</a><br>
 <!--  input type="button" id="submitLogout" value="Logout"/><br>-->
 </form>
-
-<a href="../jsp/ViewPhotos.jsp">View Photos</a><br>
+<a href="../jsp/ViewAllPhotos.jsp">View All Photos</a><br>
+<a href="../jsp/ViewPhotos.jsp">View Your Photos</a><br>
 <a href="../jsp/PhotoLayout.jsp">Upload Photos</a><br>
 <a href="../jsp/ViewPhotosWSearch.jsp">Keyword based Search</a><br>
 <a href="../jsp/EmailForm.jsp">Send email invitation</a><br>
