@@ -473,6 +473,29 @@ function getPhotoLink(photoId){
         	});
         return false;
    };       	        	
+   function getUserFirstName(userId){
+	  var name;
+	  
+	  $.ajax({
+		    type: 'GET',
+		    url: 'getUserByUserId.action',
+		    dataType: 'json',
+		    success: function(jsonUser) { 
+		    	name= jsonUser.items.userFirstName
+		    },
+		    data: {userId:userId},
+		    async: false
+		});
+	 /* alert( $.getJSON(
+        	  'getUserByUserId.action' , {userId:userId},
+        	   function(jsonUser) {
+        		  alert(jsonUser.items.userFirstName);
+        		return  jsonUser.items.userFirstName;  
+        	}));
+	 */
+	//  alert(name);
+	 return name;
+      };       	        	
  function getPhotoCategories(){
 	
 	 $.getJSON(
@@ -485,7 +508,7 @@ function getPhotoLink(photoId){
          		 				+jsonPhotoCategories.items[category].photoCategoryId+
          		 				'" class="PCatedit_box"></div> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+
-         		 				'"class="PCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div  photoCategoryId="'
+         		 				'"class="PCatclose_box"></div> <h6>'+getUserFirstName(jsonPhotoCategories.items[category].userId)+'</h6><table><tr><td valign="top" width="90%"><div  photoCategoryId="'
          		 				+jsonPhotoCategories.items[category].photoCategoryId+'" class="PCatcomment_box">'
          		 				+jsonPhotoCategories.items[category].photoCategoryName+':'+jsonPhotoCategories.items[category].photoCategoryText+
          		 				'</div></td><td valign="top" width="10%"><div photoCategoryId="'
@@ -508,7 +531,7 @@ function getRegionCategories(regionId){
 	         			  +jsonRegionCategories.items[category].regionCategoryId+
 	         			  '" class="RCatedit_box"></div> <div regionCategoryId="'
 	         			  +jsonRegionCategories.items[category].regionCategoryId+
-	         			  '" class="RCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCategoryId="'
+	         			  '" class="RCatclose_box"></div> <h6>'+getUserFirstName(jsonRegionCategories.items[category].userId)+'</h6><table><tr><td valign="top" width="90%"><div regionCategoryId="'
 	         			  +jsonRegionCategories.items[category].regionCategoryId+
 	         			  '" class="RCatcomment_box">'
 	         			  +jsonRegionCategories.items[category].categoryName+
@@ -531,7 +554,7 @@ function getPhotoComments(){
         				  +jsonPhotoComments.items[comment].photoCommentId+
         				  '" class="PCedit_box"></div> <div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
-        				  '"class="PCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div photoCommentId="'
+        				  '"class="PCclose_box"></div> <h6>'+getUserFirstName(jsonPhotoComments.items[comment].userId)+'</h6><table><tr><td valign="top" width="90%"><div photoCommentId="'
         				  +jsonPhotoComments.items[comment].photoCommentId+
         				  '" class="PCcomment_box">'
         				  +jsonPhotoComments.items[comment].photoCommentText+
@@ -554,7 +577,7 @@ function getPhotoComments(){
 	         			  +jsonRegionComments.items[comment].regionCommentId+
 	         			  '" class="RCedit_box"></div><div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
-	         			  '" class="RCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCommentId="'
+	         			  '" class="RCclose_box"></div> <h6>'+getUserFirstName(jsonRegionComments.items[comment].userId)+'</h6><table><tr><td valign="top" width="90%"><div regionCommentId="'
 	         			  +jsonRegionComments.items[comment].regionCommentId+
 	         			  '" class="RCcomment_box">'
 	         			  +jsonRegionComments.items[comment].regionCommentText+
@@ -607,7 +630,7 @@ function getPhotoComments(){
          		 				+jsonPhotoCategories.items.photoCategoryId+
          		 				'" class="PCatedit_box"></div> <div photoCategoryId="'
          		 				+jsonPhotoCategories.items.photoCategoryId+
-         		 				'"class="PCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div photoCategoryId="'
+         		 				'"class="PCatclose_box"></div> <h6>'+getUserFirstName(jsonPhotoCategories.items.userId)+'</h6><table><tr><td valign="top" width="90%"><div photoCategoryId="'
          		 				+jsonPhotoCategories.items.photoCategoryId+
          		 				'" class="PCatcomment_box">'
          		 				+jsonPhotoCategories.items.photoCategoryName+':'+jsonPhotoCategories.items.photoCategoryText+
@@ -629,7 +652,7 @@ function getPhotoComments(){
 		         			  jsonRegionCategories.items.regionCategorytId+
 		         			  '" class="RCatedit_box"></div> <div regionCategoryId="'
 		         			  +jsonRegionCategories.items.regionCategoryId+
-		         			  '"class="RCatclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCategoryId="'+
+		         			  '"class="RCatclose_box"></div> <h6>'+getUserFirstName(jsonRegionCategories.items.userId)+'</h6><table><tr><td valign="top" width="90%"><div regionCategoryId="'+
 		         			  jsonRegionCategories.items.regionCategorytId+
 		         			  '" class="RCatcomment_box">'
 		         			  +jsonRegionCategories.items.categoryName+':'+jsonRegionCategories.items.regionCategoryText+
@@ -651,7 +674,7 @@ function getPhotoComments(){
 	        				  jsonPhotoComments.items.photoCommentId+
 	        				  '" class="PCedit_box"></div> <div photoCommentId="'
 	        				  +jsonPhotoComments.items.photoCommentId+
-	        				  '"class="PCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div photoCommentId="'+
+	        				  '"class="PCclose_box"></div> <h6>'+getUserFirstName(jsonPhotoComments.items.userId)+'</h6><table><tr><td valign="top" width="90%"><div photoCommentId="'+
 	        				  jsonPhotoComments.items.photoCommentId+
 	        				  '" class="PCcomment_box">'
 	        				  +jsonPhotoComments.items.photoCommentText+
@@ -674,7 +697,7 @@ function getPhotoComments(){
 	         				  jsonRegionComments.items.regionCommentId
 	         				  +'" class="RCedit_box"></div><div regionCommentId="'+
 	         				  jsonRegionComments.items.regionCommentId
-	         				  +'"class="RCclose_box"></div> <h6>Apoorvi</h6><table><tr><td valign="top" width="90%"><div regionCommentId="'+
+	         				  +'"class="RCclose_box"></div> <h6>'+getUserFirstName(jsonRegionComments.items.userId)+'</h6><table><tr><td valign="top" width="90%"><div regionCommentId="'+
 	         				  jsonRegionComments.items.regionCommentId
 	         				  +'" class="RCcomment_box">'
 	         				  +jsonRegionComments.items.regionCommentText+
@@ -761,7 +784,7 @@ function getPhotoComments(){
 		  alert('hie1');
 		  jsonRegionComments={"items":[{"photoDesc":"my description","photoId":10,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0},{"photoDesc":"my description 2","photoId":20,"photoIsdeleted":null,"photoLink":null,"photoMetadatalink":null,"photoName":null,"photoOption1":null,"photoOption2":null,"photoOption3":null,"photoOption4":null,"photoOption5":null,"photoTimestamp":null,"userId":0}]};
 	         	  for (comment in jsonRegionComments.items) {
-	         		  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].photoDesc+'"class="close_box">X</div> <h6>Apoorvi</h6><p>'+jsonRegionComments.items[comment].photoDesc+'</p></div>');
+	         		  $('#regionComments').append('<div class="box"> <div commentId="'+jsonRegionComments.items[comment].photoDesc+'"class="close_box">X</div> <h6>'+getUserFirstName(sessionStorage.getItem("userId"))+'</h6><p>'+jsonRegionComments.items[comment].photoDesc+'</p></div>');
 	         	  	}
 	       
 	      return false;

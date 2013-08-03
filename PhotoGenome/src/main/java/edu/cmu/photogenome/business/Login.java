@@ -116,5 +116,26 @@ public class Login {
 			}
     	
     }
+	public User getUserByUserId(int userId){
+    	User user=null;
+    	try {
+    		
+    		user = getUser("userId",userId);
+	 	if(user != null) {
+    	log.debug("User found. ", user.getUserId());	
+    				return user;
+    			
+    	}
+    			else {
+    				log.debug("User not found. ");	
+    		    				return null;
+    		    				
+    			}
+    	}
+			catch(Exception e) {
+				return null;
+			}
+    	
+    }
  
 }

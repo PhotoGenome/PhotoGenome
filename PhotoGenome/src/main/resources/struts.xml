@@ -27,10 +27,10 @@
 			<result name="success">Login.jsp</result>
 		</action>
 
-		<action name="find" method="findUser"
+		<action name="getUserByUserId" method="getUserByUserId"
 			class="edu.cmu.photogenome.actions.LoginAction">
 			<result type="json">
-				<param name="root">jsonData</param>
+				<param name="root">jsonUserData</param>
 			</result>
 		</action>
 		<action name="login" method="verifyUserPassword"

@@ -34,7 +34,8 @@
                  		  } else{
                  			window.location = "Home.jsp";
                  			sessionStorage.setItem("userId", jsonLogin.items.userId);
-                 				  
+                 			sessionStorage.setItem("userFirstName", jsonLogin.items.userFirstName);
+                     				  
                  		  }
                  		  
                  	  }

@@ -1,5 +1,6 @@
 package edu.cmu.photogenome.actions;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import org.hibernate.Session;
@@ -17,12 +18,20 @@ import edu.cmu.photogenome.util.HibernateUtil;
 public class LoginAction extends ActionSupport {
 	final Logger log = LoggerFactory.getLogger(LoginAction.class);
 	
-    private String username;
+	private int userId;
+	
+	private String username;
     private String password;
     private String id;
     private String jsonFindUser;
     private LinkedHashMap<String, Object> jsonLoginData = new LinkedHashMap<String, Object>();
-    public LinkedHashMap<String, Object> getJsonLoginData() {
+    public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public LinkedHashMap<String, Object> getJsonLoginData() {
 		return jsonLoginData;
 	}
 	public void setJsonLoginData(LinkedHashMap<String, Object> jsonLoginData) {
@@ -66,8 +75,16 @@ public class LoginAction extends ActionSupport {
 	private String lastname;
 
 	private String email;
+
+	private HashMap<String, Object> jsonUserData = new LinkedHashMap<String, Object>();
     
-	  public String verifyUserPassword(){
+	  public HashMap<String, Object> getJsonUserData() {
+		return jsonUserData;
+	}
+	public void setJsonUserData(HashMap<String, Object> jsonUserData) {
+		this.jsonUserData = jsonUserData;
+	}
+	public String verifyUserPassword(){
 	    	Session session = HibernateUtil.getSessionFactory().openSession();
 			login.setSession(session);
 			HibernateUtil.beginTransaction(session);
@@ -126,7 +143,40 @@ public class LoginAction extends ActionSupport {
 				}
 	    	
 	    }
+	  public String  getUserByUserId(){
+	    	Session session = HibernateUtil.getSessionFactory().openSession();
+			login.setSession(session);
+			HibernateUtil.beginTransaction(session);
+			try {
+				System.out.println(userId);
+			User user = login.getUserByUserId(userId);
+			System.out.println(user);
+				
+	    	if(user != null) {
+	    		jsonUserData.put(jsonKey, user);
+						HibernateUtil.commitTransaction(session);
+						System.out.println(jsonUserData.toString());		
+					    
+						return SUCCESS;
+					}
+					else {
+						jsonUserData.put(jsonKey, "NotAUser");
+						addActionError(getText("error.login"));
+				    	HibernateUtil.rollbackTransaction(session);
+				    	System.out.println(jsonRegisterData);		
+					    
+				    	return SUCCESS;
+					}
+			}
+				catch(Exception e) {
+					log.warn(e.getMessage(), e);
+					HibernateUtil.rollbackTransaction(session);
+					return SUCCESS;
+				}
+	    	
+	    }
 	  
+  
 	 	
 	public String getUsername() {
         return username;

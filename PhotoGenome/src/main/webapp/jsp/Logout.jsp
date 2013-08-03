@@ -16,8 +16,6 @@
 <script type="text/javascript">
 $(window).load(function () {
 	sessionStorage.clear();
-	alert(		sessionStorage.length
-	);
 	});
 </script>
 You have successfully logged out of the application!
