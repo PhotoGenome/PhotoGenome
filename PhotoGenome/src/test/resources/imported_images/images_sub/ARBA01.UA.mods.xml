@@ -1,0 +1,69 @@
+<mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:copyrightMD="http://www.cdlib.org/inside/diglib/copyrightMD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd http://www.cdlib.org/inside/diglib/copyrightMD http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd">
+  <mods:originInfo>
+    <mods:dateCreated keyDate="yes" encoding="iso8601">1918</mods:dateCreated>
+    <mods:dateOther type="display">1918</mods:dateOther>
+    <mods:place>
+      <mods:placeTerm type="text">Oakland</mods:placeTerm>
+    </mods:place>
+    <mods:dateOther type="sort">1918-01-01T00:00:00</mods:dateOther>
+  </mods:originInfo>
+  <mods:accessCondition>
+    <copyrightMD:copyright copyright.status="unknown" publication.status="unknown"/>
+  </mods:accessCondition>
+  <mods:abstract>The Army Barracks building where soldiers can be seen taking on some leisure activities such as playing cards. Beginning on April 11, 1918, the University instituted a training program for automobile and gas engine mechanics. Seven barracks that could house 1,000, a mess hall that could seat 2,000, an administrative building and the Y.M.C.A. Hospitality House were built on the hill above O'Hara Street. Within six months, 2,200 men were being trained.</mods:abstract>
+  <mods:subject authority="lcsh">
+    <mods:topic>Oakland (Pittsburgh, Pa.).</mods:topic>
+  </mods:subject>
+  <mods:subject authority="lcsh">
+    <mods:topic>Students</mods:topic>
+    <mods:topic>Pennsylvania</mods:topic>
+    <mods:topic>Pittsburgh.</mods:topic>
+  </mods:subject>
+  <mods:subject authority="lcsh">
+    <mods:topic>Playing cards</mods:topic>
+    <mods:topic>Pennsylvania</mods:topic>
+    <mods:topic>Pittsburgh.</mods:topic>
+  </mods:subject>
+  <mods:subject authority="lcsh">
+    <mods:topic>World War I.</mods:topic>
+  </mods:subject>
+  <mods:subject authority="lcsh">
+    <mods:topic>Barracks</mods:topic>
+    <mods:topic>Pennsylvania</mods:topic>
+    <mods:topic>Pittsburgh.</mods:topic>
+  </mods:subject>
+  <mods:subject authority="lcsh">
+    <mods:topic>University of Pittsburgh.</mods:topic>
+  </mods:subject>
+  <mods:name>
+    <mods:namePart>Unknown</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text">creator</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:typeOfResource>still image</mods:typeOfResource>
+  <mods:relatedItem displayLabel="source" type="host">
+    <mods:titleInfo>
+      <mods:title>University of Pittsburgh Historic Photographs, 1884-present</mods:title>
+    </mods:titleInfo>
+    <mods:note type="prefercite">University of Pittsburgh Historic Photographs, 1884-present</mods:note>
+  </mods:relatedItem>
+  <mods:name>
+    <mods:namePart>University of Pittsburgh</mods:namePart>
+    <mods:role>
+      <mods:roleTerm type="text">depositor</mods:roleTerm>
+    </mods:role>
+  </mods:name>
+  <mods:titleInfo>
+    <mods:title>Army Barracks</mods:title>
+  </mods:titleInfo>
+  <mods:subject authority="lcsh">
+    <mods:geographic>Oakland</mods:geographic>
+  </mods:subject>
+  <mods:note type="address">O'Hara Street</mods:note>
+  <mods:genre>photograph</mods:genre>
+  <mods:physicalDescription>
+    <mods:form>8x10 Gelatin Silver Print</mods:form>
+  </mods:physicalDescription>
+  <mods:identifier type="pitt">ARBA01.UA</mods:identifier>
+</mods:mods>
