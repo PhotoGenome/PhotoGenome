@@ -68,7 +68,7 @@
 <tr><td><textarea id="txtSearchKeywords"  rows="1" cols="50">
 Space separated keywords 
 </textarea>
-<input type="button" id="submitSK" value="Comments Submit"/>
+<input type="button" id="submitSK" value="Search"/>
 </td></tr>
 <tr><td width="70%" bordercolor="black" valign="top">
 <div id="canvas" style="border:solid black;"></div>
