@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Struts2 - Email application</title>
+<title>Send Email</title>
      <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
         <link rel="stylesheet" href="PG-Style.css" type="text/css" />
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
@@ -58,7 +58,7 @@ $(window).load(function () {
 
 
 	<center>
-		<h1>Struts2 - Send e-mail with attachment</h1>
+		<h1>Send Email</h1>
 		<s:form action="doSendEmail" enctype="multipart/form-data" method="post">
 
 			<table border="0" width="80%" align="center">
