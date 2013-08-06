@@ -49,19 +49,14 @@ public class UploadPhotoAction extends ActionSupport {
 		upload.setSession(session);
 		HibernateUtil.beginTransaction(session);
 		
-		log.error("UPLOAD PHOTO");
-		log.error(String.valueOf(fileList == null));
-		if(fileList != null)
-			log.error(String.valueOf(fileList.size()));
-		log.error("USER ID " + userId);
-		
+		log.info("Uploading {} number of photos for user {}", fileList.size(), userId);
 		
 		try{
 			photoList = upload.savePhoto(userId, fileList);
 			
 			if(photoList == null) {
 					HibernateUtil.rollbackTransaction(session);
-					return ERROR;
+					return SUCCESS;
 			}
 
 			jsonUploadPhoto.put(jsonKey, photoList);
@@ -69,7 +64,7 @@ public class UploadPhotoAction extends ActionSupport {
 			return SUCCESS;
 
 		}catch(Exception ex) {
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -88,14 +83,14 @@ public class UploadPhotoAction extends ActionSupport {
 		try{
 			if(!(upload.deletePhoto(photoId))) {
 					HibernateUtil.rollbackTransaction(session);
-					return ERROR;
+					return SUCCESS;
 			}
 
 			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
 
 		}catch(Exception ex) {
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	

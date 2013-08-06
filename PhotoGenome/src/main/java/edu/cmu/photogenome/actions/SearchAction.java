@@ -64,7 +64,7 @@ public class SearchAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -86,7 +86,7 @@ public class SearchAction extends ActionSupport {
 		}
 		catch(NumberFormatException nfe) {
 			log.error(nfe.getMessage(), nfe);
-			return null;
+			return SUCCESS;
 		}
 		
 		// start transaction
@@ -105,7 +105,7 @@ public class SearchAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -139,7 +139,7 @@ public class SearchAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -171,7 +171,7 @@ public class SearchAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 

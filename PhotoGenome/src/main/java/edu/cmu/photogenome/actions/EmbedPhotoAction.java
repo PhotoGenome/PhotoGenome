@@ -184,19 +184,19 @@ public class EmbedPhotoAction extends ActionSupport {
 			if(photo != null) {
 				if((photoComment = embedPhoto.addPhotoComment(photoId, userId, photoCommentText)) == null) {
 					HibernateUtil.rollbackTransaction(session);
-					return ERROR;
+					return SUCCESS;
 				}
 			}else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
-
+			
 			jsonAddPhotoComments.put(jsonKey, photoComment);
 			HibernateUtil.commitTransaction(session);
 			return SUCCESS;
 
 		}catch(Exception ex) {
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -226,11 +226,11 @@ public class EmbedPhotoAction extends ActionSupport {
 					
 			if((photoCategory = embedPhoto.addPhotoCategory(photoId, userId, categoryList))==null) {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}else{
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 		
 		jsonAddPhotoCategories.put(jsonKey, photoCategory);
@@ -239,7 +239,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		
 		}catch(Exception ex)
 		{
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -271,7 +271,7 @@ public class EmbedPhotoAction extends ActionSupport {
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}
 	}
@@ -296,49 +296,15 @@ public class EmbedPhotoAction extends ActionSupport {
 			photoCategory.setPhotoCategoryText(photoCategoryText);
 			if(!embedPhoto.editPhotoCategory(photoCategory)) {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}else {
 			HibernateUtil.rollbackTransaction(session);
-			return "invalid_photo_category";
+			return SUCCESS;
 		}
 		HibernateUtil.commitTransaction(session);
 		return SUCCESS;
 
-	}
-
-	/**
-	 * Update region category
-	 * 
-	 * @return	success if region category is updated, otherwise error
-	 */
-
-	public String editRegionCategory(){
-
-		RegionCategory regionCategory = null;
-		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		embedPhoto.setSession(session);
-		HibernateUtil.beginTransaction(session);
-		
-		regionCategoryDao.setSession(session);
-		
-		if((regionCategory = regionCategoryDao.findById(regionCategoryId)) == null) {
-			HibernateUtil.rollbackTransaction(session);
-			return "invalid_region_category";
-		}
-		else {
-			regionCategory.setCategoryName(categoryName);
-			regionCategory.setRegionCategoryText(regionCategoryText);
-			if (embedPhoto.editRegionCategory(regionCategory)) {
-				HibernateUtil.commitTransaction(session);
-				return SUCCESS;
-			}
-			else {
-				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
-			}
-		}
 	}
 
 	/**
@@ -359,7 +325,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -382,7 +348,7 @@ public class EmbedPhotoAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 

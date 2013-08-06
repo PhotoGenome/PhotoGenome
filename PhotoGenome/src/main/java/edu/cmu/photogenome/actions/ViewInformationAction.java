@@ -85,13 +85,13 @@ public class ViewInformationAction extends ActionSupport{
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} 
 		catch(Exception e) {
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -120,12 +120,12 @@ public class ViewInformationAction extends ActionSupport{
 				return SUCCESS;
 			}else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -155,12 +155,12 @@ public class ViewInformationAction extends ActionSupport{
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -186,12 +186,12 @@ public class ViewInformationAction extends ActionSupport{
 				return SUCCESS;
 			}else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -213,12 +213,12 @@ public class ViewInformationAction extends ActionSupport{
 				return SUCCESS;
 			}else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -240,12 +240,12 @@ public class ViewInformationAction extends ActionSupport{
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e) {
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -267,12 +267,12 @@ public class ViewInformationAction extends ActionSupport{
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -294,12 +294,12 @@ public class ViewInformationAction extends ActionSupport{
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 
 	}
@@ -322,12 +322,12 @@ public class ViewInformationAction extends ActionSupport{
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 
@@ -349,12 +349,12 @@ public class ViewInformationAction extends ActionSupport{
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		} catch(Exception e){
 			log.warn(e.getMessage(), e);
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 

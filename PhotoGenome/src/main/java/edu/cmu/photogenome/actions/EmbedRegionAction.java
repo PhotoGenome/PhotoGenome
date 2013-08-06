@@ -69,7 +69,7 @@ public class EmbedRegionAction extends ActionSupport {
 		
 		if(viewInfo.getPhoto(photoId) == null) {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 		else {
 			if((region = embedRegion.addPhotoRegion(photoId, userId, shapeId, regionX, regionY, height, width)) != null) {
@@ -79,7 +79,7 @@ public class EmbedRegionAction extends ActionSupport {
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}
 	}
@@ -94,7 +94,7 @@ public class EmbedRegionAction extends ActionSupport {
 		
 		if(viewInfo.getPhotoRegion(regionId) == null) {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 		else {
 			if((regionComment = embedRegion.addRegionComment(photoId, userId, regionId, regionCommentText)) !=null) {
@@ -104,7 +104,7 @@ public class EmbedRegionAction extends ActionSupport {
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}
 	}
@@ -126,7 +126,7 @@ public class EmbedRegionAction extends ActionSupport {
 		
 		if(viewInfo.getPhotoRegion(regionId) == null) {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 		else {
 			categoryDetails = new ArrayList<SimpleEntry<String, String>>();
@@ -138,7 +138,7 @@ public class EmbedRegionAction extends ActionSupport {
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}
 	}
@@ -154,7 +154,7 @@ public class EmbedRegionAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -169,7 +169,7 @@ public class EmbedRegionAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class EmbedRegionAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -204,7 +204,7 @@ public class EmbedRegionAction extends ActionSupport {
 		}
 		else {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 	}
 	
@@ -218,7 +218,7 @@ public class EmbedRegionAction extends ActionSupport {
 		
 		if((comment = viewInfo.getRegionComment(regionCommentId)) == null) {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 		else { // update the comment
 			comment.setRegionCommentText(regionCommentText);
@@ -228,7 +228,7 @@ public class EmbedRegionAction extends ActionSupport {
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}
 	}
@@ -248,7 +248,7 @@ public class EmbedRegionAction extends ActionSupport {
 		
 		if((regionCategory = viewInfo.getRegionCategory(regionCategoryId)) == null) {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 		else {
 			regionCategory.setCategoryName(categoryName);
@@ -259,7 +259,7 @@ public class EmbedRegionAction extends ActionSupport {
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}
 	}
@@ -274,7 +274,7 @@ public class EmbedRegionAction extends ActionSupport {
 		
 		if((coordinate = viewInfo.getRegionCoordinate(regionCoordinateId)) == null) {
 			HibernateUtil.rollbackTransaction(session);
-			return ERROR;
+			return SUCCESS;
 		}
 		else { // update the coordinate
 			coordinate.setRegionX(regionX);
@@ -287,7 +287,7 @@ public class EmbedRegionAction extends ActionSupport {
 			}
 			else {
 				HibernateUtil.rollbackTransaction(session);
-				return ERROR;
+				return SUCCESS;
 			}
 		}
 	}
