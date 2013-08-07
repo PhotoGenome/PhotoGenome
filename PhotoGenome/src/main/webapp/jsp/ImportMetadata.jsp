@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>AJAX calls using Jquery in Servlet</title>
+<title>Import Metadata</title>
 
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
       <script src="jsonUtil.js"></script>
@@ -68,7 +68,7 @@
 <tr><td><textarea id="txtSearchKeywords"  rows="1" cols="50">
 root directory path
 </textarea>
-<input type="button" id="submitSK" value="Comments Submit"/>
+<input type="button" id="submitSK" value="Import Metadata"/>
 </td></tr>
 <tr><td width="70%" bordercolor="black" valign="top">
 <div id="canvas" style="border:solid black;"></div>

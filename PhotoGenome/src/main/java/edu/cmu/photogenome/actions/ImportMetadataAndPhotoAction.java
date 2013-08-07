@@ -27,9 +27,14 @@ public class ImportMetadataAndPhotoAction extends ActionSupport {
 		
 		log.info("Uploading photo at {} for user {}", path, userId);
 		
-		importMetadata.getPhotoAndMetadata(path, userId);
-		
-		HibernateUtil.commitTransaction(session);
+		try {
+			importMetadata.getPhotoAndMetadata(path, userId);
+			HibernateUtil.commitTransaction(session);
+		}
+		catch(Exception e) {
+			log.error(e.getMessage());
+			HibernateUtil.rollbackTransaction(session);
+		}
 		
 		return SUCCESS;
 	}
