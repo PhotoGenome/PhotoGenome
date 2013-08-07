@@ -13,25 +13,6 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
  
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-
-$(document).ready(function() {                        
-    
-	  //$('#submitLogout').click(function(event) {  
-	      	
-		//  alert('hi');
-			//sessionStorage.clear();
-			//window.location="Logout.jsp";
-			//});
-	  
-	//  $('#logout').addEventListener('click', function(e){
-		//  alert('hi');
-			//sessionStorage.clear();
-			//window.location="Logout.jsp";
-	  //},true);
-	
-		//});
-</script> 
 </head>
 <body>
 
@@ -69,12 +50,14 @@ $(window).load(function () {
 				</tr> 
 				<tr>
 					<td>
-						<s:textfield name="subject" size="65" label="Subject" />
+						<s:textfield name="subject" size="65" label="Subject" value="Join PhotoGenome!"/>
 					</td>
 				</tr> 
 				<tr>
 					<td>
-						<s:textarea cols="50" rows="10" name="message" label="Message" />
+						<s:textarea cols="50" rows="10" name="message" label="Message" 
+						value="PhotoGenome is a great place to share memories and experiences with others.">						
+						</s:textarea>
 					</td>
 				</tr> 
 				<tr>
