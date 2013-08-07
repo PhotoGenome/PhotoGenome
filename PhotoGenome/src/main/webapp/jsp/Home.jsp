@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>PhotoGenome Home</title>
 </head>
 <body>
 <script>
@@ -25,6 +25,7 @@ $(window).load(function () {
 <a href="../jsp/ViewAllPhotos.jsp">View All Photos</a><br>
 <a href="../jsp/ViewPhotos.jsp">View Your Photos</a><br>
 <a href="../jsp/PhotoLayout.jsp">Upload Photos</a><br>
+<a href="../jsp/ImportMetadata.jsp">Import Metadata</a><br>
 <a href="../jsp/ViewPhotosWSearch.jsp">Keyword based Search</a><br>
 <a href="../jsp/EmailForm.jsp">Send email invitation</a><br>
 </body>

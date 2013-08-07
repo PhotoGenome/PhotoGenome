@@ -47,10 +47,10 @@
         </script>
 </head>
 <body>
-<h2>Struts 2 - Login Application</h2>
+<h2>Welcome to PhotoGenome</h2>
 <form id="form1">
 <table width="100%" bordercolor="black">
-<tr><td>Login into PhotoGenome</td></tr>
+<tr><td>Login</td></tr>
 <tr><td>
 <div id="error" style="color:red;" ></div>
 Username: <input type="text" id="username" />

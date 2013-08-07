@@ -213,6 +213,10 @@
 			<result name="success">jsp/PhotoLayout.jsp</result>
 		</action>
 		
+		<action name="importMetadata" method="importMetadataAndPhoto"
+			class="edu.cmu.photogenome.actions.ImportMetadataAndPhotoAction">
+		</action>
+		
 		<action name="resultAction" class="edu.cmu.photogenome.actions.UploadPhotoAction" method="uploadPhoto">
 
 			<interceptor-ref name="exception"/>

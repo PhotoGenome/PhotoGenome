@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
 <head>
-<title>Struts 2 - Login Application</title>
+<title>PhotoGenome Registration</title>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css" type="text/css" />
         <link rel="stylesheet" href="PG-Style.css" type="text/css" />
   
@@ -12,13 +12,7 @@
   body { background-color: white; font: 16px Helvetica, Arial; color: black; }
   #canvas { height: 500px; background: white; }
   </style>
-  
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-      
   <script>
-  
-
-       
         $(document).ready(function() {                        
             
       	  $('#submitR').click(function(event) {  
